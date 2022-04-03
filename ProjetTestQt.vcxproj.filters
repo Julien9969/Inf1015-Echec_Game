@@ -57,13 +57,16 @@
     <QtMoc Include="CalcWindow.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="jeu.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="jeu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="case.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

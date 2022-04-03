@@ -1,6 +1,8 @@
 #include "jeu.h"
 #include <QDebug>
 #include <QLabel>
+#include <QGraphicsDropShadowEffect>
+#include <QEvent>
 
 using namespace iter;
 
@@ -81,6 +83,9 @@ void Jeu::creationPlateau()
 			if (((i + j) % 2) == 0) {
 				box->mettreCouleur(Qt::black);
 			}
+			else {
+				box->mettreCouleur(Qt::white);
+			}
 			scene->addItem(box);
 			ListeCase.push_back(box);
 
@@ -91,7 +96,16 @@ void Jeu::creationPlateau()
 void Jeu::image() {
 
 	auto box = dynamic_cast<Case*>(ListeCase[0]);
+	//if ((i + 8 * y) % 3 == 0) {
 	box->mettreCouleur(Qt::blue);
-	/*box->*/
+	box->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	box->setAcceptHoverEvents(true);
+	
+	
+
+	//box->
+
+
+
 
 }

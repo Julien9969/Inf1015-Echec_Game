@@ -12,8 +12,14 @@ public:
 
 	void mettreCouleur(Qt::GlobalColor couleur);
 
+	virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
+	virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+
+
 
 private:
 	QBrush brush;
+	QColor color_;
+
 };
 

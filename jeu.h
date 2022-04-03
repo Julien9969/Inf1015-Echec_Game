@@ -27,6 +27,7 @@ public:
 
 	void creationPlateau();
 
+
 	void image();
 
 	QPointer<QGraphicsScene> scene;

@@ -61,7 +61,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)\googletest\include;$(SolutionDir)\googletest;$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SupportJustMyCode>true</SupportJustMyCode>
       <WarningLevel>Level4</WarningLevel>
@@ -119,14 +119,20 @@
     <ClCompile Include="googletest\src\gtest-all.cc" />
     <ClCompile Include="Jeu.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PieceEchec.cpp" />
+    <ClCompile Include="Plateau.cpp" />
     <ClCompile Include="TestCalc.cpp" />
+    <ClCompile Include="Tour.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Calc.hpp" />
     <QtMoc Include="CalcWindow.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="case.h" />
+    <ClInclude Include="Tour.h" />
+    <QtMoc Include="case.h" />
+    <ClInclude Include="PieceEchec.h" />
+    <ClInclude Include="Plateau.h" />
     <QtMoc Include="jeu.h" />
   </ItemGroup>
   <ItemGroup>

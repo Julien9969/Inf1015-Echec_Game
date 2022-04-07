@@ -6,6 +6,8 @@ extern QPointer<Jeu> jeu;
 Case::Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* parent) : QGraphicsRectItem(x, y, width, height, parent)
 {
 	//brush.setStyle(Qt::SolidPattern);
+	xPos_ = x;
+	yPos_ = y;
 	setOpacity(0.8);
 	setBrush(brush);
 	setFlags(QGraphicsItem::ItemIsSelectable); //QGraphicsItem::ItemIsMovable | 
@@ -14,11 +16,11 @@ Case::Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* parent) :
 	//jeu->scene->addItem(this);
 }
 
-Case::~Case()
+void Case::mettreEmplacement(int i, int j)
 {
-	delete this;
+	ligne_ = i;
+	colone_ = j;
 }
-
 
 void Case::mettreCouleur(Qt::GlobalColor couleur)
 {
@@ -28,6 +30,11 @@ void Case::mettreCouleur(Qt::GlobalColor couleur)
 	setBrush(brush);
 }
 
+void Case::mettrePiece(PieceEchec* piece)
+{
+	piece_ = piece;
+}
+
 void Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
 	brush.setColor(Qt::darkGray);
@@ -35,6 +42,11 @@ void Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 	setBrush(brush);
 	update();
 	
+}
+
+const std::pair<int, int> Case::lirePosition() const 
+{
+	return std::pair<int, int>(xPos_, yPos_);
 }
 
 void Case::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {

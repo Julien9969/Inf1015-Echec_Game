@@ -30,7 +30,7 @@ void initialiserBibliothequeCours([[maybe_unused]] int argc, [[maybe_unused]] ch
 }
 
 
-QPointer<Jeu> jeu;
+bibliotheque_cours::BreakpointSurAllocations breakpointSurAllocations = 548U;
 
 int main(int argc, char *argv[])
 {
@@ -38,9 +38,9 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	initialiserBibliothequeCours(argc, argv);
 
-	jeu = new Jeu;
+	Jeu jeu;
 
 
-	jeu->show();
+	jeu.show();
 	return app.exec();
 }

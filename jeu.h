@@ -1,37 +1,41 @@
 #pragma once
 #include <QGraphicsView>
 #include <QGraphicsScene>
-#include <QGraphicsRectItem>
 #include <QGraphicsTextItem>
-#include "case.h"
+#include <QGraphicsRectItem>
+#include <QMainWindow>
 #include <QPointer>
 #include <cppitertools/range.hpp>
 #include <vector>
+#include <memory>
+//#include "case.h"
+#include "Plateau.h"
 
+class Plateau;
 
-
-class Jeu : public QGraphicsView
+class Jeu : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	Jeu(QWidget* parent = nullptr);
+	Jeu(QWidget* parent = NULL);
 
-	/*~Jeu() {
-		for (auto&& i : ListeCase)
-			delete i;
-	}*/
+	~Jeu() = default;
 
 	void debutPartie();
 	void creationDesBord(int taille, int x, int y, QColor couleur, double opacite);
 
 	void creationPlateau();
 
+	void mettreDansScene(QGraphicsItem* object);
 
-	void image();
+	QGraphicsScene* scene;
 
-	QPointer<QGraphicsScene> scene;
-	std::vector<QGraphicsRectItem*> ListeCase;
+	QGraphicsView* window_;
+
+	QString ab = "bonojour";
+
+	std::unique_ptr<Plateau> plateau_;
 
 private:
 

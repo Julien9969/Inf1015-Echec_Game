@@ -49,6 +49,15 @@
     <ClCompile Include="case.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Plateau.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PieceEchec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Calc.hpp">
@@ -60,9 +69,18 @@
     <QtMoc Include="jeu.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="case.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="case.h">
+    <ClInclude Include="Plateau.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PieceEchec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tour.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

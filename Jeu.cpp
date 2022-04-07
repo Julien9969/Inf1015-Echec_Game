@@ -1,22 +1,26 @@
 #include "jeu.h"
 #include <QDebug>
+
 #include <QLabel>
 #include <QGraphicsDropShadowEffect>
 #include <QEvent>
 
-using namespace iter;
 
-Jeu::Jeu(QWidget* parent) : QGraphicsView(parent)
+using iter::range;
+
+Jeu::Jeu(QWidget* parent) : QMainWindow(parent)
 {
 	setFixedSize(1080, 720);
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	window_ = new QGraphicsView(this);
+	window_->setFixedSize(1080, 720);
+	window_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	window_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-	scene = new QGraphicsScene();
+	scene = new QGraphicsScene(window_);
 	scene->setSceneRect(0, 0, 1080, 720);
-	setScene(scene);
-
-
+	window_->setScene(scene);
+	
+	
 
 	debutPartie();
 
@@ -54,8 +58,6 @@ void Jeu::debutPartie()
 	
 	creationPlateau();
 
-	image();
-	
 }
 
 void Jeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
@@ -75,37 +77,15 @@ void Jeu::creationDesBord(int taille, int x, int y, QColor couleur, double opaci
 
 void Jeu::creationPlateau()
 {
-	for (int i : range(8)) {
-
-		for (int j : range(8)) {
-			Case* box = new Case((width() - height()) / 2 + 90 * i, 90 * j, 90, 90);
-
-			if (((i + j) % 2) == 0) {
-				box->mettreCouleur(Qt::black);
-			}
-			else {
-				box->mettreCouleur(Qt::white);
-			}
-			scene->addItem(box);
-			ListeCase.push_back(box);
-
-		}
-	}
+	plateau_ = std::make_unique<Plateau>(this);
+	plateau_->creeCases();
+	plateau_->creePiecesNoir();
+	plateau_->mettreLesPieces();
+	
 }
 
-void Jeu::image() {
-
-	auto box = dynamic_cast<Case*>(ListeCase[0]);
-	//if ((i + 8 * y) % 3 == 0) {
-	box->mettreCouleur(Qt::blue);
-	box->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-	box->setAcceptHoverEvents(true);
-	
-	
-
-	//box->
-
-
-
-
+void Jeu::mettreDansScene(QGraphicsItem* object)
+{
+	scene->addItem(object);
 }
+

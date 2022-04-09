@@ -72,14 +72,14 @@
     <QtMoc Include="case.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="PieceEchec.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Plateau.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Plateau.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PieceEchec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Tour.h">
       <Filter>Header Files</Filter>
     </ClInclude>

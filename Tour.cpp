@@ -1,7 +1,7 @@
 #include "Tour.h"
 
 
-
+using model::Tour;
 
 Tour::Tour(QString equipe, QGraphicsItem* parent) : PieceEchec(equipe, parent)
 {
@@ -19,7 +19,7 @@ void Tour::ajouterImage()
 		setPixmap(QPixmap("images/TourB.png"));
 	}
 
-	setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+	//setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 	setAcceptHoverEvents(true);
 
 	setScale(1.4);

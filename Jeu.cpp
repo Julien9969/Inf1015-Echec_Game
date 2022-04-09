@@ -1,14 +1,13 @@
 #include "jeu.h"
 #include <QDebug>
 
-#include <QLabel>
-#include <QGraphicsDropShadowEffect>
-#include <QEvent>
+//#include <QLabel>
+//#include <QGraphicsDropShadowEffect>
 
 
 using iter::range;
 
-Jeu::Jeu(QWidget* parent) : QMainWindow(parent)
+Ui::Jeu::Jeu(QWidget* parent) : QMainWindow(parent)
 {
 	setFixedSize(1080, 720);
 	window_ = new QGraphicsView(this);
@@ -26,7 +25,7 @@ Jeu::Jeu(QWidget* parent) : QMainWindow(parent)
 
 }
 
-void Jeu::debutPartie()
+void Ui::Jeu::debutPartie()
 {
 	//scene->clear()
 	int taillePaneau = (width() - height()) / 2;
@@ -35,11 +34,11 @@ void Jeu::debutPartie()
 
 	creationDesBord(taillePaneau, width() - taillePaneau, 0, Qt::red, 0.3);
 
-	QPointer<QGraphicsTextItem> joueur1 = new QGraphicsTextItem("Jsp quoi on verra 1 :");
+	QGraphicsTextItem* joueur1 = new QGraphicsTextItem("Jsp quoi on verra 1 :");
 	joueur1->setPos(50, 5);
 	scene->addItem(joueur1);
 
-	QPointer<QGraphicsTextItem> joueur2 = new QGraphicsTextItem("Jsp quoi on verra 2 :");
+	QGraphicsTextItem* joueur2 = new QGraphicsTextItem("Jsp quoi on verra 2 :");
 	joueur2->setPos(width() - taillePaneau + 50, 5);
 	scene->addItem(joueur2);
 
@@ -56,11 +55,9 @@ void Jeu::debutPartie()
 
 	setWindowTitle(tour);
 	
-	creationPlateau();
-
 }
 
-void Jeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
+void Ui::Jeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
 {
 	 //qDebug() << scene->height();
 
@@ -75,16 +72,8 @@ void Jeu::creationDesBord(int taille, int x, int y, QColor couleur, double opaci
 
 }
 
-void Jeu::creationPlateau()
-{
-	plateau_ = std::make_unique<Plateau>(this);
-	plateau_->creeCases();
-	plateau_->creePiecesNoir();
-	plateau_->mettreLesPieces();
-	
-}
 
-void Jeu::mettreDansScene(QGraphicsItem* object)
+void Ui::Jeu::mettreDansScene(QGraphicsItem* object)
 {
 	scene->addItem(object);
 }

@@ -1,7 +1,8 @@
 #include "Calc.hpp"
 #include "CalcWindow.hpp"
 #include "jeu.h"
-#include <QPointer>
+#include "Plateau.h"
+#include <memory>
 #include <QApplication>
 
 #if __has_include("bibliotheque_cours.hpp")
@@ -38,7 +39,8 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	initialiserBibliothequeCours(argc, argv);
 
-	Jeu jeu;
+	Ui::Jeu jeu;
+	std::unique_ptr<Plateau> plateau = std::make_unique<Plateau>(&jeu);
 
 
 	jeu.show();

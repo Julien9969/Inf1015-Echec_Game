@@ -1,28 +1,28 @@
 #include "case.h"
 #include <QDebug>
 
-extern QPointer<Jeu> jeu;
 
-Case::Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* parent) : QGraphicsRectItem(x, y, width, height, parent)
+Ui::Case::Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* parent) : QGraphicsRectItem(x, y, width, height, parent)
 {
 	//brush.setStyle(Qt::SolidPattern);
-	xPos_ = x;
-	yPos_ = y;
+	xPixPos_ = x;
+	yPixPos_ = y;
 	setOpacity(0.8);
 	setBrush(brush);
 	setFlags(QGraphicsItem::ItemIsSelectable); //QGraphicsItem::ItemIsMovable | 
 	setAcceptHoverEvents(true);
+	setAcceptDrops(true);
 
 	//jeu->scene->addItem(this);
 }
 
-void Case::mettreEmplacement(int i, int j)
+void Ui::Case::mettreCoordonnees(int i, int j)
 {
 	ligne_ = i;
 	colone_ = j;
 }
 
-void Case::mettreCouleur(Qt::GlobalColor couleur)
+void Ui::Case::mettreCouleur(Qt::GlobalColor couleur)
 {
 	brush.setStyle(Qt::SolidPattern);
 	brush.setColor(couleur);
@@ -30,29 +30,56 @@ void Case::mettreCouleur(Qt::GlobalColor couleur)
 	setBrush(brush);
 }
 
-void Case::mettrePiece(PieceEchec* piece)
+void Ui::Case::mettrePiece(model::PieceEchec* piece)
 {
 	piece_ = piece;
 }
 
-void Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+void Ui::Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
 	brush.setColor(Qt::darkGray);
-	qDebug() << "entering";
+	qDebug() <<"case pos : " << piece_ << " " << ligne_ << " " << colone_;
 	setBrush(brush);
 	update();
 	
 }
 
-const std::pair<int, int> Case::lirePosition() const 
-{
-	return std::pair<int, int>(xPos_, yPos_);
-}
 
-void Case::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
+void Ui::Case::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
 	brush.setColor(color_);
-	qDebug() << "leaving";
+	//qDebug() << "leaving";
 	setBrush(brush);
 	update();
 
 }
+
+const std::pair<int, int> Ui::Case::lirePixPosition() const
+{
+	return std::pair<int, int>(xPixPos_, yPixPos_);
+}
+
+const std::pair<int, int> Ui::Case::lireMatricePosition() const
+{
+	return std::pair<int, int>(ligne_, colone_);
+}
+
+
+void Ui::Case::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+	
+	//qDebug() << "deClique";
+	
+}
+
+
+void Ui::Case::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+	if (event->buttons() == Qt::LeftButton)
+	{
+		
+		qDebug() << "cliqueCase";
+		emit caseClique(this);
+	}
+
+}
+

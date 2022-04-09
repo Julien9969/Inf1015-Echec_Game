@@ -3,17 +3,18 @@
 #include <QGraphicsPixmapItem>
 #include <utility>
 
+namespace model {
 
-class Tour : public PieceEchec
-{
-public:
-	Tour(QString equipe, QGraphicsItem* parent = NULL);
-	~Tour();
+	class Tour : public PieceEchec
+	{
+	public:
+		Tour(QString equipe, QGraphicsItem* parent = NULL);
+		~Tour();
 
-	void ajouterImage() override;
-	void deplacementValide() override;
+		void ajouterImage() override;
+		void deplacementValide() override;
 
-private:
+	private:
 
-};
-
+	};
+}

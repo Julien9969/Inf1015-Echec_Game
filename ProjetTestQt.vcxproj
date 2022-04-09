@@ -16,6 +16,7 @@
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <ProjectName>Echec_INF1015</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -131,8 +132,8 @@
   <ItemGroup>
     <ClInclude Include="Tour.h" />
     <QtMoc Include="case.h" />
-    <ClInclude Include="PieceEchec.h" />
-    <ClInclude Include="Plateau.h" />
+    <QtMoc Include="PieceEchec.h" />
+    <QtMoc Include="Plateau.h" />
     <QtMoc Include="jeu.h" />
   </ItemGroup>
   <ItemGroup>

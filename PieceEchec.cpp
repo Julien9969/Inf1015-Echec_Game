@@ -1,17 +1,38 @@
 #include "PieceEchec.h"
 #include "QDebug"
 
-
+using model::PieceEchec;
 
 PieceEchec::PieceEchec(QString equipe, QGraphicsItem* parent) : QGraphicsPixmapItem(parent)
 {
 	equipe_ = equipe;
+	
+    //setAcceptDrops(true);
+    
+
+
+
 }
 
-void PieceEchec::positionnerPiece(int xPos, int yPos, std::pair<int, int> pos)
+void PieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> pixPos)
 {
-	qDebug() << pos.first;
-	x_ = xPos;
-	y_ = yPos;
-	setPos(pos.first, pos.second);
+	qDebug() << pixPos.first;
+	x_ = matricePos.first;
+	y_ = matricePos.second;
+	setPos(pixPos.first, pixPos.second);
+}
+
+void PieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+	if (event->buttons() == Qt::LeftButton)
+	{
+		qDebug() << "clique";
+		emit pieceClique(this);
+	}
+
+}
+
+void PieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+{
+	qDebug() << x_ << " " << y_;
 }

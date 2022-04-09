@@ -1,24 +1,27 @@
 #pragma once
+#include "jeu.h"
+#include "case.h"
+#include "Tour.h" 
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
-#include <QGraphicsTextItem>
-#include "case.h"
-#include <QPointer>
 #include <cppitertools/range.hpp>
 #include <vector>
-#include "jeu.h"
 //#include "PieceEchec.h"
-#include "Tour.h" 
+#include <QObject>
 
-class Jeu;
-class Case;
-class PieceEchec;
+namespace Ui {
+	class Jeu;
+	class Case;
+};
 
-class Plateau 
+namespace { class PieceEchec; };
+
+class Plateau : public QObject
 {
+	Q_OBJECT
 public:
-	Plateau(Jeu* jeu);
+	Plateau(Ui::Jeu* jeu);
 	~Plateau();
 
 	void creeCases();
@@ -28,12 +31,20 @@ public:
 
 	void ajouterDansScene(QGraphicsItem* item);
 
-	std::vector<PieceEchec*> ListePieceNoir;
-	std::vector<QGraphicsPixmapItem*> ListePieceBlanc;
+	std::vector<model::PieceEchec*> ListePieceNoir;
+	std::vector<model::PieceEchec*> ListePieceBlanc;
 
 
-	std::vector<Case*> ListeCase;
+	std::vector<Ui::Case*> ListeCase;
+
+
 
 private:
-	Jeu* ptrJeu_;
+	Ui::Jeu* ptrJeu_;
+	model::PieceEchec* pieceActuelle_;
+
+public slots:
+	void enregistrerPieceClique(model::PieceEchec* piece);
+	void recevoirCaseClique(Ui::Case* caseClique);
+
 };

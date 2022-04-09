@@ -4,44 +4,39 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsRectItem>
 #include <QMainWindow>
-#include <QPointer>
 #include <cppitertools/range.hpp>
 #include <vector>
-#include <memory>
 //#include "case.h"
-#include "Plateau.h"
 
-class Plateau;
 
-class Jeu : public QMainWindow
-{
-	Q_OBJECT
+namespace Ui {
 
-public:
-	Jeu(QWidget* parent = NULL);
+	class Jeu : public QMainWindow
+	{
+		Q_OBJECT
 
-	~Jeu() = default;
+	public:
+		Jeu(QWidget* parent = NULL);
 
-	void debutPartie();
-	void creationDesBord(int taille, int x, int y, QColor couleur, double opacite);
+		~Jeu() = default;
 
-	void creationPlateau();
+		void debutPartie();
+		void creationDesBord(int taille, int x, int y, QColor couleur, double opacite);
 
-	void mettreDansScene(QGraphicsItem* object);
+		void mettreDansScene(QGraphicsItem* object);
 
-	QGraphicsScene* scene;
+		QGraphicsScene* scene;
 
-	QGraphicsView* window_;
+		QGraphicsView* window_;
 
-	QString ab = "bonojour";
+		QString ab = "bonojour";
 
-	std::unique_ptr<Plateau> plateau_;
+	private:
 
-private:
-
-	QPointer<QGraphicsTextItem> quiDoitJouer;
+		QGraphicsTextItem* quiDoitJouer;
 
 
 
-};
+	};
 
+}

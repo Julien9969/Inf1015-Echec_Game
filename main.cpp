@@ -31,7 +31,7 @@ void initialiserBibliothequeCours([[maybe_unused]] int argc, [[maybe_unused]] ch
 }
 
 
-bibliotheque_cours::BreakpointSurAllocations breakpointSurAllocations = 548U;
+//bibliotheque_cours::BreakpointSurAllocations breakpointSurAllocations = 548U;
 
 int main(int argc, char *argv[])
 {

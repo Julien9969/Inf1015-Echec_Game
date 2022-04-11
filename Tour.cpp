@@ -2,6 +2,7 @@
 
 
 using model::Tour;
+using Ui::ListeCases;
 
 Tour::Tour(QString equipe, QGraphicsItem* parent) : PieceEchec(equipe, parent)
 {
@@ -26,10 +27,15 @@ void Tour::ajouterImage()
 
 }
 
-void Tour::deplacementValide()
+std::list<std::pair<int, int>>& Tour::deplacementsValide(ListeCases& ListeCase)
 {
-	
+	//Vers le bas
+	for (int ligne = ligne_ + 1; ligne < 8; ligne++)
+	{
+		ListeCase(ligne, colone_)->mettreCouleur(Qt::green);
+	}
 
+	return emplacementsValides;
 }
 
 

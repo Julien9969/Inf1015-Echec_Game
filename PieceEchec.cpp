@@ -8,8 +8,6 @@ PieceEchec::PieceEchec(QString equipe, QGraphicsItem* parent) : QGraphicsPixmapI
 	equipe_ = equipe;
 	
     //setAcceptDrops(true);
-    
-
 
 
 }
@@ -17,8 +15,8 @@ PieceEchec::PieceEchec(QString equipe, QGraphicsItem* parent) : QGraphicsPixmapI
 void PieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> pixPos)
 {
 	qDebug() << pixPos.first;
-	x_ = matricePos.first;
-	y_ = matricePos.second;
+	ligne_ = matricePos.first;
+	colone_ = matricePos.second;
 	setPos(pixPos.first, pixPos.second);
 }
 
@@ -26,13 +24,28 @@ void PieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{
+		estClique = true;
 		qDebug() << "clique";
 		emit pieceClique(this);
 	}
 
 }
 
+//void PieceEchec::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+//	// if there is a cardToPlace, then make it follow the mouse
+//	if (estClique) {
+//		setPos(event->scenePos().x() - 45, event->scenePos().y() - 45);
+//		qDebug() << "piece move" << event->pos();
+//
+//	}
+//
+//	qDebug() << "move";
+//	QGraphicsPixmapItem::mouseMoveEvent(event);
+//}
+
+
 void PieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-	qDebug() << x_ << " " << y_;
+	qDebug() << ligne_ << " " << colone_;
+	//this->~PieceEchec();
 }

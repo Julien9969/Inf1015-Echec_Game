@@ -60,4 +60,16 @@ namespace Ui {
 
 	};
 
+	struct ListeCases {
+		std::vector<Case*> listeCase;
+
+		Case* operator()(int x, int y) {
+			return listeCase[x * 8 + y];
+		}
+
+		void push_back(Case* box) {
+			listeCase.push_back(box);
+		}
+	};
+
 }

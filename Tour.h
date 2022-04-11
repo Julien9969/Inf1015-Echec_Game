@@ -3,6 +3,11 @@
 #include <QGraphicsPixmapItem>
 #include <utility>
 
+namespace Ui {
+	class Case;
+	struct ListeCases;
+};
+
 namespace model {
 
 	class Tour : public PieceEchec
@@ -12,7 +17,9 @@ namespace model {
 		~Tour();
 
 		void ajouterImage() override;
-		void deplacementValide() override;
+		std::list<std::pair<int, int>>& deplacementsValide(Ui::ListeCases& ListeCase) override;
+
+		
 
 	private:
 

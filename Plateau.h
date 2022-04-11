@@ -7,15 +7,19 @@
 #include <QGraphicsRectItem>
 #include <cppitertools/range.hpp>
 #include <vector>
+#include <list>
 //#include "PieceEchec.h"
 #include <QObject>
 
 namespace Ui {
 	class Jeu;
 	class Case;
+	struct ListeCases;
 };
 
 namespace { class PieceEchec; };
+
+
 
 class Plateau : public QObject
 {
@@ -27,16 +31,20 @@ public:
 	void creeCases();
 
 	void creePiecesNoir();
+	void creePieceBlanc();
 	void mettreLesPieces();
 
 	void ajouterDansScene(QGraphicsItem* item);
+
+	void couleurSurCaseValide(std::list<std::pair<int, int>> listeEmplacements);
 
 	std::vector<model::PieceEchec*> ListePieceNoir;
 	std::vector<model::PieceEchec*> ListePieceBlanc;
 
 
-	std::vector<Ui::Case*> ListeCase;
+	Ui::ListeCases listeCase;
 
+	//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 
 private:

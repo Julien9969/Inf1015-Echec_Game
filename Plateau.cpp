@@ -19,6 +19,7 @@ Plateau::Plateau(Ui::Jeu* jeu)
 	ptrJeu_ = jeu;
 	creeCases();
 	creePiecesNoir();
+	creePieceBlanc();
 	mettreLesPieces();
 }
 
@@ -42,7 +43,7 @@ void Plateau::creeCases() {
 			QObject::connect(box, &Ui::Case::caseClique, this, &Plateau::recevoirCaseClique);
 
 			ajouterDansScene(box);
-			ListeCase.push_back(box);
+			listeCase.push_back(box);
 
 
 		}
@@ -77,6 +78,35 @@ void Plateau::creePiecesNoir()
 	Tour* tourN7 = new Tour("Noir");
 	ListePieceNoir.push_back(tourN7);
 	
+	tourN->deplacementsValide(listeCase);
+}
+
+void Plateau::creePieceBlanc()
+{
+	Tour* tourB = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB);
+
+	Tour* tourB1 = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB1);
+
+	Tour* tourB2 = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB2);
+
+	Tour* tourB3 = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB3);
+
+	Tour* tourB4 = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB4);
+
+	Tour* tourB5 = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB5);
+
+	Tour* tourB6 = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB6);
+
+	Tour* tourB7 = new Tour("Blanc");
+	ListePieceBlanc.push_back(tourB7);
+
 }
 
 void Plateau::mettreLesPieces()
@@ -88,16 +118,32 @@ void Plateau::mettreLesPieces()
 	for (int i = 0; i < 1; i++) {
 		for (int j = 0; j < 8; j++) {
 
-			tempCase = ListeCase[i * 8 + j];
+			tempCase = listeCase(i, j);
 			tempPiece = ListePieceNoir[i * 8 + j];
 
 			tempCase->mettrePiece(tempPiece);
-			tempPiece->positionnerPiece({ i, j }, tempCase->lirePixPosition());
+			tempPiece->positionnerPiece(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
 			QObject::connect(tempPiece, &model::PieceEchec::pieceClique, this, &Plateau::enregistrerPieceClique);
 			
 			
 			ajouterDansScene(tempPiece);//i+j
 			
+		}
+	}
+
+	for (int i = 0; i < 1; i++) {
+		for (int j = 0; j < 8; j++) {
+
+			tempCase = listeCase(i, j + 56);
+			tempPiece = ListePieceBlanc[i * 8 + j];
+
+			tempCase->mettrePiece(tempPiece);
+			tempPiece->positionnerPiece(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
+			QObject::connect(tempPiece, &model::PieceEchec::pieceClique, this, &Plateau::enregistrerPieceClique);
+
+
+			ajouterDansScene(tempPiece);//i+j
+
 		}
 	}
 
@@ -112,11 +158,14 @@ void Plateau::recevoirCaseClique(Case* caseClique)
 {
 	if (pieceActuelle_ != nullptr && caseClique->getPiece() == nullptr) 
 	{
-		ListeCase[pieceActuelle_->lireX() * 8 + pieceActuelle_->lireY()]->enleverPiece();
-		ListeCase[pieceActuelle_->lireX() * 8 + pieceActuelle_->lireY()]->mettreCouleur(Qt::yellow);
+		listeCase(pieceActuelle_->lireX(), pieceActuelle_->lireY())->enleverPiece();
+		listeCase(pieceActuelle_->lireX(), + pieceActuelle_->lireY())->mettreCouleur(Qt::yellow);
+
 		qDebug() << "indice tableau case : " << pieceActuelle_->lireX() + 8 * pieceActuelle_->lireY();
+
 		caseClique->mettrePiece(pieceActuelle_);
 		pieceActuelle_->positionnerPiece(caseClique->lireMatricePosition(), caseClique->lirePixPosition());
+		pieceActuelle_->estDeClique();
 		pieceActuelle_ = nullptr;
 	}
 }
@@ -124,17 +173,37 @@ void Plateau::recevoirCaseClique(Case* caseClique)
 
 void Plateau::enregistrerPieceClique(model::PieceEchec* piece) 
 {
-
 	pieceActuelle_ = piece;
+	couleurSurCaseValide(pieceActuelle_->deplacementsValide(listeCase));
 	qDebug() << "on Save";
 }
 
+void Plateau::couleurSurCaseValide(std::list<std::pair<int, int>> listeEmplacements)
+{
+	for (auto&& emplacement : listeEmplacements) {
+		listeCase(emplacement.first, emplacement.second)->mettreCouleur(Qt::darkGreen);
+	}
+
+
+
+}
+
+//void Plateau::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+//	// if there is a cardToPlace, then make it follow the mouse
+//	if (pieceActuelle_ != nullptr) {
+//		pieceActuelle_->setPos(event->scenePos().x() - 45, event->scenePos().y() - 45);
+//		qDebug() << "piece move" << event->pos();
+//
+//	}
+//
+//	qDebug() << "move";
+//}
 
 Plateau::~Plateau()
 {
-	for (auto&& elem : ListeCase) {
+	/*for (auto&& elem : listeCase) {
 		delete elem;
-	}
+	}*/
 
 	/*for (auto&& elem : ListePieceNoir) {
 		delete elem;

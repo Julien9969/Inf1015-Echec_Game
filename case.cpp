@@ -12,6 +12,7 @@ Ui::Case::Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* paren
 	setFlags(QGraphicsItem::ItemIsSelectable); //QGraphicsItem::ItemIsMovable | 
 	setAcceptHoverEvents(true);
 	setAcceptDrops(true);
+	
 
 	//jeu->scene->addItem(this);
 }
@@ -67,7 +68,7 @@ const std::pair<int, int> Ui::Case::lireMatricePosition() const
 void Ui::Case::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
 	
-	//qDebug() << "deClique";
+	qDebug() << "deClique";
 	
 }
 

@@ -18,7 +18,7 @@ Ui::Jeu::Jeu(QWidget* parent) : QMainWindow(parent)
 	scene = new QGraphicsScene(window_);
 	scene->setSceneRect(0, 0, 1080, 720);
 	window_->setScene(scene);
-	
+	setMouseTracking(true);
 	
 
 	debutPartie();

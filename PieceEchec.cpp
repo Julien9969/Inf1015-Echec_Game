@@ -6,29 +6,40 @@ using model::PieceEchec;
 PieceEchec::PieceEchec(QString equipe, QGraphicsItem* parent) : QGraphicsPixmapItem(parent)
 {
 	equipe_ = equipe;
-	
+	pieceDuJeuEstClique = false;
     //setAcceptDrops(true);
 
 
 }
 
-void PieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> pixPos)
+void PieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> scenePos)
 {
-	qDebug() << pixPos.first;
+	qDebug() << scenePos.first;
 	ligne_ = matricePos.first;
 	colone_ = matricePos.second;
-	setPos(pixPos.first, pixPos.second);
+	ScenePos_ = scenePos;
+
+	setPos(scenePos.first, scenePos.second);
 }
+
+
 
 void PieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{
-		estClique = true;
+		pieceDuJeuEstClique = true;
 		qDebug() << "clique";
 		emit pieceClique(this);
 	}
 
+}
+
+void PieceEchec::mangeLaPiece(PieceEchec* piece) {
+	positionnerPiece(piece->matricePos(), piece->ScenePos_);
+	qDebug() << "une piece : " << piece->equipe_ << " a été mangé.";
+
+	delete piece;
 }
 
 //void PieceEchec::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
@@ -46,6 +57,10 @@ void PieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void PieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-	qDebug() << ligne_ << " " << colone_;
+	qDebug() << pieceDuJeuEstClique;
 	//this->~PieceEchec();
 }
+
+
+
+

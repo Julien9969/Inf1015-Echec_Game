@@ -20,7 +20,10 @@ namespace Ui {
 		Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* parent = NULL);
 		~Case() = default;
 
-		void mettreCouleur(Qt::GlobalColor couleur);
+		void mettreCouleurbase(QColor couleur);
+
+		void mettreCouleur(QColor couleur);
+		void mettreCouleur();
 
 		void mettreCoordonnees(int i, int j);
 
@@ -52,7 +55,8 @@ namespace Ui {
 
 		model::PieceEchec* piece_ = nullptr;
 		QBrush brush;
-		QColor color_;
+		QColor couleurDeBase_;
+		QColor couleurActuelle;
 
 	signals:
 		void caseClique(Case* caseClique);
@@ -61,15 +65,19 @@ namespace Ui {
 	};
 
 	struct ListeCases {
-		std::vector<Case*> listeCase;
+		std::vector<Case*> listeCases;
 
 		Case* operator()(int x, int y) {
-			return listeCase[x * 8 + y];
+			return listeCases[x * 8 + y];
 		}
 
 		void push_back(Case* box) {
-			listeCase.push_back(box);
+			listeCases.push_back(box);
 		}
+
+		auto begin() { return listeCases.begin(); }
+		
+		auto end() { return listeCases.end(); }
 	};
 
 }

@@ -13,11 +13,14 @@
 
 namespace Ui {
 	class Jeu;
-	class Case;
-	struct ListeCases;
+	//class Case;
+	//struct ListeCases;
 };
 
-namespace { class PieceEchec; };
+namespace model { 
+	//struct CaseValide;
+	//class PieceEchec;
+};
 
 
 
@@ -36,15 +39,16 @@ public:
 
 	void ajouterDansScene(QGraphicsItem* item);
 
-	void couleurSurCaseValide(std::list<std::pair<int, int>> listeEmplacements);
+	void couleurSurCaseValide(std::list<model::CaseValide> listeEmplacements);
+	void couleurPlateauInitial();
 
 	std::vector<model::PieceEchec*> ListePieceNoir;
 	std::vector<model::PieceEchec*> ListePieceBlanc;
 
 
-	Ui::ListeCases listeCase;
+	Ui::ListeCases listeCases;
 
-	//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 
 private:
@@ -52,7 +56,7 @@ private:
 	model::PieceEchec* pieceActuelle_;
 
 public slots:
-	void enregistrerPieceClique(model::PieceEchec* piece);
+	void recevoirPieceClique(model::PieceEchec* piece);
 	void recevoirCaseClique(Ui::Case* caseClique);
 
 };

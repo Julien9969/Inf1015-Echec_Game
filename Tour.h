@@ -14,11 +14,11 @@ namespace model {
 	{
 	public:
 		Tour(QString equipe, QGraphicsItem* parent = NULL);
-		~Tour();
+		~Tour() = default;
 
 		void ajouterImage() override;
-		std::list<std::pair<int, int>>& deplacementsValide(Ui::ListeCases& ListeCase) override;
-
+		std::list<CaseValide>& listerDeplacementsValides(Ui::ListeCases& listeCase) override;
+		bool deplacementEstValide(const std::pair<int, int>& destination) override;
 		
 
 	private:

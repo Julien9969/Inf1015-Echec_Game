@@ -9,7 +9,9 @@
 using iter::range;
 using Ui::Case;
 using model::Tour;
-using model::PieceEchec;
+using model::Roi;
+using Ui::VuePieceEchec;
+using model::ModelPieceEchec;
 
 //using ui::Case, ui::Jeu;
 
@@ -55,94 +57,78 @@ void Plateau::creeCases() {
 
 void Plateau::creePiecesNoir()
 {
-	Tour* tourN = new Tour("Noir");
-	ListePieceNoir.push_back(tourN);
+	std::unique_ptr<ModelPieceEchec> tourN = std::make_unique<Tour>("Noir");
+	ListePieceNoir.push_back(move(tourN));
 
-	Tour* tourN1 = new Tour("Noir");
-	ListePieceNoir.push_back(tourN1);
+	std::unique_ptr<ModelPieceEchec> tourN1 = std::make_unique<Tour>("Noir");
+	ListePieceNoir.push_back(move(tourN1));
 
-	Tour* tourN2 = new Tour("Noir");
-	ListePieceNoir.push_back(tourN2);
-
-	Tour* tourN3 = new Tour("Noir");
-	ListePieceNoir.push_back(tourN3);
-
-	Tour* tourN4 = new Tour("Noir");
-	ListePieceNoir.push_back(tourN4);
-
-	Tour* tourN5 = new Tour("Noir");
-	ListePieceNoir.push_back(tourN5);
-
-	Tour* tourN6 = new Tour("Noir");
-	ListePieceNoir.push_back(tourN6);
-
-	Tour* tourN7 = new Tour("Noir");
-	ListePieceNoir.push_back(tourN7);
+	std::unique_ptr<ModelPieceEchec> roiN = std::make_unique<Roi>("Noir");
+	ListePieceNoir.push_back(move(roiN));
 	
 }
 
 void Plateau::creePieceBlanc()
 {
-	Tour* tourB = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB);
+	std::unique_ptr<ModelPieceEchec> tourB = std::make_unique<Tour>("Blanc");
+	ListePieceBlanc.push_back(move(tourB));
 
-	Tour* tourB1 = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB1);
+	std::unique_ptr<ModelPieceEchec> tourB1 = std::make_unique<Tour>("Blanc");
+	ListePieceBlanc.push_back(move(tourB1));
 
-	Tour* tourB2 = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB2);
+	std::unique_ptr<ModelPieceEchec> roiB = std::make_unique<Roi>("Blanc");
+	ListePieceBlanc.push_back(move(roiB));
 
-	Tour* tourB3 = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB3);
-
-	Tour* tourB4 = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB4);
-
-	Tour* tourB5 = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB5);
-
-	Tour* tourB6 = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB6);
-
-	Tour* tourB7 = new Tour("Blanc");
-	ListePieceBlanc.push_back(tourB7);
+	try {
+		std::unique_ptr<ModelPieceEchec> roiB2 = std::make_unique<Roi>("Blanc");
+	}
+	catch (std::domain_error& e) {
+		qDebug() << "Erreur : " << e.what();
+	}
 
 }
 
 void Plateau::mettreLesPieces()
 {
 	Ui::Case* tempCase = nullptr;
-	model::PieceEchec* tempPiece = nullptr;
+	ModelPieceEchec* tempPiece = nullptr;
 
 	
 	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 8; j++) {
+		for (int j = 0; j < 3; j++) {
 
 			tempCase = listeCases(i, j);
-			tempPiece = ListePieceNoir[i * 8 + j];
+			tempPiece = ListePieceNoir[i * 8 + j].get();
+
+			VuePieceEchec* piece = new VuePieceEchec(tempPiece);
 
 			tempCase->mettrePiece(tempPiece);
-			tempPiece->positionnerPiece(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
-			QObject::connect(tempPiece, &model::PieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
+		
+			tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
+			
+			QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
 			
 			
-			ajouterDansScene(tempPiece);//i+j
+			ajouterDansScene(piece);
 			
 		}
 	}
 
 	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 8; j++) {
+		for (int j = 0; j < 3; j++) {
 
 			tempCase = listeCases(i, j + 56);
-			tempPiece = ListePieceBlanc[i * 8 + j];
+			tempPiece = ListePieceBlanc[i * 8 + j].get();
+
+			VuePieceEchec* piece = new VuePieceEchec(tempPiece);
 
 			tempCase->mettrePiece(tempPiece);
-			tempPiece->positionnerPiece(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
-			QObject::connect(tempPiece, &model::PieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
+
+			tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
+			QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
 
 
-			ajouterDansScene(tempPiece);//i+j
+			ajouterDansScene(piece);
 
 		}
 	}
@@ -159,13 +145,12 @@ void Plateau::recevoirCaseClique(Case* caseClique)
 	if ((pieceActuelle_ != nullptr) && (caseClique->getPiece() == nullptr) && (pieceActuelle_->deplacementEstValide(caseClique->lireMatricePosition())))
 	{
 		listeCases(pieceActuelle_->lireX(), pieceActuelle_->lireY())->enleverPiece();
-		//listeCases(pieceActuelle_->lireX(), + pieceActuelle_->lireY())->mettreCouleur(Qt::yellow);
 
 		qDebug() << "indice tableau case : " << pieceActuelle_->lireX() + 8 * pieceActuelle_->lireY();
 
 		caseClique->mettrePiece(pieceActuelle_);
-		pieceActuelle_->positionnerPiece(caseClique->lireMatricePosition(), caseClique->lirePixPosition());
-		pieceActuelle_->estDeClique();
+		pieceActuelle_->positionner(caseClique->lireMatricePosition(), caseClique->lirePixPosition());
+		
 		couleurPlateauInitial();
 		pieceActuelle_ = nullptr;
 
@@ -173,29 +158,31 @@ void Plateau::recevoirCaseClique(Case* caseClique)
 }
 
 
-void Plateau::recevoirPieceClique(model::PieceEchec* piece)
+void Plateau::recevoirPieceClique(Ui::VuePieceEchec* piece)
 {
 	couleurPlateauInitial();
-	
-	if ((pieceActuelle_ != nullptr) && (piece->lireEquipe() != pieceActuelle_->lireEquipe())) {
-		if (pieceActuelle_->deplacementEstValide(piece->matricePos())) {
+	model::ModelPieceEchec* pieceClique = piece->lirePiece();
+
+	if ((pieceActuelle_ != nullptr) && (pieceClique->lireEquipe() != pieceActuelle_->lireEquipe())) {
+		if (pieceActuelle_->deplacementEstValide(pieceClique->matricePos())) {
 
 			listeCases(pieceActuelle_->lireX(), pieceActuelle_->lireY())->enleverPiece();
-			listeCases(piece->lireX(), piece->lireY())->mettrePiece(pieceActuelle_);
-			pieceActuelle_->mangeLaPiece(piece);
+			listeCases(pieceClique->lireX(), pieceClique->lireY())->mettrePiece(pieceActuelle_);
+
+			pieceActuelle_->mangeLaPiece(pieceClique);
 			pieceActuelle_ = nullptr;
 		}
 	}
 	else {
-		pieceActuelle_ = piece;
-		couleurSurCaseValide(pieceActuelle_->listerDeplacementsValides(listeCases));
+		pieceActuelle_ = pieceClique;
+		couleurSurCaseValide(pieceClique->listerDeplacementsValides(listeCases));
 
 	}
 
 	qDebug() << "on Save";
 }
 
-void Plateau::couleurSurCaseValide(std::list<model::CaseValide> listeEmplacements)
+void Plateau::couleurSurCaseValide(std::list<model::EmplacementValide> listeEmplacements)
 {
 	for (auto&& caseValide : listeEmplacements) {
 		listeCases(caseValide.ligne, caseValide.colone)->mettreCouleur(caseValide.couleur);
@@ -214,30 +201,14 @@ void Plateau::couleurPlateauInitial() {
 
 
 
-void Plateau::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
-	// if there is a cardToPlace, then make it follow the mouse
-	if (pieceActuelle_ != nullptr) {
-		pieceActuelle_->setPos(event->scenePos().x() - 45, event->scenePos().y() - 45);
-		qDebug() << "piece move" << event->pos();
-
-	}
-
-	qDebug() << "move";
-}
-
-Plateau::~Plateau()
-{
-	/*for (auto&& elem : listeCase) {
-		delete elem;
-	}*/
-
-	/*for (auto&& elem : ListePieceNoir) {
-		delete elem;
-	}
-	
-	for (auto&& elem : ListePieceBlanc) {
-		delete elem;
-	}*/
-
-}
+//void Plateau::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+//	// if there is a cardToPlace, then make it follow the mouse
+//	if (pieceActuelle_ != nullptr) {
+//		pieceActuelle_->setPos(event->scenePos().x() - 45, event->scenePos().y() - 45);
+//		qDebug() << "piece move" << event->pos();
+//
+//	}
+//
+//	qDebug() << "move";
+//}
 

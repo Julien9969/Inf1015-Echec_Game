@@ -8,7 +8,7 @@
 //#include <QEvent>
 
 
-namespace model { class PieceEchec; };
+namespace model { class ModelPieceEchec; };
 
 namespace Ui {
 
@@ -27,10 +27,10 @@ namespace Ui {
 
 		void mettreCoordonnees(int i, int j);
 
-		void mettrePiece(model::PieceEchec* piece);
+		void mettrePiece(model::ModelPieceEchec* piece);
 		void enleverPiece() { piece_ = nullptr; }
 
-		const model::PieceEchec* getPiece() const { return piece_; }
+		const model::ModelPieceEchec* getPiece() const { return piece_; }
 
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
 		virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
@@ -53,7 +53,7 @@ namespace Ui {
 		int xPixPos_;
 		int yPixPos_;
 
-		model::PieceEchec* piece_ = nullptr;
+		model::ModelPieceEchec* piece_ = nullptr;
 		QBrush brush;
 		QColor couleurDeBase_;
 		QColor couleurActuelle;

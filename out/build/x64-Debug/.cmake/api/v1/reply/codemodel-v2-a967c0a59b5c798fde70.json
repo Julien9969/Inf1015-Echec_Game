@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.1.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ProjetTest",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ProjetTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ProjetTest-Debug-705bcff99c085bd7e7f1.json",
+					"name" : "ProjetTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ProjetTest_couverture::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ProjetTest_couverture-Debug-32d861fc8852aff528d6.json",
+					"name" : "ProjetTest_couverture",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/69juj/OneDrive - polymtl.ca/INF1015/Inf1015-Echec_Game/out/build/x64-Debug",
+		"source" : "C:/Users/69juj/OneDrive - polymtl.ca/INF1015/Inf1015-Echec_Game"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

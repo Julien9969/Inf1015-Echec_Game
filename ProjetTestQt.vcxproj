@@ -120,8 +120,10 @@
     <ClCompile Include="googletest\src\gtest-all.cc" />
     <ClCompile Include="Jeu.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelPieceEchec.cpp" />
     <ClCompile Include="PieceEchec.cpp" />
     <ClCompile Include="Plateau.cpp" />
+    <ClCompile Include="Roi.cpp" />
     <ClCompile Include="TestCalc.cpp" />
     <ClCompile Include="Tour.cpp" />
   </ItemGroup>
@@ -130,14 +132,13 @@
     <QtMoc Include="CalcWindow.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="ModelPieceEchec.h" />
+    <ClInclude Include="Roi.h" />
     <ClInclude Include="Tour.h" />
     <QtMoc Include="case.h" />
     <QtMoc Include="PieceEchec.h" />
     <QtMoc Include="Plateau.h" />
     <QtMoc Include="jeu.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

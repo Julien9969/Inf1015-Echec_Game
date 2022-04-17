@@ -1,46 +1,64 @@
 #include "PieceEchec.h"
 #include "QDebug"
 
-using model::PieceEchec;
+using Ui::VuePieceEchec;
 
-PieceEchec::PieceEchec(QString equipe, QGraphicsItem* parent) : QGraphicsPixmapItem(parent)
+VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* parent) : QGraphicsPixmapItem(parent)
 {
-	equipe_ = equipe;
-	pieceDuJeuEstClique = false;
+	pieceAssocie_ = piece;
     //setAcceptDrops(true);
+	QObject::connect(piece, &model::ModelPieceEchec::mettrePositionVue, this, &Ui::VuePieceEchec::positionnerPiece);
+	QObject::connect(piece, &model::ModelPieceEchec::suppressionPiece, this, &Ui::VuePieceEchec::laPieceEstElimine);
 
 
+	setPixmap(QPixmap(pieceAssocie_->lireCheminImage()));
+	//setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+	setAcceptHoverEvents(true);
+
+	setScale(1.4);
 }
 
-void PieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> scenePos)
+
+
+void VuePieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> scenePos)
 {
-	qDebug() << scenePos.first;
-	ligne_ = matricePos.first;
-	colone_ = matricePos.second;
-	ScenePos_ = scenePos;
+	//qDebug() << scenePos.first;
+	
+	pieceAssocie_->scenePos() = scenePos;
 
 	setPos(scenePos.first, scenePos.second);
 }
 
 
 
-void PieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
+//RAII ? marche pas avec le delete dans le destructeur de la classe
+void Ui::VuePieceEchec::laPieceEstElimine()
+{
+	//pieceAssocie_ = nullptr;
+	pieceAssocie_->~ModelPieceEchec();
+	//this->~VuePieceEchec();
+	delete this;
+}
+
+
+void VuePieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{
-		pieceDuJeuEstClique = true;
-		qDebug() << "clique";
+		qDebug() << "clique" << pieceAssocie_->lireX() << pieceAssocie_->lireY();
 		emit pieceClique(this);
 	}
 
 }
 
-void PieceEchec::mangeLaPiece(PieceEchec* piece) {
-	positionnerPiece(piece->matricePos(), piece->ScenePos_);
-	qDebug() << "une piece : " << piece->equipe_ << " a été mangé.";
-
-	delete piece;
+void VuePieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+{
+	//qDebug() << pieceDuJeuEstClique;
+	//this->~VuePieceEchec();
 }
+
+
+
 
 //void PieceEchec::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 //	// if there is a cardToPlace, then make it follow the mouse
@@ -55,11 +73,7 @@ void PieceEchec::mangeLaPiece(PieceEchec* piece) {
 //}
 
 
-void PieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
-{
-	qDebug() << pieceDuJeuEstClique;
-	//this->~PieceEchec();
-}
+
 
 
 

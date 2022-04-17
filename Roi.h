@@ -1,26 +1,25 @@
 #pragma once
 #include "ModelPieceEchec.h"
 #include <QGraphicsPixmapItem>
-#include <utility>
-
+#include <stdexcept>
 
 namespace model {
-
-	class Tour : public ModelPieceEchec
+	class Roi : public ModelPieceEchec
 	{
 	public:
-		Tour(std::string equipe);
-		~Tour() = default;
+		Roi(std::string equipe);
+		~Roi() { compteurDeRoi--; }
 
-		
+
 		std::list<EmplacementValide>& listerDeplacementsValides(Ui::ListeCases& listeCase) override;
 		bool deplacementEstValide(const std::pair<int, int>& destination) override;
-		
+
 
 	private:
-
+		static inline int compteurDeRoi = 0;
 
 	signals:
 
 	};
 }
+

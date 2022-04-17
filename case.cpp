@@ -42,7 +42,7 @@ void Ui::Case::mettreCouleur()
 	setBrush(brush);
 }
 
-void Ui::Case::mettrePiece(model::PieceEchec* piece)
+void Ui::Case::mettrePiece(model::ModelPieceEchec* piece)
 {
 	piece_ = piece;
 }

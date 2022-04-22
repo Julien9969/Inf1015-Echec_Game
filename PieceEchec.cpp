@@ -20,7 +20,7 @@ VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* paren
 
 
 
-void VuePieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> scenePos)
+void VuePieceEchec::positionnerPiece(std::pair<int, int> scenePos)
 {
 	//qDebug() << scenePos.first;
 	
@@ -30,13 +30,16 @@ void VuePieceEchec::positionnerPiece(std::pair<int, int> matricePos, std::pair<i
 }
 
 
+//RAII
+VuePieceEchec::~VuePieceEchec() {
+	emit enleverLaPiece(pieceAssocie_);
+	pieceAssocie_ = nullptr;
+}
 
-//RAII ? marche pas avec le delete dans le destructeur de la classe
 void Ui::VuePieceEchec::laPieceEstElimine()
 {
-	//pieceAssocie_ = nullptr;
-	pieceAssocie_->~ModelPieceEchec();
-	//this->~VuePieceEchec();
+	//pieceAssocie_->~ModelPieceEchec();
+	/*this->~VuePieceEchec();*/
 	delete this;
 }
 
@@ -48,7 +51,6 @@ void VuePieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 		qDebug() << "clique" << pieceAssocie_->lireX() << pieceAssocie_->lireY();
 		emit pieceClique(this);
 	}
-
 }
 
 void VuePieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
@@ -56,8 +58,6 @@ void VuePieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 	//qDebug() << pieceDuJeuEstClique;
 	//this->~VuePieceEchec();
 }
-
-
 
 
 //void PieceEchec::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {

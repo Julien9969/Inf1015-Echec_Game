@@ -21,7 +21,7 @@ namespace Ui {
 	public:
 		VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* parent = NULL);
 		//~VuePieceEchec() = default;
-		~VuePieceEchec() = default;
+		~VuePieceEchec();
 
 
 
@@ -46,11 +46,12 @@ namespace Ui {
 
 	public slots:
 		//void recevoirImagePiece();
-		void positionnerPiece(std::pair<int, int> matricePos, std::pair<int, int> pos);
+		void positionnerPiece(std::pair<int, int> pos);
 		void laPieceEstElimine();
 
 	signals:
 		void pieceClique(VuePieceEchec* pieceClique);
+		void enleverLaPiece(model::ModelPieceEchec* pieceAssocie_);
 
 	};
 }

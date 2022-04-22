@@ -67,6 +67,10 @@ namespace Ui {
 	struct ListeCases {
 		std::vector<Case*> listeCases;
 
+		Case* operator[](int x) {
+			return listeCases[x];
+		}
+
 		Case* operator()(int x, int y) {
 			return listeCases[x * 8 + y];
 		}

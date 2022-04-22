@@ -85,54 +85,53 @@ void Plateau::creePieceBlanc()
 	catch (std::domain_error& e) {
 		qDebug() << "Erreur : " << e.what();
 	}
-
 }
 
 void Plateau::mettreLesPieces()
 {
 	Ui::Case* tempCase = nullptr;
 	ModelPieceEchec* tempPiece = nullptr;
-
+	int i = 0;
 	
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (auto&& j = ListePieceNoir.begin(); j != ListePieceNoir.end(); j++) {
+			
+		tempCase = listeCases[i++];
+		tempPiece = j->get();// ListePieceNoir[i * 8 + j].get();
 
-			tempCase = listeCases(i, j);
-			tempPiece = ListePieceNoir[i * 8 + j].get();
+		VuePieceEchec* piece = new VuePieceEchec(tempPiece);
 
-			VuePieceEchec* piece = new VuePieceEchec(tempPiece);
-
-			tempCase->mettrePiece(tempPiece);
+		tempCase->mettrePiece(tempPiece);
 		
-			tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
+		tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
 			
-			QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
+		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
+		QObject::connect(piece, &Ui::VuePieceEchec::enleverLaPiece, this, &Plateau::enleverPieceElimine);
+
+
+		ajouterDansScene(piece);
 			
-			
-			ajouterDansScene(piece);
-			
-		}
 	}
+	
 
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 3; j++) {
+	i = 0;
+	
+	for (auto&& j = ListePieceBlanc.begin(); j != ListePieceBlanc.end(); j++) {
 
-			tempCase = listeCases(i, j + 56);
-			tempPiece = ListePieceBlanc[i * 8 + j].get();
+		tempCase = listeCases[56 + i++];
+		tempPiece = j->get();//ListePieceBlanc[i * 8 + j].get();
 
-			VuePieceEchec* piece = new VuePieceEchec(tempPiece);
+		VuePieceEchec* piece = new VuePieceEchec(tempPiece);
 
-			tempCase->mettrePiece(tempPiece);
+		tempCase->mettrePiece(tempPiece);
 
-			tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
-			QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
-
-
-			ajouterDansScene(piece);
-
-		}
+		tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
+		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
+		QObject::connect(piece, &Ui::VuePieceEchec::enleverLaPiece, this, &Plateau::enleverPieceElimine);
+		
+		ajouterDansScene(piece);	
 	}
-
+	
+	//ListePieceBlanc.erase();
 }
 
 void Plateau::ajouterDansScene(QGraphicsItem* item)
@@ -157,6 +156,28 @@ void Plateau::recevoirCaseClique(Case* caseClique)
 	}
 }
 
+void Plateau::enleverPieceElimine(model::ModelPieceEchec* piece)
+{
+	if (piece->lireEquipe() == "Noir")
+	{
+		for (auto&& it = ListePieceNoir.begin(); it != ListePieceNoir.end(); it++) {
+			if (it->get() == piece) {
+				qDebug() << "enleve du vector";
+				*it = nullptr;
+			}
+		}
+	}
+	else
+	{
+		for (auto&& it = ListePieceBlanc.begin(); it != ListePieceBlanc.end(); it++) {
+			if (it->get() == piece) {
+				qDebug() << "enleve du vector";
+				*it = nullptr;
+			}
+		}
+	}
+}
+
 
 void Plateau::recevoirPieceClique(Ui::VuePieceEchec* piece)
 {
@@ -171,6 +192,7 @@ void Plateau::recevoirPieceClique(Ui::VuePieceEchec* piece)
 
 			pieceActuelle_->mangeLaPiece(pieceClique);
 			pieceActuelle_ = nullptr;
+			//enleverPieceElimine(pieceClique);
 		}
 	}
 	else {
@@ -198,6 +220,8 @@ void Plateau::couleurPlateauInitial() {
 	}
 	
 }
+
+
 
 
 

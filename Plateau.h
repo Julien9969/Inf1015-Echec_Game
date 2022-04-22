@@ -61,5 +61,6 @@ private:
 public slots:
 	void recevoirPieceClique(Ui::VuePieceEchec* piece);
 	void recevoirCaseClique(Ui::Case* caseClique);
+	void enleverPieceElimine(model::ModelPieceEchec* piece);
 
 };

@@ -16,7 +16,7 @@ void model::ModelPieceEchec::PieceElimine()
 	qDebug() << "on est de retour";
 }
 
-
+//On repositionne la piece qui mange puis on enleve l'ancienne piece
 void ModelPieceEchec::mangeLaPiece(ModelPieceEchec* piece) {
 	positionner(piece->matricePos(), piece->ScenePos_);
 	qDebug() << "une piece : " << "equpie marche pas" << " a été mangé.";
@@ -29,5 +29,5 @@ void model::ModelPieceEchec::positionner(std::pair<int, int> matricePos, std::pa
 {
 	ligne_ = matricePos.first;
 	colone_ = matricePos.second;
-	emit mettrePositionVue(matricePos, scenePos);
+	emit mettrePositionVue(scenePos);
 }

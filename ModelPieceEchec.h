@@ -8,11 +8,11 @@
 #include "case.h"
 
 //namespace Ui { 
-//	class Case;
+//	class Case
+
+namespace Ui {;
 //	struct ListeCases;
 //};
-
-namespace Ui {
 	class Case;
 	struct ListeCases;
 };
@@ -65,7 +65,7 @@ namespace model {
 		virtual bool deplacementEstValide(const std::pair<int, int>& destination) = 0;
 	
 	signals:   
-		void mettrePositionVue(std::pair<int, int> matricePos, std::pair<int, int> scenePos);
+		void mettrePositionVue(std::pair<int, int> scenePos);
 		void suppressionPiece();
 	};
 }

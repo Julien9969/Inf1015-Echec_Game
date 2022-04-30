@@ -18,7 +18,7 @@ Roi::Roi(std::string equipe) : ModelPieceEchec(equipe)
 	compteurDeRoi++;
 	if (compteurDeRoi > 2) {
 		compteurDeRoi--;
-		throw std::domain_error("Trop de roi");
+		throw std::logic_error("Trop de roi");
 	}
 }
 
@@ -26,9 +26,9 @@ std::list<EmplacementValide>& Roi::listerDeplacementsValides(ListeCases& listeCa
 {
 	listeEmplacementsValides.clear();
 
-	std::vector<std::pair<int, int>> AjoutCoordonnees = { {-1,-1}, {1,1}, {-1,1}, {1,-1}, {1,0}, {-1,0}, {0,1}, {0,-1} };
+	std::vector<std::pair<int, int>> deplacementRoi = { {-1,-1}, {1,1}, {-1,1}, {1,-1}, {1,0}, {-1,0}, {0,1}, {0,-1} };
 
-	for (auto&& coordonnee : AjoutCoordonnees) {
+	for (auto&& coordonnee : deplacementRoi) {
 		int ligne = ligne_ + coordonnee.first;
 		int colone = colone_ + coordonnee.second;
 		

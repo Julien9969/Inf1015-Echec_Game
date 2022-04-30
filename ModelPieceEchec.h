@@ -30,7 +30,8 @@ namespace model {
 		Q_OBJECT
 	public:
 		ModelPieceEchec(std::string equipe);
-		virtual ~ModelPieceEchec() = default;
+		//virtual ~ModelPieceEchec() = default;
+		virtual ~ModelPieceEchec();
 
 		int lireX() const { return ligne_; }
 		int lireY() const { return colone_; }
@@ -47,8 +48,6 @@ namespace model {
 
 		void positionner(std::pair<int, int> matricePos, std::pair<int, int> scenePos);
 		
-		void PieceElimine();
-
 	protected:
 		std::string equipe_;
 		QString cheminImage;
@@ -67,5 +66,6 @@ namespace model {
 	signals:   
 		void mettrePositionVue(std::pair<int, int> scenePos);
 		void suppressionPiece();
+		void enleverLaPieceDuPlateau(model::ModelPieceEchec* piece);
 	};
 }

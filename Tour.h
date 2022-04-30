@@ -10,7 +10,7 @@ namespace model {
 	{
 	public:
 		Tour(std::string equipe);
-		~Tour() = default;
+		//~Tour() = default;
 
 		
 		std::list<EmplacementValide>& listerDeplacementsValides(Ui::ListeCases& listeCase) override;

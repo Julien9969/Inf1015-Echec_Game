@@ -8,7 +8,8 @@ VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* paren
 	pieceAssocie_ = piece;
     //setAcceptDrops(true);
 	QObject::connect(piece, &model::ModelPieceEchec::mettrePositionVue, this, &Ui::VuePieceEchec::positionnerPiece);
-	QObject::connect(piece, &model::ModelPieceEchec::suppressionPiece, this, &Ui::VuePieceEchec::laPieceEstElimine);
+	QObject::connect(piece, &model::ModelPieceEchec::suppressionPiece, this, [this]() { delete this; });
+
 
 
 	setPixmap(QPixmap(pieceAssocie_->lireCheminImage()));
@@ -27,20 +28,6 @@ void VuePieceEchec::positionnerPiece(std::pair<int, int> scenePos)
 	pieceAssocie_->scenePos() = scenePos;
 
 	setPos(scenePos.first, scenePos.second);
-}
-
-
-//RAII
-VuePieceEchec::~VuePieceEchec() {
-	emit enleverLaPiece(pieceAssocie_);
-	pieceAssocie_ = nullptr;
-}
-
-void Ui::VuePieceEchec::laPieceEstElimine()
-{
-	//pieceAssocie_->~ModelPieceEchec();
-	/*this->~VuePieceEchec();*/
-	delete this;
 }
 
 

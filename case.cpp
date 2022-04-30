@@ -79,8 +79,8 @@ const std::pair<int, int> Ui::Case::lireMatricePosition() const
 void Ui::Case::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
 	
-	qDebug() << "deClique";
-	
+	qDebug() << "deClique" << piece_ << " " << ligne_ << " " << colone_;
+
 }
 
 
@@ -92,6 +92,6 @@ void Ui::Case::mousePressEvent(QGraphicsSceneMouseEvent* event)
 		qDebug() << "cliqueCase";
 		emit caseClique(this);
 	}
-
+	
 }
 

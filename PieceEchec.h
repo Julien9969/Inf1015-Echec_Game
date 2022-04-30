@@ -20,8 +20,7 @@ namespace Ui {
 		Q_OBJECT
 	public:
 		VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* parent = NULL);
-		//~VuePieceEchec() = default;
-		~VuePieceEchec();
+		~VuePieceEchec() = default;
 
 
 
@@ -29,14 +28,8 @@ namespace Ui {
 		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
 		//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
-		/*int lireX() const { return ligne_; }
-		int lireY() const { return colone_; }*/
-		model::ModelPieceEchec* lirePiece() { return pieceAssocie_; }
 		
-		//void mangeLaPiece(VuePieceEchec* piece);
-
-		/*virtual std::list<CaseValide>& listerDeplacementsValides(Ui::ListeCases& ListeCase) = 0;
-		virtual bool deplacementEstValide(const std::pair<int, int>& destination) = 0;*/
+		model::ModelPieceEchec* lirePiece() { return pieceAssocie_; }
 
 	
 	private:
@@ -47,11 +40,9 @@ namespace Ui {
 	public slots:
 		//void recevoirImagePiece();
 		void positionnerPiece(std::pair<int, int> pos);
-		void laPieceEstElimine();
 
 	signals:
 		void pieceClique(VuePieceEchec* pieceClique);
-		void enleverLaPiece(model::ModelPieceEchec* pieceAssocie_);
 
 	};
 }

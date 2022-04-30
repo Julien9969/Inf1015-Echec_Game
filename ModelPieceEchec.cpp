@@ -9,19 +9,18 @@ ModelPieceEchec::ModelPieceEchec(std::string equipe)
 	equipe_ = equipe;
 }
 
-void model::ModelPieceEchec::PieceElimine()
+model::ModelPieceEchec::~ModelPieceEchec()
 {
 	emit suppressionPiece();
-
-	qDebug() << "on est de retour";
 }
 
-//On repositionne la piece qui mange puis on enleve l'ancienne piece
+
+//On repositionne la piece qui mange puis on enleve la piece du plateau
 void ModelPieceEchec::mangeLaPiece(ModelPieceEchec* piece) {
 	positionner(piece->matricePos(), piece->ScenePos_);
 	qDebug() << "une piece : " << "equpie marche pas" << " a été mangé.";
 
-	piece->PieceElimine();
+	emit enleverLaPieceDuPlateau(piece);
 }
 
 

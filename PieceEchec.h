@@ -3,7 +3,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <utility>
 #include <QObject>
-#include <list>
+#include <QCursor>
 #include "ModelPieceEchec.h"
 //#include "case.h"
 //
@@ -21,7 +21,6 @@ namespace Ui {
 	public:
 		VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* parent = NULL);
 		~VuePieceEchec() = default;
-
 
 
 		void mousePressEvent(QGraphicsSceneMouseEvent* event);

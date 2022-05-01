@@ -1,39 +1,46 @@
 #pragma once
+#include <QMainWindow>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QGraphicsRectItem>
-#include <QMainWindow>
 #include <cppitertools/range.hpp>
 #include <vector>
+#include <memory>
+
 //#include "case.h"
+#include "Plateau.h"
 
-
+class Plateau;
 namespace Ui {
 
-	class Jeu : public QMainWindow
+	class InterfaceJeu : public QMainWindow
 	{
 		Q_OBJECT
 
 	public:
-		Jeu(QWidget* parent = NULL);
+		InterfaceJeu(QWidget* parent = NULL);
 
-		~Jeu() = default;
+		~InterfaceJeu() { delete plateau; };
 
-		void debutPartie();
+		void creationElementBord();
 		void creationDesBord(int taille, int x, int y, QColor couleur, double opacite);
+		void initialisationFenetre();
 
-		void mettreDansScene(QGraphicsItem* object);
-
-		QGraphicsScene* scene;
-
-		QGraphicsView* window_;
 
 		QString ab = "bonojour";
 
 	private:
 
+		QGraphicsScene* scene;
+		QGraphicsView* window_;
+		
+		Plateau* plateau;
+
 		QGraphicsTextItem* quiDoitJouer;
+
+	public slots:
+		void mettreDansScene(QGraphicsItem* object);
 
 
 

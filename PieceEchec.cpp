@@ -10,13 +10,15 @@ VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* paren
 	QObject::connect(piece, &model::ModelPieceEchec::mettrePositionVue, this, &Ui::VuePieceEchec::positionnerPiece);
 	QObject::connect(piece, &model::ModelPieceEchec::suppressionPiece, this, [this]() { delete this; });
 
-
-
+	
+	//setTransformationMode(Qt::SmoothTransformation);
+	setScale(1);//1.4
+	//qDebug() << transformationMode();
 	setPixmap(QPixmap(pieceAssocie_->lireCheminImage()));
 	//setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 	setAcceptHoverEvents(true);
-
-	setScale(1.4);
+	
+	setCursor(Qt::PointingHandCursor);
 }
 
 

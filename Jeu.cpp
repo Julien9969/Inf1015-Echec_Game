@@ -7,35 +7,48 @@
 
 using iter::range;
 
-Ui::Jeu::Jeu(QWidget* parent) : QMainWindow(parent)
+Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 {
-	setFixedSize(1080, 720);
 	window_ = new QGraphicsView(this);
-	window_->setFixedSize(1080, 720);
-	window_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	window_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
 	scene = new QGraphicsScene(window_);
-	scene->setSceneRect(0, 0, 1080, 720);
-	window_->setScene(scene);
-	setMouseTracking(true);
-	
 
-	debutPartie();
+	initialisationFenetre();
+
+	creationElementBord();
+
+	plateau = new Plateau(this);
+
 
 }
 
-void Ui::Jeu::debutPartie()
+void Ui::InterfaceJeu::initialisationFenetre()
+{
+	setFixedSize(1080, 780);
+	setWindowIcon(QIcon("images/Icone2.ico"));
+
+	window_->setFixedSize(1080, 780);
+	window_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	window_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+	window_->setScene(scene);
+
+	//scene->setSceneRect(0, 0, 1080, 720);
+	//setMouseTracking(true);
+}
+
+void Ui::InterfaceJeu::creationElementBord()
 {
 	//scene->clear()
-	int taillePaneau = (width() - height()) / 2;
+	int taillePaneau = (width() - 720) / 2;
 
 	creationDesBord(taillePaneau, 0, 0, Qt::blue, 0.3);
 
 	creationDesBord(taillePaneau, width() - taillePaneau, 0, Qt::red, 0.3);
 
-	QGraphicsTextItem* joueur1 = new QGraphicsTextItem("Jsp quoi on verra 1 :");
+	QGraphicsTextItem* joueur1 = new QGraphicsTextItem("Jsp quoi on verra 1 :\n yufuyfuyf");
 	joueur1->setPos(50, 5);
+	joueur1->setScale(1);
+	joueur1->setDefaultTextColor(Qt::blue);
 	scene->addItem(joueur1);
 
 	QGraphicsTextItem* joueur2 = new QGraphicsTextItem("Jsp quoi on verra 2 :");
@@ -57,7 +70,7 @@ void Ui::Jeu::debutPartie()
 	
 }
 
-void Ui::Jeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
+void Ui::InterfaceJeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
 {
 	 //qDebug() << scene->height();
 
@@ -73,7 +86,7 @@ void Ui::Jeu::creationDesBord(int taille, int x, int y, QColor couleur, double o
 }
 
 
-void Ui::Jeu::mettreDansScene(QGraphicsItem* object)
+void Ui::InterfaceJeu::mettreDansScene(QGraphicsItem* object)
 {
 	scene->addItem(object);
 }

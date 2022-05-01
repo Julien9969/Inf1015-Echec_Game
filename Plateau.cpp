@@ -15,7 +15,7 @@ using model::ModelPieceEchec;
 
 //using ui::Case, ui::Jeu;
 
-Plateau::Plateau(Ui::Jeu* jeu)
+Plateau::Plateau(Ui::InterfaceJeu* jeu)
 {
 	qDebug() << "plateau : " << jeu->ab;
 	ptrJeu_ = jeu;
@@ -31,7 +31,7 @@ void Plateau::creeCases() {
 
 		for (int j : range(8)) {
 
-			Ui::Case* box = new Ui::Case((ptrJeu_->width() - ptrJeu_->height()) / 2 + 90 * j, 90 * i, 90, 90);
+			Ui::Case* box = new Ui::Case((ptrJeu_->width() - 720) / 2 + 90 * j, 60 + 90 * i, 90, 90); //ptrJeu_->height() -> 720
 
 			box->mettreCoordonnees(i, j);
 

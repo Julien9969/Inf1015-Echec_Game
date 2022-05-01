@@ -20,6 +20,24 @@
     <Filter Include="Sources Bibliotheques">
       <UniqueIdentifier>{68ace6f3-7624-4063-b7e8-0b2c755fbfc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Vue">
+      <UniqueIdentifier>{c50e0be3-f737-4886-b29f-4b226491e986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Calc">
+      <UniqueIdentifier>{11ebafe6-c039-412e-b265-dcf369d57c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{f00813d3-a93d-406a-97f4-45c9e4c7d1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Vue">
+      <UniqueIdentifier>{f9db85da-5c4f-439e-a9da-3220ec38629a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Calc">
+      <UniqueIdentifier>{8e29643a-a8c2-416b-9da0-d7e1bd880dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{7a6f4a74-1e8f-4fdf-ac0b-de6e6958f500}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,66 +52,72 @@
     <ClCompile Include="googletest\src\gtest-all.cc">
       <Filter>Sources Bibliotheques</Filter>
     </ClCompile>
-    <ClCompile Include="CalcWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Calc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCalc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Jeu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="case.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Plateau.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Vue</Filter>
     </ClCompile>
     <ClCompile Include="PieceEchec.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Vue</Filter>
     </ClCompile>
-    <ClCompile Include="Tour.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="case.cpp">
+      <Filter>Source Files\Vue</Filter>
+    </ClCompile>
+    <ClCompile Include="Calc.cpp">
+      <Filter>Source Files\Calc</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcWindow.cpp">
+      <Filter>Source Files\Calc</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCalc.cpp">
+      <Filter>Source Files\Calc</Filter>
     </ClCompile>
     <ClCompile Include="ModelPieceEchec.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Plateau.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Roi.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Tour.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelCase.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Calc.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Calc</Filter>
     </QtMoc>
     <QtMoc Include="CalcWindow.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="jeu.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Calc</Filter>
     </QtMoc>
     <QtMoc Include="case.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Vue</Filter>
+    </QtMoc>
+    <QtMoc Include="jeu.h">
+      <Filter>Header Files\Vue</Filter>
     </QtMoc>
     <QtMoc Include="PieceEchec.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Plateau.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Vue</Filter>
     </QtMoc>
     <QtMoc Include="ModelPieceEchec.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="Plateau.h">
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ModelCase.h">
+      <Filter>Header Files\Model</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tour.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Roi.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Tour.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

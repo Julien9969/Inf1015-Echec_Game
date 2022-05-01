@@ -4,6 +4,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QBrush>
+#include <QCursor>
 
 //#include <QEvent>
 

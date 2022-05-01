@@ -15,7 +15,7 @@
 #include <QObject>
 
 namespace Ui {
-	class Jeu;
+	class InterfaceJeu;
 	//class Case;
 	//struct ListeCases;
 };
@@ -31,7 +31,7 @@ class Plateau : public QObject
 {
 	Q_OBJECT
 public:
-	Plateau(Ui::Jeu* jeu);
+	Plateau(Ui::InterfaceJeu* jeu);
 	~Plateau() = default;
 
 	void creeCases();
@@ -55,8 +55,11 @@ public:
 
 
 private:
-	Ui::Jeu* ptrJeu_;
+	Ui::InterfaceJeu* ptrJeu_;
 	model::ModelPieceEchec* pieceActuelle_;
+
+signals:
+	//mettre
 
 public slots:
 	void recevoirPieceClique(Ui::VuePieceEchec* piece);

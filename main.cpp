@@ -38,8 +38,8 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	initialiserBibliothequeCours(argc, argv);
 
-	Ui::Jeu jeu;
-	std::unique_ptr<Plateau> plateau = std::make_unique<Plateau>(&jeu);
+	Ui::InterfaceJeu jeu;
+	//Plateau plat(&jeu);
 
 
 	jeu.show();

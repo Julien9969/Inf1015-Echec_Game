@@ -52,17 +52,22 @@ void Ui::Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 	brush.setColor(Qt::darkGray);
 	setBrush(brush);
 
+	if (couleurActuelle != Qt::darkGreen) {
+		setCursor(Qt::ForbiddenCursor);
+	}
+	else {
+		setCursor(Qt::ArrowCursor);
+	}
+
 	qDebug() <<"case pos : " << piece_ << " " << ligne_ << " " << colone_;
-	update();
 	
 }
 
 
 void Ui::Case::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
 	mettreCouleur(couleurActuelle);
+	
 	//qDebug() << "leaving";
-	update();
-
 }
 
 const std::pair<int, int> Ui::Case::lirePixPosition() const

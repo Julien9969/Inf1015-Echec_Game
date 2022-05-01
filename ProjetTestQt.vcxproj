@@ -124,6 +124,7 @@
     <ClCompile Include="PieceEchec.cpp" />
     <ClCompile Include="Plateau.cpp" />
     <ClCompile Include="Roi.cpp" />
+    <ClCompile Include="ModelCase.cpp" />
     <ClCompile Include="TestCalc.cpp" />
     <ClCompile Include="Tour.cpp" />
   </ItemGroup>
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ModelPieceEchec.h" />
+    <QtMoc Include="ModelCase.h" />
     <ClInclude Include="Roi.h" />
     <ClInclude Include="Tour.h" />
     <QtMoc Include="case.h" />

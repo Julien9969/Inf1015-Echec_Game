@@ -1,9 +1,9 @@
 #include "Tour.h"
+#include <QDebug>
 
 
 using model::Tour;
 using model::EmplacementValide;
-using Ui::ListeCases;
 
 Tour::Tour(std::string equipe) : ModelPieceEchec(equipe)
 {
@@ -21,69 +21,78 @@ std::list<EmplacementValide>& Tour::listerDeplacementsValides(ListeCases& listeC
 	listeEmplacementsValides.clear();
 
 	//Vers le bas
-	for (int ligne = ligne_ + 1; ligne < 8; ligne++)
+	for (int ligne = lireMatricePos().ligne + 1; ligne < 8; ligne++)
 	{
-		if (listeCase(ligne, colone_)->getPiece() != nullptr) {
-			if (listeCase(ligne, colone_)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ ligne, colone_, Qt::darkRed });
+		if (listeCase(ligne, lireMatricePos().colone)->getPiece() != nullptr) {
+			if (listeCase(ligne, lireMatricePos().colone)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
+				qDebug() << "pas equipe apfhepfaefi";
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ ligne, colone_, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkGreen });
 		}
 	}
 
 	//vers le haut
-	for (int ligne = ligne_ - 1; ligne >= 0; ligne--)
+	for (int ligne = lireMatricePos().ligne - 1; ligne >= 0; ligne--)
 	{
-		if (listeCase(ligne, colone_)->getPiece() != nullptr) {
-			if (listeCase(ligne, colone_)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ ligne, colone_, Qt::darkRed });
+		if (listeCase(ligne, lireMatricePos().colone)->getPiece() != nullptr) {
+			if (listeCase(ligne, lireMatricePos().colone)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
+				qDebug() << "pas equipe apfhepfaefi";
+
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ ligne, colone_, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkGreen });
 		}
 	}
 
 	//vers la droite
-	for (int colone = colone_ + 1; colone < 8; colone++)
+	for (int colone = lireMatricePos().colone + 1; colone < 8; colone++)
 	{
-		if (listeCase(ligne_, colone)->getPiece() != nullptr) {
-			if (listeCase(ligne_, colone)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ ligne_, colone, Qt::darkRed });
+		if (listeCase(lireMatricePos().ligne, colone)->getPiece() != nullptr) {
+			if (listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
+				qDebug() << "pas equipe " << QString::fromStdString(equipe_) << QString::fromStdString(listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe());
+				qDebug() << listeCase(lireMatricePos().ligne, colone)->getPiece()->lireMatricePos().ligne;
+				qDebug() << listeCase(lireMatricePos().ligne, colone)->getPiece()->lireMatricePos().colone;
+
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ ligne_, colone, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkGreen });
 		}
 	}
 
 
 	//vers la gauche
-	for (int colone = colone_ - 1; colone >= 0; colone--)
+	for (int colone = lireMatricePos().colone - 1; colone >= 0; colone--)
 	{
-		if (listeCase(ligne_, colone)->getPiece() != nullptr) {
-			if (listeCase(ligne_, colone)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ ligne_, colone, Qt::darkRed });
+		if (listeCase(lireMatricePos().ligne, colone)->getPiece() != nullptr) {
+			if (listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
+				qDebug() << "pas equipe apfhepfaefi";
+
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ ligne_, colone, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkGreen });
 		}
 	}
 
 	return listeEmplacementsValides;
 }
 
-bool model::Tour::deplacementEstValide(const std::pair<int, int>& destination)
+bool model::Tour::deplacementEstValide(const MatricePosition& destination)
 {
 	for (auto&& emplacement : listeEmplacementsValides) {
-		if (emplacement.ligne == destination.first && emplacement.colone == destination.second) {
+		if (emplacement.ligne == destination.ligne && emplacement.colone == destination.colone) {
 			return true;
 		}
 

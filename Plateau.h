@@ -1,7 +1,7 @@
 #pragma once
 #include "jeu.h"
-#include "case.h"
-#include "PieceEchec.h"
+#include "ModelCase.h"
+#include "ModelPieceEchec.h"
 #include "Tour.h" 
 #include "Roi.h"
 #include <QGraphicsView>
@@ -11,19 +11,23 @@
 #include <vector>
 #include <list>
 #include <memory>
-//#include "PieceEchec.h"
+#include "PieceEchec.h"
 #include <QObject>
 
-namespace Ui {
-	class InterfaceJeu;
-	//class Case;
-	//struct ListeCases;
-};
+//pas sur utile
+//#include "case.h"
 
-namespace model { 
-	//struct CaseValide;
-	//class PieceEchec;
-};
+
+//namespace Ui {
+//	class InterfaceJeu;
+//	//class Case;
+//	//struct ListeCases;
+//};
+
+//namespace model { 
+//	//struct CaseValide;
+//	//class PieceEchec;
+//};
 
 
 
@@ -31,7 +35,7 @@ class Plateau : public QObject
 {
 	Q_OBJECT
 public:
-	Plateau(Ui::InterfaceJeu* jeu);
+	Plateau(/*Ui::InterfaceJeu* jeu*/);
 	~Plateau() = default;
 
 	void creeCases();
@@ -39,23 +43,20 @@ public:
 	void creePieceBlanc();
 	void mettreLesPieces();
 
-	void ajouterDansScene(QGraphicsItem* item);
-
 	void couleurSurCaseValide(std::list<model::EmplacementValide> listeEmplacements);
 	void couleurPlateauInitial();
 
 	std::vector<std::unique_ptr<model::ModelPieceEchec>> ListePieceNoir;
 	std::vector<std::unique_ptr<model::ModelPieceEchec>> ListePieceBlanc;
 
-	//std::vector <Ui::VuePieceEchec*> tempsPiecelist;
 
-	Ui::ListeCases listeCases;
+	model::ListeCases listeCases;
 
 	//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 
 private:
-	Ui::InterfaceJeu* ptrJeu_;
+	
 	model::ModelPieceEchec* pieceActuelle_;
 
 signals:
@@ -63,7 +64,7 @@ signals:
 
 public slots:
 	void recevoirPieceClique(Ui::VuePieceEchec* piece);
-	void recevoirCaseClique(Ui::Case* caseClique);
+	void recevoirCaseClique(model::ModelCase* caseClique);
 	void enleverPieceElimine(model::ModelPieceEchec* piece);
 
 };

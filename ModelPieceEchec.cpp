@@ -17,16 +17,16 @@ model::ModelPieceEchec::~ModelPieceEchec()
 
 //On repositionne la piece qui mange puis on enleve la piece du plateau
 void ModelPieceEchec::mangeLaPiece(ModelPieceEchec* piece) {
-	positionner(piece->matricePos(), piece->ScenePos_);
+	positionner(piece->lireMatricePos(), piece->lireScenePos());
 	qDebug() << "une piece : " << "equpie marche pas" << " a été mangé.";
 
 	emit enleverLaPieceDuPlateau(piece);
 }
 
 
-void model::ModelPieceEchec::positionner(std::pair<int, int> matricePos, std::pair<int, int> scenePos)
+void model::ModelPieceEchec::positionner(MatricePosition matricePos, PixelPosition scenePos)
 {
-	ligne_ = matricePos.first;
-	colone_ = matricePos.second;
+	mPosition_ = matricePos;
+	pPosition_ = scenePos;
 	emit mettrePositionVue(scenePos);
 }

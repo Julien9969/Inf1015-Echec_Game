@@ -23,13 +23,13 @@ VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* paren
 
 
 
-void VuePieceEchec::positionnerPiece(std::pair<int, int> scenePos)
+void VuePieceEchec::positionnerPiece(PixelPosition scenePosition)
 {
 	//qDebug() << scenePos.first;
 	
-	pieceAssocie_->scenePos() = scenePos;
+	//pieceAssocie_->scenePos() = scenePos;
 
-	setPos(scenePos.first, scenePos.second);
+	setPos(scenePosition.x, scenePosition.y);
 }
 
 
@@ -37,14 +37,25 @@ void VuePieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{
-		qDebug() << "clique" << pieceAssocie_->lireX() << pieceAssocie_->lireY();
+		qDebug() << "clique" << pieceAssocie_->lireMatricePos().ligne << pieceAssocie_->lireMatricePos().colone;
 		emit pieceClique(this);
 	}
 }
 
 void VuePieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-	//qDebug() << pieceDuJeuEstClique;
+	if (pieceAssocie_->lireEquipe() == "Noir") {
+		qDebug() << "noir";
+		qDebug() << lirePiece()->lireMatricePos().ligne;
+		qDebug() << lirePiece()->lireMatricePos().colone;
+
+	}
+	else {
+		qDebug() << "blanc";
+		qDebug() << lirePiece()->lireMatricePos().ligne;
+		qDebug() << lirePiece()->lireMatricePos().colone;
+
+	}
 	//this->~VuePieceEchec();
 }
 

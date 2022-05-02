@@ -2,7 +2,6 @@
 
 using model::Roi;
 using model::EmplacementValide;
-using Ui::ListeCases;
 
 //int Roi::compteurDeRoi = 0;
 
@@ -29,8 +28,8 @@ std::list<EmplacementValide>& Roi::listerDeplacementsValides(ListeCases& listeCa
 	std::vector<std::pair<int, int>> deplacementRoi = { {-1,-1}, {1,1}, {-1,1}, {1,-1}, {1,0}, {-1,0}, {0,1}, {0,-1} };
 
 	for (auto&& coordonnee : deplacementRoi) {
-		int ligne = ligne_ + coordonnee.first;
-		int colone = colone_ + coordonnee.second;
+		int ligne = lireMatricePos().ligne + coordonnee.first;
+		int colone = lireMatricePos().colone + coordonnee.second;
 		
 		if (ligne < 0 || ligne > 7 || colone < 0 || colone > 7) {
 			continue;
@@ -52,10 +51,10 @@ std::list<EmplacementValide>& Roi::listerDeplacementsValides(ListeCases& listeCa
 	return listeEmplacementsValides;
 }
 
-bool model::Roi::deplacementEstValide(const std::pair<int, int>& destination)
+bool model::Roi::deplacementEstValide(const MatricePosition& destination)
 {
 	for (auto&& emplacement : listeEmplacementsValides) {
-		if (emplacement.ligne == destination.first && emplacement.colone == destination.second) {
+		if (emplacement.ligne == destination.ligne && emplacement.colone == destination.colone) {
 			return true;
 		}
 

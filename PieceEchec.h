@@ -38,7 +38,7 @@ namespace Ui {
 
 	public slots:
 		//void recevoirImagePiece();
-		void positionnerPiece(std::pair<int, int> pos);
+		void positionnerPiece(PixelPosition scenePosition);
 
 	signals:
 		void pieceClique(VuePieceEchec* pieceClique);

@@ -2,8 +2,8 @@
 
 model::ModelCase::ModelCase(int ligne, int colone)
 {
-	position.ligne = ligne;
-	position.colone = colone;
+	mPosition.ligne = ligne;
+	mPosition.colone = colone;
 
 }
 

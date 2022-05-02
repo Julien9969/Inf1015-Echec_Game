@@ -108,15 +108,18 @@
     <QtMoc Include="Plateau.h">
       <Filter>Header Files\Model</Filter>
     </QtMoc>
-    <QtMoc Include="ModelCase.h">
-      <Filter>Header Files\Model</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Roi.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Tour.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="StructSpecial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelCase.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>

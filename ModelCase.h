@@ -1,15 +1,17 @@
 #pragma once
 #include <QObject>
-
+#include <utility>
+#include <vector>
+#include <memory>
+#include "StructSpecial.h"
 
 #include "ModelPieceEchec.h"
 
 
 
 namespace model {
-	
-	struct Position { int ligne = 0, colone = 0; };
 
+	class ModelPieceEchec;
 
 	class ModelCase : public QObject
 	{
@@ -18,42 +20,44 @@ namespace model {
 		ModelCase(int ligne, int colone);
 		~ModelCase();
 
-		const Position& lirePosition() { return position; }
+		const MatricePosition& lirePosition() { return mPosition; }
+		const PixelPosition& lirePixelPos() { return pPosition; }
+		PixelPosition* accedeCasePixelPos() { return &pPosition; }
 
 		void mettrePiece(ModelPieceEchec* piece);
 		void enleverPiece();
 
+		const ModelPieceEchec* getPiece() const { return piece_; }
+
 
 	private:
 		ModelPieceEchec* piece_ = nullptr;
-		Position position;
+		MatricePosition mPosition;
+		PixelPosition pPosition;
 
-
-	public slots:
+	//public slots:
 
 
 	signals:
-
-
-
-
+		void mettreCouleur(QColor couleur);
+		void mettreCouleurBase();
 
 	};
 
 
 	struct ListeCases {
-		std::vector<ModelCase*> listeCases;
+		std::vector<std::unique_ptr<ModelCase>> listeCases;
 
 		ModelCase* operator[](int x) {
-			return listeCases[x];
+			return listeCases[x].get();
 		}
 
 		ModelCase* operator()(int x, int y) {
-			return listeCases[x * 8 + y];
+			return listeCases[x * 8 + y].get();
 		}
 
-		void push_back(ModelCase* box) {
-			listeCases.push_back(box);
+		void push_back(std::unique_ptr<ModelCase> box) {
+			listeCases.push_back(move(box));
 		}
 
 		auto begin() { return listeCases.begin(); }

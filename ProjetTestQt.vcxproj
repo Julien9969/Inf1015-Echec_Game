@@ -136,6 +136,7 @@
     <QtMoc Include="ModelPieceEchec.h" />
     <QtMoc Include="ModelCase.h" />
     <ClInclude Include="Roi.h" />
+    <ClInclude Include="StructSpecial.h" />
     <ClInclude Include="Tour.h" />
     <QtMoc Include="case.h" />
     <QtMoc Include="PieceEchec.h" />

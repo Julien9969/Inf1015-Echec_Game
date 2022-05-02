@@ -1,23 +1,27 @@
 #pragma once
 #include <QObject>
 #include <list>
-#include <vector>
+//#include <vector>
 #include <utility>
 #include <string>
 #include <QColor>
-#include "case.h"
+#include "modelCase.h"
+#include "StructSpecial.h"
 
 //namespace Ui { 
 //	class Case
 
-namespace Ui {;
+//namespace Ui {;
+////	struct ListeCases;
+////};
+//	class Case;
 //	struct ListeCases;
 //};
-	class Case;
-	struct ListeCases;
-};
 
 namespace model {
+
+	//class ModelCase;
+	struct ListeCases;
 
 	struct EmplacementValide {
 		int ligne;
@@ -33,11 +37,9 @@ namespace model {
 		//virtual ~ModelPieceEchec() = default;
 		virtual ~ModelPieceEchec();
 
-		int lireX() const { return ligne_; }
-		int lireY() const { return colone_; }
-		std::pair<int, int> matricePos() const { return { ligne_, colone_ }; }
+		const MatricePosition& lireMatricePos() const { return mPosition_; }
 
-		std::pair<int, int>& scenePos() { return ScenePos_; }
+		const PixelPosition& lireScenePos() const { return pPosition_; }
 
 
 		const QString& lireCheminImage() const { return cheminImage; }
@@ -46,26 +48,26 @@ namespace model {
 		const std::string& lireEquipe() const { return equipe_; }
 		std::list<EmplacementValide>& lireEmplacementValide() { return listeEmplacementsValides; }
 
-		void positionner(std::pair<int, int> matricePos, std::pair<int, int> scenePos);
+		void positionner(MatricePosition matricePos, PixelPosition scenePos);
 		
 	protected:
 		std::string equipe_;
 		QString cheminImage;
 
-		std::pair<int, int> ScenePos_;
+		//std::pair<int, int> ScenePos_;
 
-		int ligne_ = 0;
-		int colone_ = 0;
+		MatricePosition mPosition_;
+		PixelPosition pPosition_;
 
 		std::list<EmplacementValide> listeEmplacementsValides;
 
 	public slots:
-		virtual std::list<EmplacementValide>& listerDeplacementsValides(Ui::ListeCases& listeCase) = 0;
-		virtual bool deplacementEstValide(const std::pair<int, int>& destination) = 0;
+		virtual std::list<EmplacementValide>& listerDeplacementsValides(ListeCases& listeCase) = 0;
+		virtual bool deplacementEstValide(const MatricePosition& destination) = 0;
 	
 	signals:   
-		void mettrePositionVue(std::pair<int, int> scenePos);
+		void mettrePositionVue(PixelPosition scenePos);
 		void suppressionPiece();
-		void enleverLaPieceDuPlateau(model::ModelPieceEchec* piece);
+		void enleverLaPieceDuPlateau(ModelPieceEchec* piece);
 	};
 }

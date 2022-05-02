@@ -11,8 +11,8 @@ namespace model {
 		~Roi() { compteurDeRoi--; }
 
 
-		std::list<EmplacementValide>& listerDeplacementsValides(Ui::ListeCases& listeCase) override;
-		bool deplacementEstValide(const std::pair<int, int>& destination) override;
+		std::list<EmplacementValide>& listerDeplacementsValides(ListeCases& listeCase) override;
+		bool deplacementEstValide(const MatricePosition& destination) override;
 
 
 	private:

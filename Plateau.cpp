@@ -7,18 +7,18 @@
 //extern Jeu* jeu;
 
 using iter::range;
-using Ui::Case;
+//using Ui::Case;
 using model::Tour;
 using model::Roi;
-using Ui::VuePieceEchec;
+//using Ui::VuePieceEchec;
 using model::ModelPieceEchec;
 
 //using ui::Case, ui::Jeu;
 
-Plateau::Plateau(Ui::InterfaceJeu* jeu)
+Plateau::Plateau(/*Ui::InterfaceJeu* jeu*/)
 {
-	qDebug() << "plateau : " << jeu->ab;
-	ptrJeu_ = jeu;
+	//qDebug() << "plateau : " << jeu->ab;
+	/*ptrJeu_ = jeu;*/
 	creeCases();
 	creePiecesNoir();
 	creePieceBlanc();
@@ -27,28 +27,13 @@ Plateau::Plateau(Ui::InterfaceJeu* jeu)
 
 void Plateau::creeCases() {
 	
-	for (int i : range(8)) {
+	for (int ligne : range(8)) {
 
-		for (int j : range(8)) {
+		for (int colone : range(8)) {
 
-			Ui::Case* box = new Ui::Case((ptrJeu_->width() - 720) / 2 + 90 * j, 60 + 90 * i, 90, 90); //ptrJeu_->height() -> 720
+			std::unique_ptr<model::ModelCase> uneCase = std::make_unique<model::ModelCase>(ligne, colone);
 
-			box->mettreCoordonnees(i, j);
-
-			if (((i + j) % 2) == 0) {
-
-				box->mettreCouleurbase(Qt::darkBlue);
-			}
-			else {
-				box->mettreCouleurbase(Qt::white);
-			}
-
-			QObject::connect(box, &Ui::Case::caseClique, this, &Plateau::recevoirCaseClique);
-
-			ajouterDansScene(box);
-			listeCases.push_back(box);
-
-
+			listeCases.push_back(move(uneCase));
 		}
 	}
 	//ListeCase[3 * 8 + 3]->mettreCouleur(Qt::green);
@@ -85,36 +70,23 @@ void Plateau::creePieceBlanc()
 	catch (std::logic_error& e) {
 		qDebug() << "Erreur : " << e.what();
 	}
-	try {
-		std::unique_ptr<ModelPieceEchec> roiB2 = std::make_unique<Roi>("Blanc");
-	}
-	catch (std::logic_error& e) {
-		qDebug() << "Erreur : " << e.what();
-	}
+	
 }
 
 void Plateau::mettreLesPieces()
 {
-	Ui::Case* tempCase = nullptr;
+	model::ModelCase* tempCase = nullptr;
 	ModelPieceEchec* tempPiece = nullptr;
 	int i = 0;
 	
 	for (auto&& j = ListePieceNoir.begin(); j != ListePieceNoir.end(); j++) {
 			
 		tempCase = listeCases[i++];
-		tempPiece = j->get();// ListePieceNoir[i * 8 + j].get();
-
-		VuePieceEchec* piece = new VuePieceEchec(tempPiece);
+		tempPiece = j->get();
 
 		tempCase->mettrePiece(tempPiece);
 		
-		tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
-			
-		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
-		QObject::connect(tempPiece, &model::ModelPieceEchec::enleverLaPieceDuPlateau, this, &Plateau::enleverPieceElimine);
-
-
-		ajouterDansScene(piece);
+		tempPiece->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
 			
 	}
 	
@@ -124,37 +96,28 @@ void Plateau::mettreLesPieces()
 	for (auto&& j = ListePieceBlanc.begin(); j != ListePieceBlanc.end(); j++) {
 
 		tempCase = listeCases[56 + i++];
-		tempPiece = j->get();//ListePieceBlanc[i * 8 + j].get();
-
-		VuePieceEchec* piece = new VuePieceEchec(tempPiece);
+		tempPiece = j->get();// ListePieceNoir[i * 8 + j].get();
 
 		tempCase->mettrePiece(tempPiece);
 
-		tempPiece->positionner(tempCase->lireMatricePosition(), tempCase->lirePixPosition());
-		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, this, &Plateau::recevoirPieceClique);
-		QObject::connect(tempPiece, &model::ModelPieceEchec::enleverLaPieceDuPlateau, this, &Plateau::enleverPieceElimine);
-		
-		ajouterDansScene(piece);	
+		tempPiece->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
+
 	}
 	
-	//ListePieceBlanc.erase();
 }
 
-void Plateau::ajouterDansScene(QGraphicsItem* item)
-{
-	ptrJeu_->mettreDansScene(item);
-}
 
-void Plateau::recevoirCaseClique(Case* caseClique)
+
+void Plateau::recevoirCaseClique(model::ModelCase* caseClique)
 {
-	if ((pieceActuelle_ != nullptr) && (caseClique->getPiece() == nullptr) && (pieceActuelle_->deplacementEstValide(caseClique->lireMatricePosition())))
+	if ((pieceActuelle_ != nullptr) && (caseClique->getPiece() == nullptr) && (pieceActuelle_->deplacementEstValide(caseClique->lirePosition())))
 	{
-		listeCases(pieceActuelle_->lireX(), pieceActuelle_->lireY())->enleverPiece();
+		listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->enleverPiece();
 
-		qDebug() << "indice tableau case : " << pieceActuelle_->lireX() + 8 * pieceActuelle_->lireY();
+		qDebug() << "indice tableau case : " << pieceActuelle_->lireMatricePos().ligne + 8 * pieceActuelle_->lireMatricePos().colone;
 
 		caseClique->mettrePiece(pieceActuelle_);
-		pieceActuelle_->positionner(caseClique->lireMatricePosition(), caseClique->lirePixPosition());
+		pieceActuelle_->positionner(caseClique->lirePosition(), caseClique->lirePixelPos());
 		
 		couleurPlateauInitial();
 		pieceActuelle_ = nullptr;
@@ -170,10 +133,10 @@ void Plateau::recevoirPieceClique(Ui::VuePieceEchec* piece)
 	model::ModelPieceEchec* pieceClique = piece->lirePiece();
 
 	if ((pieceActuelle_ != nullptr) && (pieceClique->lireEquipe() != pieceActuelle_->lireEquipe())) {
-		if (pieceActuelle_->deplacementEstValide(pieceClique->matricePos())) {
+		if (pieceActuelle_->deplacementEstValide(pieceClique->lireMatricePos())) {
 
-			listeCases(pieceActuelle_->lireX(), pieceActuelle_->lireY())->enleverPiece();
-			listeCases(pieceClique->lireX(), pieceClique->lireY())->mettrePiece(pieceActuelle_);
+			listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->enleverPiece();
+			listeCases(pieceClique->lireMatricePos().ligne, pieceClique->lireMatricePos().colone)->mettrePiece(pieceActuelle_);
 
 			pieceActuelle_->mangeLaPiece(pieceClique);
 			pieceActuelle_ = nullptr;
@@ -190,7 +153,7 @@ void Plateau::recevoirPieceClique(Ui::VuePieceEchec* piece)
 void Plateau::couleurSurCaseValide(std::list<model::EmplacementValide> listeEmplacements)
 {
 	for (auto&& caseValide : listeEmplacements) {
-		listeCases(caseValide.ligne, caseValide.colone)->mettreCouleur(caseValide.couleur);
+		emit listeCases(caseValide.ligne, caseValide.colone)->mettreCouleur(caseValide.couleur);
 	}
 
 }
@@ -199,7 +162,7 @@ void Plateau::couleurPlateauInitial() {
 	
 	qDebug() << "seze : " << listeCases.listeCases.size();
 	for (auto&& box : listeCases) {
-		box->mettreCouleur();
+		emit box->mettreCouleurBase();
 	}
 	
 }

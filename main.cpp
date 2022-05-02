@@ -1,7 +1,7 @@
 #include "Calc.hpp"
 #include "CalcWindow.hpp"
 #include "jeu.h"
-#include "Plateau.h"
+//#include "Plateau.h"
 #include <memory>
 #include <QApplication>
 
@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
 
 	Ui::InterfaceJeu jeu;
 	//Plateau plat(&jeu);
-
 
 	jeu.show();
 	return app.exec();

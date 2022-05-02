@@ -2,10 +2,9 @@
 #include <QDebug>
 
 
-Ui::Case::Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* parent) : QGraphicsRectItem(x, y, width, height, parent)
+Ui::Case::Case(qreal x, qreal y, qreal width, qreal height, model::ModelCase* caseAssocie, QGraphicsItem* parent) : QGraphicsRectItem(x, y, width, height, parent)
 {
-	xPixPos_ = x;
-	yPixPos_ = y;
+	caseAssocie_ = caseAssocie;
 
 	setOpacity(0.8);
 	brush.setStyle(Qt::SolidPattern);
@@ -14,7 +13,6 @@ Ui::Case::Case(qreal x, qreal y, qreal width, qreal height, QGraphicsItem* paren
 	//setFlags(QGraphicsItem::ItemIsSelectable); //QGraphicsItem::ItemIsMovable | 
 	setAcceptHoverEvents(true);
 	setAcceptDrops(true);
-
 }
 
 void Ui::Case::mettreCoordonnees(int i, int j)
@@ -35,17 +33,13 @@ void Ui::Case::mettreCouleur(QColor couleur)
 	setBrush(brush);
 }
 
-void Ui::Case::mettreCouleur()
+void Ui::Case::mettreCouleurBase()
 {
 	couleurActuelle = couleurDeBase_;
 	brush.setColor(couleurDeBase_);
 	setBrush(brush);
 }
 
-void Ui::Case::mettrePiece(model::ModelPieceEchec* piece)
-{
-	piece_ = piece;
-}
 
 void Ui::Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
@@ -59,7 +53,7 @@ void Ui::Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 		setCursor(Qt::ArrowCursor);
 	}
 
-	qDebug() <<"case pos : " << piece_ << " " << ligne_ << " " << colone_;
+	qDebug() <<" case pos : " << " " << ligne_ << " " << colone_;
 	
 }
 
@@ -70,21 +64,11 @@ void Ui::Case::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
 	//qDebug() << "leaving";
 }
 
-const std::pair<int, int> Ui::Case::lirePixPosition() const
-{
-	return std::pair<int, int>(xPixPos_, yPixPos_);
-}
-
-const std::pair<int, int> Ui::Case::lireMatricePosition() const
-{
-	return std::pair<int, int>(ligne_, colone_);
-}
-
 
 void Ui::Case::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
 	
-	qDebug() << "deClique" << piece_ << " " << ligne_ << " " << colone_;
+	qDebug() << "deClique" << " " << ligne_ << " " << colone_;
 
 }
 
@@ -95,7 +79,7 @@ void Ui::Case::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	{
 		
 		qDebug() << "cliqueCase";
-		emit caseClique(this);
+		emit caseClique(caseAssocie_);
 	}
 	
 }

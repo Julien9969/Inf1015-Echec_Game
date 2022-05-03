@@ -147,6 +147,7 @@ void Plateau::recevoirPieceClique(model::ModelPieceEchec* pieceClique)
 	else if (tourDeJeu == pieceClique->lireEquipe()) {
 		pieceActuelle_ = pieceClique;
 		pieceClique->listerDeplacementsValides(listeCases);
+		verificationEchec();
 		couleurSurCaseValide(pieceClique->lireEmplacementValide());
 		qDebug() << "on Save";
 	}
@@ -154,6 +155,34 @@ void Plateau::recevoirPieceClique(model::ModelPieceEchec* pieceClique)
 
 void Plateau::verificationEchec()
 {
+	std::vector<std::unique_ptr<ModelPieceEchec>>* listePieceAdverse;
+	
+	if (dynamic_cast<Roi*>(pieceActuelle_) != 0) {
+		pieceActuelle_->lireEquipe() == "Blanc" ? listePieceAdverse = &ListePieceNoir : listePieceAdverse = &ListePieceBlanc;
+		qDebug() << "verif c un roi";
+
+		listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->enleverPiece();
+
+		for (auto&& piece = listePieceAdverse->begin(); piece != listePieceAdverse->end(); piece++) {
+			piece->get()->listerDeplacementsValides(listeCases);
+
+			for (auto&& deplacemetAdv = piece->get()->lireEmplacementValide().begin(); deplacemetAdv != piece->get()->lireEmplacementValide().end(); deplacemetAdv++) 
+			{
+				std::list<model::EmplacementValide>::iterator mauvaisDeplacement = std::find_if(pieceActuelle_->lireEmplacementValide().begin(), 
+					pieceActuelle_->lireEmplacementValide().end(),
+					[&deplacemetAdv](model::EmplacementValide deplacement)
+					{ return (deplacemetAdv->ligne == deplacement.ligne) && (deplacemetAdv->colone == deplacement.colone); });
+
+				if (mauvaisDeplacement != pieceActuelle_->lireEmplacementValide().end()) {
+					listeCases(piece->get()->lireMatricePos().ligne, piece->get()->lireMatricePos().colone)->mettreCouleur(QColor(236, 206, 91));
+					pieceActuelle_->lireEmplacementValide().erase(mauvaisDeplacement);
+					qDebug() << "mauvais deplacement";
+				}
+			}
+		}
+
+		listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->mettrePiece(pieceActuelle_);
+	}
 
 
 }

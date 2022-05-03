@@ -2,6 +2,8 @@
 #include <cppitertools/range.hpp>
 #include <vector>
 #include <memory>
+#include <algorithm>
+#include <functional>
 //#include "StructSpecial.h"
 #include <QObject>
 #include "ModelCase.h"

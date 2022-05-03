@@ -89,7 +89,7 @@ void Ui::InterfaceJeu::creationVueCases()
 
 			if (((i + j) % 2) == 0) {
 
-				box->mettreCouleurbase(Qt::darkBlue);
+				box->mettreCouleurbase(QColor(54, 69, 137));
 			}
 			else {
 				box->mettreCouleurbase(Qt::white);

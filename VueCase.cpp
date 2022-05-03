@@ -6,7 +6,7 @@ Ui::VueCase::VueCase(qreal x, qreal y, qreal width, qreal height, model::ModelCa
 {
 	caseAssocie_ = caseAssocie;
 
-	setOpacity(0.8);
+	setOpacity(1);
 	brush.setStyle(Qt::SolidPattern);
 	setBrush(brush);
 	

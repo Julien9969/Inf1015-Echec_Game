@@ -33,7 +33,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.15.2_msvc2019_64</QtInstall>
-    <QtModules>core;widgets</QtModules>
+    <QtModules>core;multimedia;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -116,12 +116,13 @@
     <ClCompile Include="bibliotheque_cours\verification_allocation.cpp" />
     <ClCompile Include="Calc.cpp" />
     <ClCompile Include="CalcWindow.cpp" />
-    <ClCompile Include="case.cpp" />
+    <ClCompile Include="Fou.cpp" />
+    <ClCompile Include="VueCase.cpp" />
     <ClCompile Include="googletest\src\gtest-all.cc" />
-    <ClCompile Include="Jeu.cpp" />
+    <ClCompile Include="InterfaceJeu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelPieceEchec.cpp" />
-    <ClCompile Include="PieceEchec.cpp" />
+    <ClCompile Include="VuePieceEchec.cpp" />
     <ClCompile Include="Plateau.cpp" />
     <ClCompile Include="Roi.cpp" />
     <ClCompile Include="ModelCase.cpp" />
@@ -135,13 +136,14 @@
   <ItemGroup>
     <QtMoc Include="ModelPieceEchec.h" />
     <QtMoc Include="ModelCase.h" />
+    <ClInclude Include="Fou.h" />
     <ClInclude Include="Roi.h" />
     <ClInclude Include="StructSpecial.h" />
     <ClInclude Include="Tour.h" />
-    <QtMoc Include="case.h" />
-    <QtMoc Include="PieceEchec.h" />
+    <QtMoc Include="VueCase.h" />
+    <QtMoc Include="VuePieceEchec.h" />
     <QtMoc Include="Plateau.h" />
-    <QtMoc Include="jeu.h" />
+    <QtMoc Include="InterfaceJeu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

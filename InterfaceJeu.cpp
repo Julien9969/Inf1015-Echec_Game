@@ -1,4 +1,4 @@
-#include "jeu.h"
+#include "InterfaceJeu.h"
 #include <QDebug>
 
 //#include <QLabel>
@@ -6,6 +6,7 @@
 
 
 using iter::range;
+using model::Plateau;
 
 Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 {
@@ -13,10 +14,12 @@ Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 	scene = new QGraphicsScene(window_);
 
 	initialisationFenetre();
-
 	creationElementBord();
 
+
 	plateau_ = new Plateau();
+
+	QObject::connect(plateau_, &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
 
 	creationVueCases();
 	creationVuePiece();
@@ -33,8 +36,6 @@ void Ui::InterfaceJeu::initialisationFenetre()
 
 	window_->setScene(scene);
 
-	//scene->setSceneRect(0, 0, 1080, 720);
-	//setMouseTracking(true);
 }
 
 void Ui::InterfaceJeu::creationElementBord()
@@ -56,24 +57,23 @@ void Ui::InterfaceJeu::creationElementBord()
 	joueur2->setPos(width() - taillePaneau + 50, 5);
 	scene->addItem(joueur2);
 
-	// place whosTurnText
 	quiDoitJouer = new QGraphicsTextItem();
-
-	// getter setter a faire ?
-
-	QString tour = "c'est a joueur x de jouer : ";
-
-	quiDoitJouer->setPlainText(tour);
-	quiDoitJouer->setPos(width() * 0.5 - 20, 5);
+	quiDoitJouer->setScale(3);
+	quiDoitJouer->setDefaultTextColor(Qt::black);
+	quiDoitJouer->setPlainText("Tour : Blanc");
+	quiDoitJouer->setPos(width() * 0.5 - 93, -2);
 	scene->addItem(quiDoitJouer);
 
-	setWindowTitle(tour);
-	
+	setWindowTitle("Jeu d'Echec de Fou");
+}
+void Ui::InterfaceJeu::mettreTour(std::string equipeQuiJoue)
+{
+	QString tour = QString::fromStdString("Tour : " + equipeQuiJoue);
+	quiDoitJouer->setPlainText(tour);
 }
 
 void Ui::InterfaceJeu::creationVueCases()
 {
-	
 	for (int i : range(8)) {
 
 		for (int j : range(8)) {
@@ -83,7 +83,7 @@ void Ui::InterfaceJeu::creationVueCases()
 			caseAssocie->accedeCasePixelPos()->x = (width() - 720) / 2 + 90 * j;
 			caseAssocie->accedeCasePixelPos()->y = 60 + 90 * i;
 
-			Ui::Case* box = new Ui::Case(caseAssocie->accedeCasePixelPos()->x, caseAssocie->accedeCasePixelPos()->y, 90, 90, caseAssocie); //ptrJeu_->height() -> 720
+			Ui::VueCase* box = new Ui::VueCase(caseAssocie->accedeCasePixelPos()->x, caseAssocie->accedeCasePixelPos()->y, 90, 90, caseAssocie); //ptrJeu_->height() -> 720
 
 			box->mettreCoordonnees(i, j);
 
@@ -94,15 +94,14 @@ void Ui::InterfaceJeu::creationVueCases()
 			else {
 				box->mettreCouleurbase(Qt::white);
 			}
-			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleurBase, box, &Ui::Case::mettreCouleurBase);
-			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleur, box, &Ui::Case::mettreCouleur);
-			QObject::connect(box, &Ui::Case::caseClique, plateau_, &Plateau::recevoirCaseClique);
+			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleurBase, box, &Ui::VueCase::mettreCouleurBase);
+			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleur, box, &Ui::VueCase::mettreCouleur);
+			QObject::connect(box, &Ui::VueCase::caseClique, plateau_, &Plateau::recevoirCaseClique);
 
 			mettreDansScene(box);
 
 		}
 	}
-	
 }
 
 void Ui::InterfaceJeu::creationVuePiece()
@@ -142,9 +141,7 @@ void Ui::InterfaceJeu::creationVuePiece()
 
 		mettreDansScene(piece);
 	}
-	
 }
-
 
 
 void Ui::InterfaceJeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
@@ -153,7 +150,6 @@ void Ui::InterfaceJeu::creationDesBord(int taille, int x, int y, QColor couleur,
 
 	QGraphicsRectItem* panel = new QGraphicsRectItem(x, y, taille, height());
 	QBrush brush;
-	//brush.setStyle(Qt::SolidPattern);
 	brush.setStyle(Qt::SolidPattern);
 	brush.setColor(couleur);
 	panel->setBrush(brush);

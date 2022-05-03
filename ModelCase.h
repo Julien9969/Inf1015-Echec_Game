@@ -1,6 +1,5 @@
 #pragma once
 #include <QObject>
-#include <utility>
 #include <vector>
 #include <memory>
 #include "StructSpecial.h"
@@ -35,7 +34,7 @@ namespace model {
 		MatricePosition mPosition;
 		PixelPosition pPosition;
 
-	//public slots:
+	public slots:
 
 
 	signals:

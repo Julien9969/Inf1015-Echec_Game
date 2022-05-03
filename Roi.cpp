@@ -3,7 +3,6 @@
 using model::Roi;
 using model::EmplacementValide;
 
-//int Roi::compteurDeRoi = 0;
 
 Roi::Roi(std::string equipe) : ModelPieceEchec(equipe)
 {
@@ -21,7 +20,7 @@ Roi::Roi(std::string equipe) : ModelPieceEchec(equipe)
 	}
 }
 
-std::list<EmplacementValide>& Roi::listerDeplacementsValides(ListeCases& listeCase)
+void Roi::listerDeplacementsValides(ListeCases& listeCase)
 {
 	listeEmplacementsValides.clear();
 
@@ -45,10 +44,6 @@ std::list<EmplacementValide>& Roi::listerDeplacementsValides(ListeCases& listeCa
 			listeEmplacementsValides.push_back({ ligne, colone, Qt::darkGreen });
 		}
 	}
-
-
-
-	return listeEmplacementsValides;
 }
 
 bool model::Roi::deplacementEstValide(const MatricePosition& destination)

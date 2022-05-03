@@ -1,6 +1,5 @@
 #pragma once
 #include "ModelPieceEchec.h"
-#include <QGraphicsPixmapItem>
 #include <stdexcept>
 
 namespace model {
@@ -11,14 +10,12 @@ namespace model {
 		~Roi() { compteurDeRoi--; }
 
 
-		std::list<EmplacementValide>& listerDeplacementsValides(ListeCases& listeCase) override;
+		void listerDeplacementsValides(ListeCases& listeCase) override;
 		bool deplacementEstValide(const MatricePosition& destination) override;
 
 
 	private:
 		static inline int compteurDeRoi = 0;
-
-	signals:
 
 	};
 }

@@ -16,7 +16,7 @@ Tour::Tour(std::string equipe) : ModelPieceEchec(equipe)
 
 }
 
-std::list<EmplacementValide>& Tour::listerDeplacementsValides(ListeCases& listeCase)
+void Tour::listerDeplacementsValides(ListeCases& listeCase)
 {
 	listeEmplacementsValides.clear();
 
@@ -85,8 +85,6 @@ std::list<EmplacementValide>& Tour::listerDeplacementsValides(ListeCases& listeC
 			listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkGreen });
 		}
 	}
-
-	return listeEmplacementsValides;
 }
 
 bool model::Tour::deplacementEstValide(const MatricePosition& destination)

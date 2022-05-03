@@ -1,70 +1,59 @@
 #pragma once
-#include "jeu.h"
-#include "ModelCase.h"
-#include "ModelPieceEchec.h"
-#include "Tour.h" 
-#include "Roi.h"
-#include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QGraphicsRectItem>
 #include <cppitertools/range.hpp>
 #include <vector>
-#include <list>
 #include <memory>
-#include "PieceEchec.h"
+//#include "StructSpecial.h"
 #include <QObject>
-
-//pas sur utile
-//#include "case.h"
-
-
-//namespace Ui {
-//	class InterfaceJeu;
-//	//class Case;
-//	//struct ListeCases;
-//};
-
-//namespace model { 
-//	//struct CaseValide;
-//	//class PieceEchec;
-//};
+#include "ModelCase.h"
+#include "ModelPieceEchec.h"
+#include "VuePieceEchec.h"
+#include "Tour.h" 
+#include "Roi.h"
+#include "Fou.h"
 
 
+namespace model {
 
-class Plateau : public QObject
-{
-	Q_OBJECT
-public:
-	Plateau(/*Ui::InterfaceJeu* jeu*/);
-	~Plateau() = default;
+	class Plateau : public QObject
+	{
+		Q_OBJECT
+	public:
+		Plateau();
+		~Plateau() = default;
 
-	void creeCases();
-	void creePiecesNoir();
-	void creePieceBlanc();
-	void mettreLesPieces();
+		void creeCases();
+		void creePiecesNoir();
+		void creePieceBlanc();
+		void mettreLesPieces();
 
-	void couleurSurCaseValide(std::list<model::EmplacementValide> listeEmplacements);
-	void couleurPlateauInitial();
+		void couleurSurCaseValide(std::list<EmplacementValide> listeEmplacements);
+		void couleurPlateauInitial();
 
-	std::vector<std::unique_ptr<model::ModelPieceEchec>> ListePieceNoir;
-	std::vector<std::unique_ptr<model::ModelPieceEchec>> ListePieceBlanc;
+		void tourDeJeuChangement(std::string quiJoue);
+		void verificationEchec();
 
-
-	model::ListeCases listeCases;
-
-	//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceNoir;
+		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceBlanc;
 
 
-private:
-	
-	model::ModelPieceEchec* pieceActuelle_;
+		model::ListeCases listeCases;
 
-signals:
-	//mettre
+		//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
-public slots:
-	void recevoirPieceClique(Ui::VuePieceEchec* piece);
-	void recevoirCaseClique(model::ModelCase* caseClique);
-	void enleverPieceElimine(model::ModelPieceEchec* piece);
 
-};
+	private:
+
+		ModelPieceEchec* pieceActuelle_;
+		TourDeJeu tourDeJeu;
+
+	signals:
+		void changementTour(std::string equipe);
+
+	public slots:
+		void recevoirPieceClique(ModelPieceEchec* pieceClique);
+		void recevoirCaseClique(ModelCase* caseClique);
+		void enleverPieceElimine(ModelPieceEchec* piece);
+
+	};
+
+}

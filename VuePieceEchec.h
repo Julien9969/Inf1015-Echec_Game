@@ -1,16 +1,10 @@
 #pragma once
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
-#include <utility>
 #include <QObject>
 #include <QCursor>
 #include "ModelPieceEchec.h"
-//#include "case.h"
-//
-//namespace Ui { 
-//	class Case;
-//	struct ListeCases;
-//};
+
 
 
 namespace Ui {
@@ -41,7 +35,7 @@ namespace Ui {
 		void positionnerPiece(PixelPosition scenePosition);
 
 	signals:
-		void pieceClique(VuePieceEchec* pieceClique);
+		void pieceClique(model::ModelPieceEchec* pieceClique);
 
 	};
 }

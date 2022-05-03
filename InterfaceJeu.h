@@ -5,15 +5,15 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsRectItem>
 #include <cppitertools/range.hpp>
-//#include <vector>
-//#include <memory>
 
-#include "case.h"
-#include "PieceEchec.h"
 
+#include "VueCase.h"
+#include "VuePieceEchec.h"
 #include "Plateau.h"
 
-class Plateau;
+namespace model {
+	class Plateau;
+}
 
 namespace Ui {
 
@@ -43,13 +43,13 @@ namespace Ui {
 		QGraphicsScene* scene;
 		QGraphicsView* window_;
 		
-		Plateau* plateau_;
+		model::Plateau* plateau_;
 
 		QGraphicsTextItem* quiDoitJouer;
 
 	public slots:
 		void mettreDansScene(QGraphicsItem* object);
-
+		void mettreTour(std::string equipeQuiJoue);
 
 
 	};

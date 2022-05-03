@@ -1,8 +1,8 @@
-#include "case.h"
+#include "VueCase.h"
 #include <QDebug>
 
 
-Ui::Case::Case(qreal x, qreal y, qreal width, qreal height, model::ModelCase* caseAssocie, QGraphicsItem* parent) : QGraphicsRectItem(x, y, width, height, parent)
+Ui::VueCase::VueCase(qreal x, qreal y, qreal width, qreal height, model::ModelCase* caseAssocie, QGraphicsItem* parent) : QGraphicsRectItem(x, y, width, height, parent)
 {
 	caseAssocie_ = caseAssocie;
 
@@ -15,25 +15,25 @@ Ui::Case::Case(qreal x, qreal y, qreal width, qreal height, model::ModelCase* ca
 	setAcceptDrops(true);
 }
 
-void Ui::Case::mettreCoordonnees(int i, int j)
+void Ui::VueCase::mettreCoordonnees(int i, int j)
 {
 	ligne_ = i;
 	colone_ = j;
 }
 
-void Ui::Case::mettreCouleurbase(QColor couleur) {
+void Ui::VueCase::mettreCouleurbase(QColor couleur) {
 	couleurDeBase_ = couleur; 
 	mettreCouleur(couleur);
 }
 
-void Ui::Case::mettreCouleur(QColor couleur)
+void Ui::VueCase::mettreCouleur(QColor couleur)
 {
 	couleurActuelle = couleur;
 	brush.setColor(couleur);
 	setBrush(brush);
 }
 
-void Ui::Case::mettreCouleurBase()
+void Ui::VueCase::mettreCouleurBase()
 {
 	couleurActuelle = couleurDeBase_;
 	brush.setColor(couleurDeBase_);
@@ -41,7 +41,7 @@ void Ui::Case::mettreCouleurBase()
 }
 
 
-void Ui::Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+void Ui::VueCase::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
 	brush.setColor(Qt::darkGray);
 	setBrush(brush);
@@ -58,14 +58,14 @@ void Ui::Case::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 }
 
 
-void Ui::Case::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
+void Ui::VueCase::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
 	mettreCouleur(couleurActuelle);
 	
 	//qDebug() << "leaving";
 }
 
 
-void Ui::Case::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void Ui::VueCase::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
 	
 	qDebug() << "deClique" << " " << ligne_ << " " << colone_;
@@ -73,7 +73,7 @@ void Ui::Case::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 }
 
 
-void Ui::Case::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void Ui::VueCase::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{

@@ -20,11 +20,16 @@ void ModelPieceEchec::mangeLaPiece(ModelPieceEchec* piece) {
 	positionner(piece->lireMatricePos(), piece->lireScenePos());
 	qDebug() << "une piece : " << "equpie marche pas" << " a été mangé.";
 
+	
+	music.setMedia(QUrl("Sons/Slash.mp3"));
+	music.setVolume(20);
+	music.play();
+
 	emit enleverLaPieceDuPlateau(piece);
 }
 
 
-void model::ModelPieceEchec::positionner(MatricePosition matricePos, PixelPosition scenePos)
+void model::ModelPieceEchec::positionner(const MatricePosition& matricePos, const PixelPosition& scenePos)
 {
 	mPosition_ = matricePos;
 	pPosition_ = scenePos;

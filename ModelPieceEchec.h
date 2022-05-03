@@ -1,27 +1,19 @@
 #pragma once
 #include <QObject>
+#include <QMediaPlayer>
+
 #include <list>
-//#include <vector>
-#include <utility>
 #include <string>
 #include <QColor>
 #include "modelCase.h"
 #include "StructSpecial.h"
 
-//namespace Ui { 
-//	class Case
 
-//namespace Ui {;
-////	struct ListeCases;
-////};
-//	class Case;
-//	struct ListeCases;
-//};
 
 namespace model {
 
-	//class ModelCase;
 	struct ListeCases;
+	class modelCase;
 
 	struct EmplacementValide {
 		int ligne;
@@ -48,21 +40,20 @@ namespace model {
 		const std::string& lireEquipe() const { return equipe_; }
 		std::list<EmplacementValide>& lireEmplacementValide() { return listeEmplacementsValides; }
 
-		void positionner(MatricePosition matricePos, PixelPosition scenePos);
+		void positionner(const MatricePosition& matricePos, const PixelPosition& scenePos);
 		
 	protected:
 		std::string equipe_;
 		QString cheminImage;
 
-		//std::pair<int, int> ScenePos_;
-
+		QMediaPlayer music;
 		MatricePosition mPosition_;
 		PixelPosition pPosition_;
 
 		std::list<EmplacementValide> listeEmplacementsValides;
 
 	public slots:
-		virtual std::list<EmplacementValide>& listerDeplacementsValides(ListeCases& listeCase) = 0;
+		virtual void listerDeplacementsValides(ListeCases& listeCase) = 0;
 		virtual bool deplacementEstValide(const MatricePosition& destination) = 0;
 	
 	signals:   

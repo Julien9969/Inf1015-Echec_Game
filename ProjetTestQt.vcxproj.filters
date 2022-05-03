@@ -52,13 +52,13 @@
     <ClCompile Include="googletest\src\gtest-all.cc">
       <Filter>Sources Bibliotheques</Filter>
     </ClCompile>
-    <ClCompile Include="Jeu.cpp">
+    <ClCompile Include="InterfaceJeu.cpp">
       <Filter>Source Files\Vue</Filter>
     </ClCompile>
-    <ClCompile Include="PieceEchec.cpp">
+    <ClCompile Include="VuePieceEchec.cpp">
       <Filter>Source Files\Vue</Filter>
     </ClCompile>
-    <ClCompile Include="case.cpp">
+    <ClCompile Include="VueCase.cpp">
       <Filter>Source Files\Vue</Filter>
     </ClCompile>
     <ClCompile Include="Calc.cpp">
@@ -85,6 +85,9 @@
     <ClCompile Include="ModelCase.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Fou.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Calc.hpp">
@@ -93,19 +96,22 @@
     <QtMoc Include="CalcWindow.hpp">
       <Filter>Header Files\Calc</Filter>
     </QtMoc>
-    <QtMoc Include="case.h">
+    <QtMoc Include="VueCase.h">
       <Filter>Header Files\Vue</Filter>
     </QtMoc>
-    <QtMoc Include="jeu.h">
+    <QtMoc Include="InterfaceJeu.h">
       <Filter>Header Files\Vue</Filter>
     </QtMoc>
-    <QtMoc Include="PieceEchec.h">
+    <QtMoc Include="VuePieceEchec.h">
       <Filter>Header Files\Vue</Filter>
     </QtMoc>
     <QtMoc Include="ModelPieceEchec.h">
       <Filter>Header Files\Model</Filter>
     </QtMoc>
     <QtMoc Include="Plateau.h">
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ModelCase.h">
       <Filter>Header Files\Model</Filter>
     </QtMoc>
   </ItemGroup>
@@ -119,7 +125,7 @@
     <ClInclude Include="StructSpecial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModelCase.h">
+    <ClInclude Include="Fou.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>

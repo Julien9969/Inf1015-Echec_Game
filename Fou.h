@@ -3,15 +3,15 @@
 
 namespace model {
 
-	class Tour : public ModelPieceEchec
+	class Fou : public ModelPieceEchec
 	{
 	public:
-		Tour(std::string equipe);
-		//~Tour() = default;
+		Fou(std::string equipe);
+		//~Fou() = default;
 
 		void listerDeplacementsValides(ListeCases& listeCase) override;
 		bool deplacementEstValide(const MatricePosition& destination) override;
-		
+
 
 	private:
 

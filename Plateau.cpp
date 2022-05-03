@@ -1,32 +1,26 @@
 #include "Plateau.h"
 #include <QDebug>
 #include <QLabel>
-//#include <QGraphicsDropShadowEffect>
 #include <QEvent>
 
-//extern Jeu* jeu;
 
 using iter::range;
-//using Ui::Case;
 using model::Tour;
 using model::Roi;
-//using Ui::VuePieceEchec;
+using model::Fou;
 using model::ModelPieceEchec;
+using model::Plateau;
 
-//using ui::Case, ui::Jeu;
-
-Plateau::Plateau(/*Ui::InterfaceJeu* jeu*/)
+Plateau::Plateau()
 {
-	//qDebug() << "plateau : " << jeu->ab;
-	/*ptrJeu_ = jeu;*/
 	creeCases();
 	creePiecesNoir();
 	creePieceBlanc();
 	mettreLesPieces();
 }
 
-void Plateau::creeCases() {
-	
+void Plateau::creeCases() 
+{
 	for (int ligne : range(8)) {
 
 		for (int colone : range(8)) {
@@ -36,8 +30,6 @@ void Plateau::creeCases() {
 			listeCases.push_back(move(uneCase));
 		}
 	}
-	//ListeCase[3 * 8 + 3]->mettreCouleur(Qt::green);
-
 }
 
 void Plateau::creePiecesNoir()
@@ -50,7 +42,12 @@ void Plateau::creePiecesNoir()
 
 	std::unique_ptr<ModelPieceEchec> roiN = std::make_unique<Roi>("Noir");
 	ListePieceNoir.push_back(move(roiN));
-	
+
+	std::unique_ptr<ModelPieceEchec> fouN = std::make_unique<Fou>("Noir");
+	ListePieceNoir.push_back(move(fouN));
+
+	std::unique_ptr<ModelPieceEchec> fouN1 = std::make_unique<Fou>("Noir");
+	ListePieceNoir.push_back(move(fouN1));
 }
 
 void Plateau::creePieceBlanc()
@@ -64,13 +61,18 @@ void Plateau::creePieceBlanc()
 	std::unique_ptr<ModelPieceEchec> roiB = std::make_unique<Roi>("Blanc");
 	ListePieceBlanc.push_back(move(roiB));
 
+	std::unique_ptr<ModelPieceEchec> fouB = std::make_unique<Fou>("Blanc");
+	ListePieceBlanc.push_back(move(fouB));
+
+	std::unique_ptr<ModelPieceEchec> fouB1 = std::make_unique<Fou>("Blanc");
+	ListePieceBlanc.push_back(move(fouB1));
+
 	try {
 		std::unique_ptr<ModelPieceEchec> roiB2 = std::make_unique<Roi>("Blanc");
 	}
 	catch (std::logic_error& e) {
 		qDebug() << "Erreur : " << e.what();
 	}
-	
 }
 
 void Plateau::mettreLesPieces()
@@ -87,23 +89,19 @@ void Plateau::mettreLesPieces()
 		tempCase->mettrePiece(tempPiece);
 		
 		tempPiece->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
-			
 	}
-	
 
 	i = 0;
 	
 	for (auto&& j = ListePieceBlanc.begin(); j != ListePieceBlanc.end(); j++) {
 
 		tempCase = listeCases[56 + i++];
-		tempPiece = j->get();// ListePieceNoir[i * 8 + j].get();
+		tempPiece = j->get();
 
 		tempCase->mettrePiece(tempPiece);
 
 		tempPiece->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
-
 	}
-	
 }
 
 
@@ -118,7 +116,9 @@ void Plateau::recevoirCaseClique(model::ModelCase* caseClique)
 
 		caseClique->mettrePiece(pieceActuelle_);
 		pieceActuelle_->positionner(caseClique->lirePosition(), caseClique->lirePixelPos());
-		
+
+		tourDeJeuChangement(pieceActuelle_->lireEquipe());
+
 		couleurPlateauInitial();
 		pieceActuelle_ = nullptr;
 
@@ -127,10 +127,11 @@ void Plateau::recevoirCaseClique(model::ModelCase* caseClique)
 
 
 
-void Plateau::recevoirPieceClique(Ui::VuePieceEchec* piece)
+void Plateau::recevoirPieceClique(model::ModelPieceEchec* pieceClique)
 {
 	couleurPlateauInitial();
-	model::ModelPieceEchec* pieceClique = piece->lirePiece();
+
+	qDebug() << "tour : " << QString::fromStdString(tourDeJeu.tour) << " joue " << QString::fromStdString(pieceClique->lireEquipe());
 
 	if ((pieceActuelle_ != nullptr) && (pieceClique->lireEquipe() != pieceActuelle_->lireEquipe())) {
 		if (pieceActuelle_->deplacementEstValide(pieceClique->lireMatricePos())) {
@@ -139,15 +140,22 @@ void Plateau::recevoirPieceClique(Ui::VuePieceEchec* piece)
 			listeCases(pieceClique->lireMatricePos().ligne, pieceClique->lireMatricePos().colone)->mettrePiece(pieceActuelle_);
 
 			pieceActuelle_->mangeLaPiece(pieceClique);
+			tourDeJeuChangement(pieceActuelle_->lireEquipe());
 			pieceActuelle_ = nullptr;
 		}
 	}
-	else {
+	else if (tourDeJeu == pieceClique->lireEquipe()) {
 		pieceActuelle_ = pieceClique;
-		couleurSurCaseValide(pieceClique->listerDeplacementsValides(listeCases));
-
+		pieceClique->listerDeplacementsValides(listeCases);
+		couleurSurCaseValide(pieceClique->lireEmplacementValide());
+		qDebug() << "on Save";
 	}
-	qDebug() << "on Save";
+}
+
+void Plateau::verificationEchec()
+{
+
+
 }
 
 void Plateau::couleurSurCaseValide(std::list<model::EmplacementValide> listeEmplacements)
@@ -158,13 +166,20 @@ void Plateau::couleurSurCaseValide(std::list<model::EmplacementValide> listeEmpl
 
 }
 
-void Plateau::couleurPlateauInitial() {
-	
+void Plateau::couleurPlateauInitial() 
+{
 	qDebug() << "seze : " << listeCases.listeCases.size();
 	for (auto&& box : listeCases) {
 		emit box->mettreCouleurBase();
 	}
-	
+}
+
+void model::Plateau::tourDeJeuChangement(std::string quiJoue)
+{
+	tourDeJeu == "Noir" ? tourDeJeu = "Blanc" : tourDeJeu = "Noir";
+	qDebug() << QString::fromStdString(tourDeJeu.tour);
+	emit changementTour(tourDeJeu.tour);
+
 }
 
 void Plateau::enleverPieceElimine(model::ModelPieceEchec* piece)

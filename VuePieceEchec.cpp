@@ -1,4 +1,4 @@
-#include "PieceEchec.h"
+#include "VuePieceEchec.h"
 #include "QDebug"
 
 using Ui::VuePieceEchec;
@@ -11,7 +11,6 @@ VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* paren
 	QObject::connect(piece, &model::ModelPieceEchec::suppressionPiece, this, [this]() { delete this; });
 
 	
-	//setTransformationMode(Qt::SmoothTransformation);
 	setScale(1);//1.4
 	//qDebug() << transformationMode();
 	setPixmap(QPixmap(pieceAssocie_->lireCheminImage()));
@@ -25,10 +24,6 @@ VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* paren
 
 void VuePieceEchec::positionnerPiece(PixelPosition scenePosition)
 {
-	//qDebug() << scenePos.first;
-	
-	//pieceAssocie_->scenePos() = scenePos;
-
 	setPos(scenePosition.x, scenePosition.y);
 }
 
@@ -38,7 +33,7 @@ void VuePieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	if (event->buttons() == Qt::LeftButton)
 	{
 		qDebug() << "clique" << pieceAssocie_->lireMatricePos().ligne << pieceAssocie_->lireMatricePos().colone;
-		emit pieceClique(this);
+		emit pieceClique(pieceAssocie_);
 	}
 }
 

@@ -1,5 +1,4 @@
 #pragma once
-//#include "jeu.h"
 #include <QObject>
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
@@ -8,18 +7,16 @@
 
 #include "ModelCase.h"
 
-//#include <QEvent>
-
 
 namespace Ui {
 
-	class Case : public QObject, public QGraphicsRectItem
+	class VueCase : public QObject, public QGraphicsRectItem
 	{
 		Q_OBJECT
 
 	public:
-		Case(qreal x, qreal y, qreal width, qreal height, model::ModelCase* caseAssocie, QGraphicsItem* parent = NULL);
-		~Case() = default;
+		VueCase(qreal x, qreal y, qreal width, qreal height, model::ModelCase* caseAssocie, QGraphicsItem* parent = NULL);
+		~VueCase() = default;
 
 		void mettreCouleurbase(QColor couleur);
 
@@ -35,8 +32,6 @@ namespace Ui {
 
 		void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 
-
-		//const std::pair<int, int> lireMatricePosition() const;
 
 	private:
 		int ligne_, colone_;

@@ -16,7 +16,7 @@ Tour::Tour(std::string equipe) : ModelPieceEchec(equipe)
 
 }
 
-void Tour::listerDeplacementsValides(ListeCases& listeCase)
+void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 {
 	listeEmplacementsValides.clear();
 
@@ -27,6 +27,10 @@ void Tour::listerDeplacementsValides(ListeCases& listeCase)
 			if (listeCase(ligne, lireMatricePos().colone)->getPiece()->lireEquipe() != equipe_) {
 				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
 				qDebug() << "pas equipe apfhepfaefi";
+			}
+			else {
+				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
+				pieceAutourAlie.push_back({ ligne, lireMatricePos().colone, Qt::transparent });
 			}
 			break;
 		}
@@ -44,6 +48,10 @@ void Tour::listerDeplacementsValides(ListeCases& listeCase)
 				qDebug() << "pas equipe apfhepfaefi";
 
 			}
+			else {
+				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
+				pieceAutourAlie.push_back({ ligne, lireMatricePos().colone, Qt::transparent });
+			}
 			break;
 		}
 		else {
@@ -57,10 +65,12 @@ void Tour::listerDeplacementsValides(ListeCases& listeCase)
 		if (listeCase(lireMatricePos().ligne, colone)->getPiece() != nullptr) {
 			if (listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe() != equipe_) {
 				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
-				qDebug() << "pas equipe " << QString::fromStdString(equipe_) << QString::fromStdString(listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe());
-				qDebug() << listeCase(lireMatricePos().ligne, colone)->getPiece()->lireMatricePos().ligne;
-				qDebug() << listeCase(lireMatricePos().ligne, colone)->getPiece()->lireMatricePos().colone;
+		
 
+			}
+			else {
+				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
+				pieceAutourAlie.push_back({ lireMatricePos().ligne, colone, Qt::transparent});
 			}
 			break;
 		}
@@ -78,6 +88,10 @@ void Tour::listerDeplacementsValides(ListeCases& listeCase)
 				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
 				qDebug() << "pas equipe apfhepfaefi";
 
+			}
+			else {
+				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
+				pieceAutourAlie.push_back({ lireMatricePos().ligne, colone, Qt::transparent });
 			}
 			break;
 		}

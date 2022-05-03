@@ -146,17 +146,19 @@ void Plateau::recevoirPieceClique(model::ModelPieceEchec* pieceClique)
 	}
 	else if (tourDeJeu == pieceClique->lireEquipe()) {
 		pieceActuelle_ = pieceClique;
-		pieceClique->listerDeplacementsValides(listeCases);
-		verificationEchec();
-		couleurSurCaseValide(pieceClique->lireEmplacementValide());
+		pieceClique->listerDeplacementsSemiValides(listeCases);
+		listerDeplacementsValide();
+		couleurSurCaseValide(pieceClique->lireEmplacementSemiValide());
 		qDebug() << "on Save";
 	}
 }
 
-void Plateau::verificationEchec()
+void Plateau::listerDeplacementsValide()
 {
 	std::vector<std::unique_ptr<ModelPieceEchec>>* listePieceAdverse;
-	
+	std::vector<std::unique_ptr<ModelPieceEchec>>* listePieceMonEquipe;
+
+	//Le Roi ne peut pas se mettre en echec
 	if (dynamic_cast<Roi*>(pieceActuelle_) != 0) {
 		pieceActuelle_->lireEquipe() == "Blanc" ? listePieceAdverse = &ListePieceNoir : listePieceAdverse = &ListePieceBlanc;
 		qDebug() << "verif c un roi";
@@ -164,27 +166,105 @@ void Plateau::verificationEchec()
 		listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->enleverPiece();
 
 		for (auto&& piece = listePieceAdverse->begin(); piece != listePieceAdverse->end(); piece++) {
-			piece->get()->listerDeplacementsValides(listeCases);
+			piece->get()->listerDeplacementsSemiValides(listeCases);
 
-			for (auto&& deplacemetAdv = piece->get()->lireEmplacementValide().begin(); deplacemetAdv != piece->get()->lireEmplacementValide().end(); deplacemetAdv++) 
+			for (auto&& deplacemetAdv = piece->get()->lireEmplacementSemiValide().begin(); deplacemetAdv != piece->get()->lireEmplacementSemiValide().end(); deplacemetAdv++) 
 			{
-				std::list<model::EmplacementValide>::iterator mauvaisDeplacement = std::find_if(pieceActuelle_->lireEmplacementValide().begin(), 
-					pieceActuelle_->lireEmplacementValide().end(),
-					[&deplacemetAdv](model::EmplacementValide deplacement)
-					{ return (deplacemetAdv->ligne == deplacement.ligne) && (deplacemetAdv->colone == deplacement.colone); });
+				qDebug() << "adv : " << deplacemetAdv->ligne << " " << deplacemetAdv->colone;
+				std::list<model::EmplacementValide>::iterator mauvaisDeplacement = std::find_if(pieceActuelle_->lireEmplacementSemiValide().begin(), 
+					pieceActuelle_->lireEmplacementSemiValide().end(),
+					[&](model::EmplacementValide& deplacement)
+					{
+						/*bool mangeEnemiMeMetEnEchec = false;
+						bool deplacementEstInvalide = (deplacemetAdv->ligne == deplacement.ligne) && (deplacemetAdv->colone == deplacement.colone);*/
+						qDebug() << "adv : " << deplacemetAdv->ligne << " " << deplacemetAdv->colone << " MOI" << deplacement.ligne << " " << deplacement.colone;
+						if ((deplacemetAdv->ligne == deplacement.ligne) && (deplacemetAdv->colone == deplacement.colone)) {
+							return true;
+						}
+						else {
+							for (auto&& emplacement = piece->get()->lirePiecesAlies().begin(); emplacement != piece->get()->lirePiecesAlies().end(); emplacement++)
+							{
+								if ((emplacement->ligne == deplacement.ligne) && (emplacement->colone == deplacement.colone)) {
+									return true;
+									break;
+								}
+							}
+							
+						}
+					});
 
-				if (mauvaisDeplacement != pieceActuelle_->lireEmplacementValide().end()) {
+				if (mauvaisDeplacement != pieceActuelle_->lireEmplacementSemiValide().end()) {
 					listeCases(piece->get()->lireMatricePos().ligne, piece->get()->lireMatricePos().colone)->mettreCouleur(QColor(236, 206, 91));
-					pieceActuelle_->lireEmplacementValide().erase(mauvaisDeplacement);
+					pieceActuelle_->lireEmplacementSemiValide().erase(mauvaisDeplacement);
 					qDebug() << "mauvais deplacement";
 				}
+				
 			}
 		}
 
 		listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->mettrePiece(pieceActuelle_);
 	}
 
+	else if (pieceActuelle_ != nullptr)
+	{
+		pieceActuelle_->lireEquipe() == "Blanc" ? listePieceMonEquipe = &ListePieceBlanc : listePieceMonEquipe = &ListePieceNoir;
+		pieceActuelle_->lireEquipe() == "Blanc" ? listePieceAdverse = &ListePieceNoir : listePieceAdverse = &ListePieceBlanc;
 
+
+		std::vector<std::unique_ptr<ModelPieceEchec>>::iterator  monRoi = std::find_if(listePieceMonEquipe->begin(), listePieceMonEquipe->end(),
+			[](std::unique_ptr<ModelPieceEchec>& piece) { return dynamic_cast<Roi*>(piece.get()) != 0; });
+		
+		for (auto&& piece = listePieceAdverse->begin(); piece != listePieceAdverse->end(); piece++) {
+			
+			//On protege le roi si il est en echec avant move
+			if (roiEnEchec(piece->get(), monRoi->get()))
+			{
+				//qDebug() << "deplacement ateint " << deplacementAtteindRoi->ligne << " " << deplacementAtteindRoi->colone;
+				bool metEnEchec;
+				listeCases(piece->get()->lireMatricePos().ligne, piece->get()->lireMatricePos().colone)->mettreCouleur(QColor(236, 206, 91));
+				listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->enleverPiece();
+
+				auto it = std::remove_if(pieceActuelle_->lireEmplacementSemiValide().begin(), pieceActuelle_->lireEmplacementSemiValide().end(),
+					[&](model::EmplacementValide& emplacement) {
+						if (listeCases(emplacement.ligne, emplacement.colone)->getPiece() == nullptr) {
+							listeCases(emplacement.ligne, emplacement.colone)->mettrePiece(pieceActuelle_);
+							metEnEchec = roiEnEchec(piece->get(), monRoi->get());
+							listeCases(emplacement.ligne, emplacement.colone)->enleverPiece();
+							return metEnEchec;
+						}
+						else if (listeCases(emplacement.ligne, emplacement.colone)->getPiece() == piece->get()) {
+							return false;
+						}
+						return true;
+					}
+					);
+
+				pieceActuelle_->lireEmplacementSemiValide().erase(it, pieceActuelle_->lireEmplacementSemiValide().end());
+
+				listeCases(pieceActuelle_->lireMatricePos().ligne, pieceActuelle_->lireMatricePos().colone)->mettrePiece(pieceActuelle_);
+			}
+			//On se met pas en echec apres un deplacement
+			else {
+
+			}
+		}
+
+		qDebug() << "lesrt go" << QString::fromStdString(monRoi->get()->lireEquipe());
+	}
+}
+
+bool Plateau::deplacementMetEnEchec() {
+
+}
+
+bool Plateau::roiEnEchec(ModelPieceEchec* piece, ModelPieceEchec* roi) {
+	piece->listerDeplacementsSemiValides(listeCases);
+
+	std::list<model::EmplacementValide>::iterator deplacementAtteindRoi = std::find_if(piece->lireEmplacementSemiValide().begin(), piece->lireEmplacementSemiValide().end(),
+		[&roi](model::EmplacementValide& emplacement)
+		{return (emplacement.ligne == roi->lireMatricePos().ligne) && ((emplacement.colone == roi->lireMatricePos().colone)); });
+
+	return deplacementAtteindRoi != piece->lireEmplacementSemiValide().end();
 }
 
 void Plateau::couleurSurCaseValide(std::list<model::EmplacementValide> listeEmplacements)
@@ -213,24 +293,31 @@ void model::Plateau::tourDeJeuChangement(std::string quiJoue)
 
 void Plateau::enleverPieceElimine(model::ModelPieceEchec* piece)
 {
+	std::vector<std::unique_ptr<ModelPieceEchec>>::iterator pieceAsupprimer;
+
 	if (piece->lireEquipe() == "Noir")
 	{
 		for (auto&& it = ListePieceNoir.begin(); it != ListePieceNoir.end(); it++) {
 			if (it->get() == piece) {
 				qDebug() << "enleve du vector";
-				*it = nullptr;
+				pieceAsupprimer = it;
 			}
 		}
+
+		ListePieceNoir.erase(pieceAsupprimer);
 	}
 	else
 	{
 		for (auto&& it = ListePieceBlanc.begin(); it != ListePieceBlanc.end(); it++) {
 			if (it->get() == piece) {
 				qDebug() << "enleve du vector";
-				*it = nullptr;
+				pieceAsupprimer = it;
 			}
 		}
+		ListePieceBlanc.erase(pieceAsupprimer);
 	}
+
+
 }
 
 

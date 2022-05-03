@@ -9,7 +9,7 @@ namespace model {
 		Tour(std::string equipe);
 		//~Tour() = default;
 
-		void listerDeplacementsValides(ListeCases& listeCase) override;
+		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
 		bool deplacementEstValide(const MatricePosition& destination) override;
 		
 

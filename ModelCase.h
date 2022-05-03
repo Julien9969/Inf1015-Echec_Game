@@ -26,7 +26,7 @@ namespace model {
 		void mettrePiece(ModelPieceEchec* piece);
 		void enleverPiece();
 
-		const ModelPieceEchec* getPiece() const { return piece_; }
+		ModelPieceEchec* getPiece() { return piece_; }
 
 
 	private:

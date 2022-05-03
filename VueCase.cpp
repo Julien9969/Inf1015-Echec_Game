@@ -53,7 +53,7 @@ void Ui::VueCase::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 		setCursor(Qt::ArrowCursor);
 	}
 
-	qDebug() <<" case pos : " << " " << ligne_ << " " << colone_;
+	qDebug() <<" case pos : "<< caseAssocie_->getPiece() << " " << ligne_ << " " << colone_;
 	
 }
 

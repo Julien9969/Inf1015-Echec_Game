@@ -32,7 +32,9 @@ namespace model {
 		void couleurPlateauInitial();
 
 		void tourDeJeuChangement(std::string quiJoue);
-		void verificationEchec();
+		void listerDeplacementsValide();
+		bool roiEnEchec(ModelPieceEchec* piece, ModelPieceEchec* roi);
+		bool deplacementMetEnEchec();
 
 		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceNoir;
 		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceBlanc;

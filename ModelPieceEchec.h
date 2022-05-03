@@ -33,12 +33,13 @@ namespace model {
 
 		const PixelPosition& lireScenePos() const { return pPosition_; }
 
+		std::list<model::EmplacementValide>& lirePiecesAlies() { return pieceAutourAlie; }
 
 		const QString& lireCheminImage() const { return cheminImage; }
 		void mangeLaPiece(ModelPieceEchec* piece);
 
 		const std::string& lireEquipe() const { return equipe_; }
-		std::list<EmplacementValide>& lireEmplacementValide() { return listeEmplacementsValides; }
+		std::list<EmplacementValide>& lireEmplacementSemiValide() { return listeEmplacementsValides; }
 
 		void positionner(const MatricePosition& matricePos, const PixelPosition& scenePos);
 		
@@ -51,9 +52,10 @@ namespace model {
 		PixelPosition pPosition_;
 
 		std::list<EmplacementValide> listeEmplacementsValides;
+		std::list<model::EmplacementValide> pieceAutourAlie;
 
 	public slots:
-		virtual void listerDeplacementsValides(ListeCases& listeCase) = 0;
+		virtual void listerDeplacementsSemiValides(ListeCases& listeCase) = 0;
 		virtual bool deplacementEstValide(const MatricePosition& destination) = 0;
 	
 	signals:   

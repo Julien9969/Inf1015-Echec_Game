@@ -9,7 +9,7 @@ namespace model {
 		Fou(std::string equipe);
 		//~Fou() = default;
 
-		void listerDeplacementsValides(ListeCases& listeCase) override;
+		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
 		bool deplacementEstValide(const MatricePosition& destination) override;
 
 

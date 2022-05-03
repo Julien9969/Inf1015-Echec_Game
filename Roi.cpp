@@ -20,7 +20,7 @@ Roi::Roi(std::string equipe) : ModelPieceEchec(equipe)
 	}
 }
 
-void Roi::listerDeplacementsValides(ListeCases& listeCase)
+void Roi::listerDeplacementsSemiValides(ListeCases& listeCase)
 {
 	listeEmplacementsValides.clear();
 
@@ -37,6 +37,10 @@ void Roi::listerDeplacementsValides(ListeCases& listeCase)
 		if (listeCase(ligne, colone)->getPiece() != nullptr) {
 			if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
 				listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
+			}
+			else {
+				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
+				pieceAutourAlie.push_back({ ligne, colone, Qt::transparent });
 			}
 		}
 		else

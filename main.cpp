@@ -1,6 +1,6 @@
 #include "Calc.hpp"
 #include "CalcWindow.hpp"
-#include "jeu.h"
+#include "Interfacejeu.h"
 //#include "Plateau.h"
 #include <memory>
 #include <QApplication>

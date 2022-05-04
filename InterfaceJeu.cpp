@@ -1,7 +1,6 @@
 #include "InterfaceJeu.h"
 #include <QDebug>
 
-//#include <QLabel>
 //#include <QGraphicsDropShadowEffect>
 
 
@@ -11,19 +10,12 @@ using model::Plateau;
 Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 {
 	window_ = new QGraphicsView(this);
+	//setCentralWidget(window_);
 	scene = new QGraphicsScene(window_);
-
 	initialisationFenetre();
-	creationElementBord();
 
-
-	plateau_ = new Plateau();
-
-	QObject::connect(plateau_, &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
-	QObject::connect(plateau_, &Plateau::finDuJeu, this, &InterfaceJeu::finDuJeu);
-
-	creationVueCases();
-	creationVuePiece();
+	MenuPrincipal();
+	
 }
 
 void Ui::InterfaceJeu::initialisationFenetre()
@@ -34,6 +26,8 @@ void Ui::InterfaceJeu::initialisationFenetre()
 	window_->setFixedSize(1080, 780);
 	window_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	window_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+	scene->setSceneRect(0, 0, 1080, 780);
 
 	window_->setScene(scene);
 
@@ -97,7 +91,7 @@ void Ui::InterfaceJeu::creationVueCases()
 			}
 			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleurBase, box, &Ui::VueCase::mettreCouleurBase);
 			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleur, box, &Ui::VueCase::mettreCouleur);
-			QObject::connect(box, &Ui::VueCase::caseClique, plateau_, &Plateau::recevoirCaseClique);
+			QObject::connect(box, &Ui::VueCase::caseClique, &*plateau_, &Plateau::recevoirCaseClique);
 
 			mettreDansScene(box);
 
@@ -118,8 +112,8 @@ void Ui::InterfaceJeu::creationVuePiece()
 
 		j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
 
-		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, plateau_, &Plateau::recevoirPieceClique);
-		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, plateau_, &Plateau::enleverPieceElimine);
+		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
+		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
 
 
 		mettreDansScene(piece);
@@ -136,8 +130,8 @@ void Ui::InterfaceJeu::creationVuePiece()
 
 		j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
 
-		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, plateau_, &Plateau::recevoirPieceClique);
-		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, plateau_, &Plateau::enleverPieceElimine);
+		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
+		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
 
 
 		mettreDansScene(piece);
@@ -159,38 +153,54 @@ void Ui::InterfaceJeu::creationDesBord(int taille, int x, int y, QColor couleur,
 
 }
 
-void Ui::InterfaceJeu::finDuJeu(std::string gagnant)
+void Ui::InterfaceJeu::nouvellePartie()
 {
-	QString ok = QString::fromStdString(gagnant) + " a gagné";
+	scene->clear();
 
-	//scene->clear();
+	creationElementBord();
 
-	auto test = new QGraphicsTextItem();
-	test->setScale(6);
+	plateau_ = std::make_unique<Plateau>();
+
+	QObject::connect(&*plateau_, &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
+	QObject::connect(&*plateau_, &Plateau::MenuPrincipal, this, &InterfaceJeu::MenuPrincipal);
+
+	creationVueCases();
+	creationVuePiece();
+}
+
+void Ui::InterfaceJeu::MenuPrincipal(std::string gagnant)
+{
+	scene->clear();
+	plateau_ = nullptr;
+
+	window_->setBackgroundBrush(QBrush(QColor(236, 206, 91)));
+	
+	QString ok = QString::fromStdString(gagnant);
+
+	auto test = new QGraphicsTextItem(ok);
+	QFont f;
+	f.setPixelSize(23);
+	//f.setBold(true);
+	test->setFont(f);
+
+	test->boundingRect().setWidth(100);
 	test->setDefaultTextColor(Qt::darkMagenta);
-	test->setPos(width() * 0.5 - 200, height() / 2);
-	test->setPlainText(ok);
+	
+	qDebug() << test->boundingRect().width();
+	
+	test->setPos(width() * 0.25, height() * 0.25);
+	
 	scene->addItem(test);
 
+	Bouton* bouton = new Bouton("Nouvelle Partie", width() / 2, height() / 2);
+	QObject::connect(bouton, &Bouton::clicked , this, &InterfaceJeu::nouvellePartie);
+	mettreDansScene(bouton);
 
-	//delete plateau_;
-	/*initialisationFenetre();
-	creationElementBord();*/
+	Bouton* boutonQuitter = new Bouton("Quitter", width() / 2, height() / 2 + 100);
+	QObject::connect(boutonQuitter, &Bouton::clicked, this, [&]() { QCoreApplication::exit(0); });
 
-	//plateau_ = new Plateau();
+	mettreDansScene(boutonQuitter);
 
-	/*QObject::connect(plateau_, &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
-	QObject::connect(plateau_, &Plateau::finDuJeu, this, &InterfaceJeu::finDuJeu);*/
-
-	/*creationVueCases();
-	creationVuePiece();*/
-
-	/*quiDoitJouer = new QGraphicsTextItem();
-	quiDoitJouer->setScale(3);
-	quiDoitJouer->setDefaultTextColor(Qt::black);
-	quiDoitJouer->setPos(width() * 0.5 - 93, -2);
-	quiDoitJouer->setPlainText(ok);
-	scene->addItem(quiDoitJouer);*/
 }
 
 void Ui::InterfaceJeu::mettreDansScene(QGraphicsItem* object)

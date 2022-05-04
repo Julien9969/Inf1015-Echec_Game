@@ -114,6 +114,7 @@
   <ItemGroup>
     <ClCompile Include="bibliotheque_cours\bibliotheque_cours.cpp" />
     <ClCompile Include="bibliotheque_cours\verification_allocation.cpp" />
+    <ClCompile Include="Bouton.cpp" />
     <ClCompile Include="Calc.cpp" />
     <ClCompile Include="CalcWindow.cpp" />
     <ClCompile Include="Fou.cpp" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <QtMoc Include="ModelPieceEchec.h" />
     <QtMoc Include="ModelCase.h" />
+    <QtMoc Include="Bouton.h" />
     <ClInclude Include="Fou.h" />
     <ClInclude Include="Roi.h" />
     <ClInclude Include="StructSpecial.h" />

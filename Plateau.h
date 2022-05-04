@@ -54,7 +54,7 @@ namespace model {
 
 	signals:
 		void changementTour(std::string equipe);
-		void finDuJeu(std::string gagnant);
+		void MenuPrincipal(std::string gagnant);
 
 	public slots:
 		void recevoirPieceClique(ModelPieceEchec* pieceClique);

@@ -88,6 +88,9 @@
     <ClCompile Include="Fou.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Bouton.cpp">
+      <Filter>Source Files\Vue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Calc.hpp">
@@ -113,6 +116,9 @@
     </QtMoc>
     <QtMoc Include="ModelCase.h">
       <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="Bouton.h">
+      <Filter>Header Files\Vue</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

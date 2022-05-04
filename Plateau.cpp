@@ -141,8 +141,8 @@ void Plateau::recevoirPieceClique(model::ModelPieceEchec* pieceClique)
 			listeCases(pieceClique->lireMatricePos().ligne, pieceClique->lireMatricePos().colone)->mettrePiece(pieceActuelle_);
 
 			pieceActuelle_->mangeLaPiece(pieceClique);
-			echecEtMat(pieceActuelle_->lireEquipe());
 			tourDeJeuChangement(pieceActuelle_->lireEquipe());
+			echecEtMat(pieceActuelle_->lireEquipe());
 			pieceActuelle_ = nullptr;
 		}
 	}
@@ -274,9 +274,9 @@ void model::Plateau::echecEtMat(std::string equipeQuiVientDeJouer)
 	}
 
 
-	if ((AuMoins1emplacementValide == false) || (ListePieceBlanc.size() < 4 && ListePieceNoir.size() < 4) ) {
+	if ((AuMoins1emplacementValide == false) || (ListePieceBlanc.size() < 5 && ListePieceNoir.size() < 5) ) {
 		qDebug() << "C'est fini frr";
-		emit finDuJeu(pieceActuelle_->lireEquipe());
+		emit MenuPrincipal(pieceActuelle_->lireEquipe() + " a gagné");
 	}
 
 }

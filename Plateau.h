@@ -4,7 +4,6 @@
 #include <memory>
 #include <algorithm>
 #include <functional>
-//#include "StructSpecial.h"
 #include <QObject>
 #include "ModelCase.h"
 #include "ModelPieceEchec.h"
@@ -33,7 +32,7 @@ namespace model {
 
 		void tourDeJeuChangement(std::string quiJoue);
 		void listerDeplacementsValide(ModelPieceEchec* pieceActuelle);
-		bool deplacementMetEnEchec(/*ModelPieceEchec* pieceAdverse,*/ ModelPieceEchec* roi ,const MatricePosition& positionRoiModifie);
+		bool deplacementMetEnEchec(ModelPieceEchec* roi ,const MatricePosition& positionRoiModifie);
 		bool roiEnEchec(ModelPieceEchec* piece, const MatricePosition& positionRoiModifie);
 
 		void echecEtMat(std::string equipeQuiVientDeJouer);
@@ -43,9 +42,6 @@ namespace model {
 
 
 		model::ListeCases listeCases;
-
-		//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-
 
 	private:
 

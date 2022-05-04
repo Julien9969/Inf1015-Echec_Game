@@ -117,10 +117,9 @@ void Plateau::recevoirCaseClique(model::ModelCase* caseClique)
 		caseClique->mettrePiece(pieceActuelle_);
 		pieceActuelle_->positionner(caseClique->lirePosition(), caseClique->lirePixelPos());
 
-		echecEtMat(pieceActuelle_->lireEquipe());
 		tourDeJeuChangement(pieceActuelle_->lireEquipe());
-
 		couleurPlateauInitial();
+		echecEtMat(pieceActuelle_->lireEquipe());
 		pieceActuelle_ = nullptr;
 
 	}
@@ -150,7 +149,6 @@ void Plateau::recevoirPieceClique(model::ModelPieceEchec* pieceClique)
 		pieceActuelle_ = pieceClique;
 		listerDeplacementsValide(pieceActuelle_);
 		couleurSurCaseValide(pieceActuelle_->lireEmplacementValide());
-		qDebug() << "on Save";
 	}
 }
 
@@ -173,7 +171,7 @@ void Plateau::listerDeplacementsValide(ModelPieceEchec* pieceActuelle)
 		//On protege le roi si il est en echec avant move
 		if (dynamic_cast<Roi*>(pieceActuelle) == 0 && roiEnEchec(piece->get(), monRoi->get()->lireMatricePos()))
 		{
-			listeCases(pieceActuelle->lireMatricePos().ligne, pieceActuelle->lireMatricePos().colone)->enleverPiece();
+			listeCases(monRoi->get()->lireMatricePos().ligne, monRoi->get()->lireMatricePos().colone)->enleverPiece();
 
 			auto it = std::remove_if(pieceActuelle->lireEmplacementValide().begin(), pieceActuelle->lireEmplacementValide().end(),
 				[&](model::EmplacementValide& emplacement) {
@@ -195,11 +193,10 @@ void Plateau::listerDeplacementsValide(ModelPieceEchec* pieceActuelle)
 				pieceActuelle->lireEmplacementValide().erase(it, pieceActuelle->lireEmplacementValide().end());
 			}
 
-			listeCases(pieceActuelle->lireMatricePos().ligne, pieceActuelle->lireMatricePos().colone)->mettrePiece(pieceActuelle);
+			listeCases(monRoi->get()->lireMatricePos().ligne, monRoi->get()->lireMatricePos().colone)->mettrePiece(pieceActuelle);
 
 		}	
 		else {
-			//listeCases(pieceActuelle->lireMatricePos().ligne, pieceActuelle->lireMatricePos().colone)->enleverPiece();
 
 			auto it = std::remove_if(pieceActuelle->lireEmplacementValide().begin(), pieceActuelle->lireEmplacementValide().end(),
 				[&](EmplacementValide& deplacemet){
@@ -224,8 +221,6 @@ void Plateau::listerDeplacementsValide(ModelPieceEchec* pieceActuelle)
 			if (it != pieceActuelle->lireEmplacementValide().end()) {
 				pieceActuelle->lireEmplacementValide().erase(it, pieceActuelle->lireEmplacementValide().end());
 			}
-
-			//listeCases(pieceActuelle->lireMatricePos().ligne, pieceActuelle->lireMatricePos().colone)->mettrePiece(pieceActuelle);
 		}
 	}
 }
@@ -263,7 +258,8 @@ void model::Plateau::echecEtMat(std::string equipeQuiVientDeJouer)
 
 	bool AuMoins1emplacementValide = false;
 
-	for (auto&& piece = listePieceAdverse->begin(); piece != listePieceAdverse->end(); piece++) {
+	for (auto&& piece = listePieceAdverse->begin(); piece != listePieceAdverse->end(); piece++) 
+	{
 		listerDeplacementsValide(piece->get());
 
 		if (!(piece->get()->listEmplacementEstVide())) {
@@ -274,11 +270,14 @@ void model::Plateau::echecEtMat(std::string equipeQuiVientDeJouer)
 	}
 
 
-	if ((AuMoins1emplacementValide == false) || (ListePieceBlanc.size() < 5 && ListePieceNoir.size() < 5) ) {
-		qDebug() << "C'est fini frr";
+	if ((AuMoins1emplacementValide == false))
+	{
 		emit MenuPrincipal(pieceActuelle_->lireEquipe() + " a gagné");
 	}
-
+	else if ((ListePieceBlanc.size() < 2 && ListePieceNoir.size() < 2))
+	{
+		emit MenuPrincipal("Egalité");
+	}
 }
 
 void Plateau::couleurSurCaseValide(std::list<model::EmplacementValide> listeEmplacements)
@@ -290,7 +289,7 @@ void Plateau::couleurSurCaseValide(std::list<model::EmplacementValide> listeEmpl
 
 void Plateau::couleurPlateauInitial() 
 {
-	qDebug() << "seze : " << listeCases.listeCases.size();
+	//qDebug() << "seze : " << listeCases.listeCases.size();
 	for (auto&& box : listeCases) {
 		emit box->mettreCouleurBase();
 	}
@@ -299,7 +298,7 @@ void Plateau::couleurPlateauInitial()
 void model::Plateau::tourDeJeuChangement(std::string quiJoue)
 {
 	tourDeJeu == "Noir" ? tourDeJeu = "Blanc" : tourDeJeu = "Noir";
-	qDebug() << QString::fromStdString(tourDeJeu.tour);
+	//qDebug() << QString::fromStdString(tourDeJeu.tour);
 	emit changementTour(tourDeJeu.tour);
 }
 

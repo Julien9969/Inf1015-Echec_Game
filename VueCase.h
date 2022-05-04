@@ -30,9 +30,6 @@ namespace Ui {
 
 		void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
-		void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-
-
 	private:
 		int ligne_, colone_;
 
@@ -51,5 +48,4 @@ namespace Ui {
 		
 
 	};
-
 }

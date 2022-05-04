@@ -3,6 +3,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsTextItem>
 #include <QBrush>
+#include <QFont>
 
 class Bouton :public QObject, public QGraphicsRectItem {
     Q_OBJECT

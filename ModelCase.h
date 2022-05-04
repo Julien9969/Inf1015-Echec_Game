@@ -52,12 +52,14 @@ namespace model {
 		}
 
 		ModelCase* operator()(int x, int y) {
-			return listeCases[x * 8 + y].get();
+			return listeCases[size_t(x * 8 + y)].get();
 		}
 
 		void push_back(std::unique_ptr<ModelCase> box) {
 			listeCases.push_back(move(box));
 		}
+
+		const size_t size() const { return listeCases.size(); }
 
 		auto begin() { return listeCases.begin(); }
 

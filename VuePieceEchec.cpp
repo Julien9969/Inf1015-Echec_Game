@@ -6,15 +6,11 @@ using Ui::VuePieceEchec;
 VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* parent) : QGraphicsPixmapItem(parent)
 {
 	pieceAssocie_ = piece;
-    //setAcceptDrops(true);
+    
 	QObject::connect(piece, &model::ModelPieceEchec::mettrePositionVue, this, &Ui::VuePieceEchec::positionnerPiece);
 	QObject::connect(piece, &model::ModelPieceEchec::suppressionPiece, this, [this]() { delete this; });
-
 	
-	setScale(1);//1.4
-	//qDebug() << transformationMode();
 	setPixmap(QPixmap(pieceAssocie_->lireCheminImage()));
-	//setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 	setAcceptHoverEvents(true);
 	
 	setCursor(Qt::PointingHandCursor);
@@ -39,6 +35,7 @@ void VuePieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void VuePieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
+	event->accept();
 	if (pieceAssocie_->lireEquipe() == "Noir") {
 		qDebug() << "noir";
 		qDebug() << lirePiece()->lireMatricePos().ligne;
@@ -51,21 +48,7 @@ void VuePieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 		qDebug() << lirePiece()->lireMatricePos().colone;
 
 	}
-	//this->~VuePieceEchec();
 }
-
-
-//void PieceEchec::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
-//	// if there is a cardToPlace, then make it follow the mouse
-//	if (estClique) {
-//		setPos(event->scenePos().x() - 45, event->scenePos().y() - 45);
-//		qDebug() << "piece move" << event->pos();
-//
-//	}
-//
-//	qDebug() << "move";
-//	QGraphicsPixmapItem::mouseMoveEvent(event);
-//}
 
 
 

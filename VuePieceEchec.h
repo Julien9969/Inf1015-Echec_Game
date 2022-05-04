@@ -15,23 +15,16 @@ namespace Ui {
 	public:
 		VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* parent = NULL);
 		~VuePieceEchec() = default;
-
-
-		void mousePressEvent(QGraphicsSceneMouseEvent* event);
-		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
-		//void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-
 		
 		model::ModelPieceEchec* lirePiece() { return pieceAssocie_; }
 
-	
 	private:
 
 		model::ModelPieceEchec* pieceAssocie_;
 
-
 	public slots:
-		//void recevoirImagePiece();
+		void mousePressEvent(QGraphicsSceneMouseEvent* event);
+		void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
 		void positionnerPiece(PixelPosition scenePosition);
 
 	signals:

@@ -5,7 +5,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QGraphicsRectItem>
-#include <QPushButton>
 #include "Bouton.h"
 #include <cppitertools/range.hpp>
 
@@ -27,11 +26,7 @@ namespace Ui {
 	public:
 		InterfaceJeu(QWidget* parent = NULL);
 
-		//~InterfaceJeu() = default;
-		~InterfaceJeu() {
-			/*delete scene; delete window_;*/
-		};
-
+		~InterfaceJeu() = default;
 
 		void initialisationFenetre();
 
@@ -43,9 +38,12 @@ namespace Ui {
 		void creationVueCases();
 		void creationVuePiece();
 
+		model::Plateau* plateau() const { return plateau_.get(); }
+		QGraphicsScene* scene() const { return scene_; }
+
 	private:
 
-		QGraphicsScene* scene;
+		QGraphicsScene* scene_;
 		QGraphicsView* window_;
 		
 		std::unique_ptr<model::Plateau> plateau_;
@@ -55,9 +53,6 @@ namespace Ui {
 	public slots:
 		void mettreDansScene(QGraphicsItem* object);
 		void mettreTour(std::string equipeQuiJoue);
-		void MenuPrincipal(std::string gagnant = "");
-
-
+		void MenuPrincipal(std::string textePrincipal = "Echec de Fou");
 	};
-
 }

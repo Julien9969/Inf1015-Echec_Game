@@ -37,7 +37,6 @@ void Roi::listerDeplacementsSemiValides(ListeCases& listeCase)
 		if (listeCase(ligne, colone)->getPiece() != nullptr) {
 			if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
 				listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
-				qDebug() << "mechant";
 			}
 		}
 		else

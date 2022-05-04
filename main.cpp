@@ -1,7 +1,6 @@
-#include "Calc.hpp"
-#include "CalcWindow.hpp"
+//#include "Calc.hpp"
+//#include "CalcWindow.hpp"
 #include "Interfacejeu.h"
-//#include "Plateau.h"
 #include <memory>
 #include <QApplication>
 
@@ -31,7 +30,7 @@ void initialiserBibliothequeCours([[maybe_unused]] int argc, [[maybe_unused]] ch
 }
 
 
-bibliotheque_cours::BreakpointSurAllocations breakpointSurAllocations = { 541U, 542U, 4439U, };
+//bibliotheque_cours::BreakpointSurAllocations breakpointSurAllocations = { 541U, 542U, 4439U, };
 int main(int argc, char *argv[])
 {
 	bibliotheque_cours::VerifierFuitesAllocations verifierFuitesAllocations;
@@ -39,7 +38,6 @@ int main(int argc, char *argv[])
 	initialiserBibliothequeCours(argc, argv);
 
 	Ui::InterfaceJeu jeu;
-	//Plateau plat(&jeu);
 
 	jeu.show();
 	return app.exec();

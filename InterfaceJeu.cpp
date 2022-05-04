@@ -10,12 +10,10 @@ using model::Plateau;
 Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 {
 	window_ = new QGraphicsView(this);
-	//setCentralWidget(window_);
-	scene = new QGraphicsScene(window_);
+	scene_ = new QGraphicsScene(window_);
 	initialisationFenetre();
 
 	MenuPrincipal();
-	
 }
 
 void Ui::InterfaceJeu::initialisationFenetre()
@@ -27,15 +25,13 @@ void Ui::InterfaceJeu::initialisationFenetre()
 	window_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	window_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-	scene->setSceneRect(0, 0, 1080, 780);
+	scene_->setSceneRect(0, 0, 1080, 780);
 
-	window_->setScene(scene);
-
+	window_->setScene(scene_);
 }
 
 void Ui::InterfaceJeu::creationElementBord()
 {
-	//scene->clear()
 	int taillePaneau = (width() - 720) / 2;
 
 	creationDesBord(taillePaneau, 0, 0, Qt::blue, 0.3);
@@ -46,18 +42,18 @@ void Ui::InterfaceJeu::creationElementBord()
 	joueur1->setPos(50, 5);
 	joueur1->setScale(1);
 	joueur1->setDefaultTextColor(Qt::blue);
-	scene->addItem(joueur1);
+	scene_->addItem(joueur1);
 
 	QGraphicsTextItem* joueur2 = new QGraphicsTextItem("Jsp quoi on verra 2 :");
 	joueur2->setPos(width() - taillePaneau + 50, 5);
-	scene->addItem(joueur2);
+	scene_->addItem(joueur2);
 
 	quiDoitJouer = new QGraphicsTextItem();
 	quiDoitJouer->setScale(3);
 	quiDoitJouer->setDefaultTextColor(Qt::black);
 	quiDoitJouer->setPlainText("Tour : Blanc");
 	quiDoitJouer->setPos(width() * 0.5 - 93, -2);
-	scene->addItem(quiDoitJouer);
+	scene_->addItem(quiDoitJouer);
 
 	setWindowTitle("Jeu d'Echec de Fou");
 }
@@ -141,21 +137,18 @@ void Ui::InterfaceJeu::creationVuePiece()
 
 void Ui::InterfaceJeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
 {
-	 //qDebug() << scene->height();
-
 	QGraphicsRectItem* panel = new QGraphicsRectItem(x, y, taille, height());
 	QBrush brush;
 	brush.setStyle(Qt::SolidPattern);
 	brush.setColor(couleur);
 	panel->setBrush(brush);
 	panel->setOpacity(opacite);
-	scene->addItem(panel);
-
+	scene_->addItem(panel);
 }
 
 void Ui::InterfaceJeu::nouvellePartie()
 {
-	scene->clear();
+	scene_->clear();
 
 	creationElementBord();
 
@@ -168,29 +161,23 @@ void Ui::InterfaceJeu::nouvellePartie()
 	creationVuePiece();
 }
 
-void Ui::InterfaceJeu::MenuPrincipal(std::string gagnant)
+void Ui::InterfaceJeu::MenuPrincipal(std::string textePrincipal)
 {
-	scene->clear();
+	scene_->clear();
 	plateau_ = nullptr;
 
 	window_->setBackgroundBrush(QBrush(QColor(236, 206, 91)));
 	
-	QString ok = QString::fromStdString(gagnant);
+	QString ok = QString::fromStdString(textePrincipal);
 
 	auto test = new QGraphicsTextItem(ok);
 	QFont f;
-	f.setPixelSize(23);
-	//f.setBold(true);
+	f.setPixelSize(100);
+	f.setBold(true);
 	test->setFont(f);
-
-	test->boundingRect().setWidth(100);
-	test->setDefaultTextColor(Qt::darkMagenta);
-	
-	qDebug() << test->boundingRect().width();
-	
-	test->setPos(width() * 0.25, height() * 0.25);
-	
-	scene->addItem(test);
+	test->setDefaultTextColor(Qt::black);
+	test->setPos(width() * 0.5 - test->boundingRect().width() / 2, 40);
+	scene_->addItem(test);
 
 	Bouton* bouton = new Bouton("Nouvelle Partie", width() / 2, height() / 2);
 	QObject::connect(bouton, &Bouton::clicked , this, &InterfaceJeu::nouvellePartie);
@@ -200,11 +187,10 @@ void Ui::InterfaceJeu::MenuPrincipal(std::string gagnant)
 	QObject::connect(boutonQuitter, &Bouton::clicked, this, [&]() { QCoreApplication::exit(0); });
 
 	mettreDansScene(boutonQuitter);
-
 }
 
 void Ui::InterfaceJeu::mettreDansScene(QGraphicsItem* object)
 {
-	scene->addItem(object);
+	scene_->addItem(object);
 }
 

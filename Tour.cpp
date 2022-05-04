@@ -26,7 +26,6 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 		if (listeCase(ligne, lireMatricePos().colone)->getPiece() != nullptr) {
 			if (listeCase(ligne, lireMatricePos().colone)->getPiece()->lireEquipe() != equipe_) {
 				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
-				qDebug() << "pas equipe apfhepfaefi";
 			}
 			break;
 		}
@@ -41,7 +40,6 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 		if (listeCase(ligne, lireMatricePos().colone)->getPiece() != nullptr) {
 			if (listeCase(ligne, lireMatricePos().colone)->getPiece()->lireEquipe() != equipe_) {
 				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
-				qDebug() << "pas equipe apfhepfaefi";
 
 			}
 			break;
@@ -74,7 +72,6 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 		if (listeCase(lireMatricePos().ligne, colone)->getPiece() != nullptr) {
 			if (listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe() != equipe_) {
 				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
-				qDebug() << "pas equipe apfhepfaefi";
 
 			}
 			break;

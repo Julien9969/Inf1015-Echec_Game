@@ -10,7 +10,6 @@ Ui::VueCase::VueCase(qreal x, qreal y, qreal width, qreal height, model::ModelCa
 	brush.setStyle(Qt::SolidPattern);
 	setBrush(brush);
 	
-	//setFlags(QGraphicsItem::ItemIsSelectable); //QGraphicsItem::ItemIsMovable | 
 	setAcceptHoverEvents(true);
 	setAcceptDrops(true);
 }
@@ -43,6 +42,8 @@ void Ui::VueCase::mettreCouleurBase()
 
 void Ui::VueCase::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
+	event->accept();
+
 	brush.setColor(Qt::darkGray);
 	setBrush(brush);
 
@@ -57,22 +58,13 @@ void Ui::VueCase::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 	caseAssocie_->getPiece() != nullptr ? ok = QString::fromStdString(caseAssocie_->getPiece()->lireEquipe()) : ok = " Null";
 
 	qDebug() <<" case pos : "<< ok << " " << ligne_ << " " << colone_;
-	
 }
 
 
-void Ui::VueCase::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
-	mettreCouleur(couleurActuelle);
-	
-	//qDebug() << "leaving";
-}
-
-
-void Ui::VueCase::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void Ui::VueCase::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) 
 {
-	
-	qDebug() << "deClique" << " " << ligne_ << " " << colone_;
-
+	event->accept();
+	mettreCouleur(couleurActuelle);
 }
 
 
@@ -84,6 +76,5 @@ void Ui::VueCase::mousePressEvent(QGraphicsSceneMouseEvent* event)
 		qDebug() << "cliqueCase";
 		emit caseClique(caseAssocie_);
 	}
-	
 }
 

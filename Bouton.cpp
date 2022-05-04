@@ -1,6 +1,4 @@
 #include "Bouton.h"
-#include <QGraphicsTextItem>
-#include <QBrush>
 #include <QDebug>
 
 Bouton::Bouton(QString name, int xPos, int yPos, QGraphicsItem* parent) : QGraphicsRectItem(parent) {
@@ -13,11 +11,14 @@ Bouton::Bouton(QString name, int xPos, int yPos, QGraphicsItem* parent) : QGraph
     setBrush(brush);
 
     text = new QGraphicsTextItem(name, this);
-    text->setScale(3.15);
+    QFont f;
+    f.setPixelSize(35);
+    //f.setBold(true);
+    text->setFont(f);
     text->setDefaultTextColor(Qt::white);
     
-    //qDebug() << text->boundingRect().width();
-    text->setPos(xPos - text->boundingRect().width() * 1.55, yPos + 85);
+    qDebug() << text->boundingRect().width();
+    text->setPos(xPos - text->boundingRect().width() /2 , yPos + 80 + text->boundingRect().height()/4 /*+ 80*/);
 
     setAcceptHoverEvents(true);
 }

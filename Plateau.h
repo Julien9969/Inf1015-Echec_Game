@@ -32,9 +32,11 @@ namespace model {
 		void couleurPlateauInitial();
 
 		void tourDeJeuChangement(std::string quiJoue);
-		void listerDeplacementsValide();
-		bool roiEnEchec(ModelPieceEchec* piece, ModelPieceEchec* roi);
-		bool deplacementMetEnEchec();
+		void listerDeplacementsValide(ModelPieceEchec* pieceActuelle);
+		bool deplacementMetEnEchec(/*ModelPieceEchec* pieceAdverse,*/ ModelPieceEchec* roi ,const MatricePosition& positionRoiModifie);
+		bool roiEnEchec(ModelPieceEchec* piece, const MatricePosition& positionRoiModifie);
+
+		void echecEtMat(std::string equipeQuiVientDeJouer);
 
 		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceNoir;
 		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceBlanc;
@@ -52,6 +54,7 @@ namespace model {
 
 	signals:
 		void changementTour(std::string equipe);
+		void finDuJeu(std::string gagnant);
 
 	public slots:
 		void recevoirPieceClique(ModelPieceEchec* pieceClique);

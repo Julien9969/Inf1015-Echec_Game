@@ -28,10 +28,6 @@ void Fou::listerDeplacementsSemiValides(ListeCases& listeCase)
                 listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
                 qDebug() << "pas equipe apfhepfaefi";
             }
-            else {
-                //on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-                pieceAutourAlie.push_back({ ligne, colone, Qt::transparent });
-            }
             break;
         }
         else {
@@ -46,10 +42,6 @@ void Fou::listerDeplacementsSemiValides(ListeCases& listeCase)
             if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
                 listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
                 qDebug() << "pas equipe apfhepfaefi";
-            }
-            else {
-                //on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-                pieceAutourAlie.push_back({ ligne, colone, Qt::transparent });
             }
             break;
         }
@@ -66,10 +58,6 @@ void Fou::listerDeplacementsSemiValides(ListeCases& listeCase)
                 listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
                 qDebug() << "pas equipe apfhepfaefi";
             }
-            else {
-                //on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-                pieceAutourAlie.push_back({ ligne, colone, Qt::transparent });
-            }
             break;
         }
         else {
@@ -84,10 +72,6 @@ void Fou::listerDeplacementsSemiValides(ListeCases& listeCase)
             if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
                 listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
                 qDebug() << "pas equipe apfhepfaefi";
-            }
-            else {
-                //on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-                pieceAutourAlie.push_back({ ligne, colone, Qt::transparent });
             }
             break;
         }

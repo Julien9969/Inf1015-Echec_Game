@@ -20,6 +20,7 @@ Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 	plateau_ = new Plateau();
 
 	QObject::connect(plateau_, &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
+	QObject::connect(plateau_, &Plateau::finDuJeu, this, &InterfaceJeu::finDuJeu);
 
 	creationVueCases();
 	creationVuePiece();
@@ -158,6 +159,39 @@ void Ui::InterfaceJeu::creationDesBord(int taille, int x, int y, QColor couleur,
 
 }
 
+void Ui::InterfaceJeu::finDuJeu(std::string gagnant)
+{
+	QString ok = QString::fromStdString(gagnant) + " a gagné";
+
+	//scene->clear();
+
+	auto test = new QGraphicsTextItem();
+	test->setScale(6);
+	test->setDefaultTextColor(Qt::darkMagenta);
+	test->setPos(width() * 0.5 - 200, height() / 2);
+	test->setPlainText(ok);
+	scene->addItem(test);
+
+
+	//delete plateau_;
+	/*initialisationFenetre();
+	creationElementBord();*/
+
+	//plateau_ = new Plateau();
+
+	/*QObject::connect(plateau_, &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
+	QObject::connect(plateau_, &Plateau::finDuJeu, this, &InterfaceJeu::finDuJeu);*/
+
+	/*creationVueCases();
+	creationVuePiece();*/
+
+	/*quiDoitJouer = new QGraphicsTextItem();
+	quiDoitJouer->setScale(3);
+	quiDoitJouer->setDefaultTextColor(Qt::black);
+	quiDoitJouer->setPos(width() * 0.5 - 93, -2);
+	quiDoitJouer->setPlainText(ok);
+	scene->addItem(quiDoitJouer);*/
+}
 
 void Ui::InterfaceJeu::mettreDansScene(QGraphicsItem* object)
 {

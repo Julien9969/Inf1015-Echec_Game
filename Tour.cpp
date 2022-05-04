@@ -28,10 +28,6 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
 				qDebug() << "pas equipe apfhepfaefi";
 			}
-			else {
-				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-				pieceAutourAlie.push_back({ ligne, lireMatricePos().colone, Qt::transparent });
-			}
 			break;
 		}
 		else {
@@ -47,10 +43,6 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
 				qDebug() << "pas equipe apfhepfaefi";
 
-			}
-			else {
-				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-				pieceAutourAlie.push_back({ ligne, lireMatricePos().colone, Qt::transparent });
 			}
 			break;
 		}
@@ -68,10 +60,6 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 		
 
 			}
-			else {
-				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-				pieceAutourAlie.push_back({ lireMatricePos().ligne, colone, Qt::transparent});
-			}
 			break;
 		}
 		else {
@@ -88,10 +76,6 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
 				qDebug() << "pas equipe apfhepfaefi";
 
-			}
-			else {
-				//on enregistre temporairement les deplacements sur les aliés mais ils seront supprimé plus tard
-				pieceAutourAlie.push_back({ lireMatricePos().ligne, colone, Qt::transparent });
 			}
 			break;
 		}

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <utility>
 
 struct TourDeJeu{ 
 	TourDeJeu operator=(std::string str) {
@@ -17,7 +18,16 @@ struct TourDeJeu{
 	std::string tour = "Blanc";
 };
 
-struct MatricePosition { int ligne = 0, colone = 0; };
+struct MatricePosition { 
+	int ligne = 0, colone = 0;
+
+	/*MatricePosition operator=(std::pair<int, int> nouvellePos) {
+		ligne = nouvellePos.first;
+		colone = nouvellePos.second;
+
+		return *this;
+	}*/
+};
 
 struct PixelPosition
 {

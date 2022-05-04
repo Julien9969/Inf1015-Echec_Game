@@ -50,6 +50,7 @@ namespace Ui {
 	public slots:
 		void mettreDansScene(QGraphicsItem* object);
 		void mettreTour(std::string equipeQuiJoue);
+		void finDuJeu(std::string gagnant);
 
 
 	};

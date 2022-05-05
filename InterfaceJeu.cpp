@@ -169,6 +169,10 @@ void Ui::InterfaceJeu::MenuPrincipal(std::string textePrincipal)
 	
 	QString ok = QString::fromStdString(textePrincipal);
 
+	auto image = new QGraphicsPixmapItem(QPixmap("images/imageMenu"));
+	image->setPos(width() * 0.5 - image->boundingRect().width() / 2, height() / 4);
+	mettreDansScene(image);
+
 	auto test = new QGraphicsTextItem(ok);
 	QFont f;
 	f.setPixelSize(100);
@@ -176,13 +180,13 @@ void Ui::InterfaceJeu::MenuPrincipal(std::string textePrincipal)
 	test->setFont(f);
 	test->setDefaultTextColor(Qt::black);
 	test->setPos(width() * 0.5 - test->boundingRect().width() / 2, 40);
-	scene_->addItem(test);
+	mettreDansScene(test);
 
-	Bouton* bouton = new Bouton("Nouvelle Partie", width() / 2, height() / 2);
+	Bouton* bouton = new Bouton("Nouvelle Partie", width() / 2, height() / 2 + 50);
 	QObject::connect(bouton, &Bouton::clicked , this, &InterfaceJeu::nouvellePartie);
 	mettreDansScene(bouton);
 
-	Bouton* boutonQuitter = new Bouton("Quitter", width() / 2, height() / 2 + 100);
+	Bouton* boutonQuitter = new Bouton("Quitter", width() / 2, height() / 2 + 150);
 	QObject::connect(boutonQuitter, &Bouton::clicked, this, [&]() { QCoreApplication::exit(0); });
 
 	mettreDansScene(boutonQuitter);

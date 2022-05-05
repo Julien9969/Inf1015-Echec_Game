@@ -16,7 +16,7 @@ Plateau::Plateau()
 	creeCases();
 	creePiecesNoir();
 	creePieceBlanc();
-	mettreLesPieces();
+	
 }
 
 void Plateau::creeCases() 
@@ -79,11 +79,12 @@ void Plateau::mettreLesPieces()
 {
 	model::ModelCase* tempCase = nullptr;
 	ModelPieceEchec* tempPiece = nullptr;
+	int positionPiece[5] = {0, 7, 4, 2, 5};
 	int i = 0;
-	
+
 	for (auto&& j = ListePieceNoir.begin(); j != ListePieceNoir.end(); j++) {
 			
-		tempCase = listeCases[i++];
+		tempCase = listeCases[positionPiece[i++]];
 		tempPiece = j->get();
 
 		tempCase->mettrePiece(tempPiece);
@@ -95,7 +96,7 @@ void Plateau::mettreLesPieces()
 	
 	for (auto&& j = ListePieceBlanc.begin(); j != ListePieceBlanc.end(); j++) {
 
-		tempCase = listeCases[56 + i++];
+		tempCase = listeCases[56 + positionPiece[i++]];
 		tempPiece = j->get();
 
 		tempCase->mettrePiece(tempPiece);
@@ -198,6 +199,10 @@ void Plateau::listerDeplacementsValide(ModelPieceEchec* pieceActuelle)
 		}	
 		else {
 
+			if (pieceActuelle != nullptr) {
+				listeCases(pieceActuelle->lireMatricePos().ligne, pieceActuelle->lireMatricePos().colone)->enleverPiece();
+			}
+
 			auto it = std::remove_if(pieceActuelle->lireEmplacementValide().begin(), pieceActuelle->lireEmplacementValide().end(),
 				[&](EmplacementValide& deplacemet){
 					model::ModelPieceEchec* tempsPiece = listeCases(deplacemet.ligne, deplacemet.colone)->getPiece();
@@ -221,6 +226,8 @@ void Plateau::listerDeplacementsValide(ModelPieceEchec* pieceActuelle)
 			if (it != pieceActuelle->lireEmplacementValide().end()) {
 				pieceActuelle->lireEmplacementValide().erase(it, pieceActuelle->lireEmplacementValide().end());
 			}
+
+			listeCases(pieceActuelle->lireMatricePos().ligne, pieceActuelle->lireMatricePos().colone)->mettrePiece(pieceActuelle);
 		}
 	}
 }

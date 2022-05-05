@@ -1,9 +1,6 @@
 #include "InterfaceJeu.h"
 #include <QDebug>
 
-//#include <QGraphicsDropShadowEffect>
-
-
 using iter::range;
 using model::Plateau;
 
@@ -11,6 +8,7 @@ Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 {
 	window_ = new QGraphicsView(this);
 	scene_ = new QGraphicsScene(window_);
+
 	initialisationFenetre();
 
 	MenuPrincipal();
@@ -25,7 +23,7 @@ void Ui::InterfaceJeu::initialisationFenetre()
 	window_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	window_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-	scene_->setSceneRect(0, 0, 1080, 780);
+	scene_->setSceneRect(0, 0, 1080, 778);
 
 	window_->setScene(scene_);
 }
@@ -34,17 +32,20 @@ void Ui::InterfaceJeu::creationElementBord()
 {
 	int taillePaneau = (width() - 720) / 2;
 
-	creationDesBord(taillePaneau, 0, 0, Qt::blue, 0.3);
+	creationDesBord(taillePaneau, 0, 0, QColor(114, 137, 218), 1);
 
-	creationDesBord(taillePaneau, width() - taillePaneau, 0, Qt::red, 0.3);
+	creationDesBord(taillePaneau, width() - taillePaneau, 0, QColor(255, 78, 80), 1);
 
-	QGraphicsTextItem* joueur1 = new QGraphicsTextItem("Jsp quoi on verra 1 :\n yufuyfuyf");
+	QFont f;
+	f.setPixelSize(30);
+
+	QGraphicsTextItem* joueur1 = new QGraphicsTextItem("Blanc : ");
 	joueur1->setPos(50, 5);
-	joueur1->setScale(1);
-	joueur1->setDefaultTextColor(Qt::blue);
+	joueur1->setFont(f);
 	scene_->addItem(joueur1);
 
-	QGraphicsTextItem* joueur2 = new QGraphicsTextItem("Jsp quoi on verra 2 :");
+	QGraphicsTextItem* joueur2 = new QGraphicsTextItem("Noir : ");
+	joueur2->setFont(f);
 	joueur2->setPos(width() - taillePaneau + 50, 5);
 	scene_->addItem(joueur2);
 
@@ -79,11 +80,10 @@ void Ui::InterfaceJeu::creationVueCases()
 			box->mettreCoordonnees(i, j);
 
 			if (((i + j) % 2) == 0) {
-
 				box->mettreCouleurbase(QColor(54, 69, 137));
 			}
 			else {
-				box->mettreCouleurbase(Qt::white);
+				box->mettreCouleurbase(QColor(238, 238, 238));
 			}
 			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleurBase, box, &Ui::VueCase::mettreCouleurBase);
 			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleur, box, &Ui::VueCase::mettreCouleur);
@@ -97,16 +97,13 @@ void Ui::InterfaceJeu::creationVueCases()
 
 void Ui::InterfaceJeu::creationVuePiece()
 {
-	model::ModelCase* tempCase;
-	int i = 0;
-
 	for (auto&& j = plateau_->ListePieceNoir.begin(); j != plateau_->ListePieceNoir.end(); j++) {
 
-		tempCase = plateau_->listeCases[i++];
+		//tempCase = plateau_->listeCases[i++];
 
 		VuePieceEchec* piece = new VuePieceEchec(j->get());
 
-		j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
+		//j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
 
 		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
 		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
@@ -116,15 +113,15 @@ void Ui::InterfaceJeu::creationVuePiece()
 
 	}
 
-	i = 0;
+	//i = 0;
 
 	for (auto&& j = plateau_->ListePieceBlanc.begin(); j != plateau_->ListePieceBlanc.end(); j++) {
 
-		tempCase = plateau_->listeCases[56 + i++];
+		//tempCase = plateau_->listeCases[56 + i++];
 
 		VuePieceEchec* piece = new VuePieceEchec(j->get());
 
-		j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
+		//j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
 
 		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
 		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
@@ -132,6 +129,8 @@ void Ui::InterfaceJeu::creationVuePiece()
 
 		mettreDansScene(piece);
 	}
+
+	plateau_->mettreLesPieces();
 }
 
 

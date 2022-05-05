@@ -5,10 +5,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QGraphicsRectItem>
-#include "Bouton.h"
 #include <cppitertools/range.hpp>
 
-
+#include "Bouton.h"
 #include "VueCase.h"
 #include "VuePieceEchec.h"
 #include "Plateau.h"

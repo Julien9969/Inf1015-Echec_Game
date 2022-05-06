@@ -1,19 +1,27 @@
+/*
+* Classe implémentant la logique du jeu d'echec
+* s'occupe de mettre en place le jeu et fait les vérifications d'échec
+*
+* Fichier : Plateau.h, Plateau.cpp
+* Auteurs : Sebastian Espin, Julien Roux
+* Date : 05/05/2022
+* Crée : 28/04/2022
+*/
+
 #pragma once
 #include <cppitertools/range.hpp>
 #include <vector>
 #include <memory>
 #include <algorithm>
 #include <functional>
-#include <QObject>
-#include "ModelCase.h"
-#include "ModelPieceEchec.h"
-#include "VuePieceEchec.h"
+#include "ModeleCase.h"
+#include "ModelePieceEchec.h"
 #include "Tour.h" 
 #include "Roi.h"
 #include "Fou.h"
 
 
-namespace model {
+namespace Modele {
 
 	class Plateau : public QObject
 	{
@@ -31,21 +39,21 @@ namespace model {
 		void couleurPlateauInitial();
 
 		void tourDeJeuChangement(std::string quiJoue);
-		void listerDeplacementsValide(ModelPieceEchec* pieceActuelle);
-		bool deplacementMetEnEchec(ModelPieceEchec* roi ,const MatricePosition& positionRoiModifie);
-		bool roiEnEchec(ModelPieceEchec* piece, const MatricePosition& positionRoiModifie);
+		void listerDeplacementsValide(ModelePieceEchec* pieceActuelle);
+		bool deplacementMetEnEchec(ModelePieceEchec* roi ,const MatricePosition& positionRoiModifie);
+		bool roiEnEchec(ModelePieceEchec* piece, const MatricePosition& positionRoiModifie);
 
 		void echecEtMat(std::string equipeQuiVientDeJouer);
 
-		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceNoir;
-		std::vector<std::unique_ptr<ModelPieceEchec>> ListePieceBlanc;
+		std::vector<std::unique_ptr<ModelePieceEchec>> ListePieceNoir;
+		std::vector<std::unique_ptr<ModelePieceEchec>> ListePieceBlanc;
 
 
-		model::ListeCases listeCases;
+		Modele::ListeCases listeCases;
 
 	private:
 
-		ModelPieceEchec* pieceActuelle_;
+		ModelePieceEchec* pieceActuelle_;
 		TourDeJeu tourDeJeu;
 
 	signals:
@@ -53,9 +61,9 @@ namespace model {
 		void MenuPrincipal(std::string gagnant);
 
 	public slots:
-		void recevoirPieceClique(ModelPieceEchec* pieceClique);
-		void recevoirCaseClique(ModelCase* caseClique);
-		void enleverPieceElimine(ModelPieceEchec* piece);
+		void recevoirPieceClique(ModelePieceEchec* pieceClique);
+		void recevoirCaseClique(ModeleCase* caseClique);
+		void enleverPieceElimine(ModelePieceEchec* piece);
 
 	};
 

@@ -1,14 +1,15 @@
+//Corps de la classe VuePieceEchec
 #include "VuePieceEchec.h"
 #include "QDebug"
 
 using Ui::VuePieceEchec;
 
-VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* parent) : QGraphicsPixmapItem(parent)
+VuePieceEchec::VuePieceEchec(Modele::ModelePieceEchec* piece, QGraphicsItem* parent) : QGraphicsPixmapItem(parent)
 {
 	pieceAssocie_ = piece;
     
-	QObject::connect(piece, &model::ModelPieceEchec::mettrePositionVue, this, &Ui::VuePieceEchec::positionnerPiece);
-	QObject::connect(piece, &model::ModelPieceEchec::suppressionPiece, this, [this]() { delete this; });
+	QObject::connect(piece, &Modele::ModelePieceEchec::mettrePositionVue, this, &Ui::VuePieceEchec::positionnerPiece);
+	QObject::connect(piece, &Modele::ModelePieceEchec::suppressionPiece, this, [this]() { delete this; });
 	
 	setPixmap(QPixmap(pieceAssocie_->lireCheminImage()));
 	setAcceptHoverEvents(true);
@@ -20,6 +21,7 @@ VuePieceEchec::VuePieceEchec(model::ModelPieceEchec* piece, QGraphicsItem* paren
 
 void VuePieceEchec::positionnerPiece(PixelPosition scenePosition)
 {
+	emit jouerSon("Sons/Move.mp3");
 	setPos(scenePosition.x, scenePosition.y);
 }
 
@@ -28,7 +30,7 @@ void VuePieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{
-		qDebug() << "clique" << pieceAssocie_->lireMatricePos().ligne << pieceAssocie_->lireMatricePos().colone;
+		qDebug() << "clique" << pieceAssocie_->lireMatricePos().ligne << pieceAssocie_->lireMatricePos().colonne;
 		emit pieceClique(pieceAssocie_);
 	}
 }
@@ -36,20 +38,20 @@ void VuePieceEchec::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void VuePieceEchec::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
 	event->accept();
-	if (pieceAssocie_->lireEquipe() == "Noir") {
-		qDebug() << "noir";
-		qDebug() << lirePiece()->lireMatricePos().ligne;
-		qDebug() << lirePiece()->lireMatricePos().colone;
-
+	if (pieceAssocie_->lireEquipe() == "Noir")
+	{
+		qDebug() << "noir" << lirePiece()->lireMatricePos().ligne << lirePiece()->lireMatricePos().colonne;
 	}
-	else {
-		qDebug() << "blanc";
-		qDebug() << lirePiece()->lireMatricePos().ligne;
-		qDebug() << lirePiece()->lireMatricePos().colone;
-
+	else 
+	{
+		qDebug() << "blanc" << lirePiece()->lireMatricePos().ligne << lirePiece()->lireMatricePos().colonne;
 	}
 }
 
+Ui::VuePieceEchec::~VuePieceEchec()
+{
+	emit jouerSon("Sons/Slash.mp3");
+}
 
 
 

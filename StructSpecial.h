@@ -1,3 +1,12 @@
+/*
+* Définitions de structures pour simplifier l'utilisation de certains élément.
+*
+* Fichier : StructSpécial.h, StructSpécial.cpp
+* Auteurs : Sebastian Espin, Julien Roux
+* Date : 05/05/2022
+* Crée : 01/04/2022
+*/
+
 #pragma once
 #include <string>
 #include <utility>
@@ -19,14 +28,7 @@ struct TourDeJeu{
 };
 
 struct MatricePosition { 
-	int ligne = 0, colone = 0;
-
-	/*MatricePosition operator=(std::pair<int, int> nouvellePos) {
-		ligne = nouvellePos.first;
-		colone = nouvellePos.second;
-
-		return *this;
-	}*/
+	int ligne = 0, colonne = 0;
 };
 
 struct PixelPosition

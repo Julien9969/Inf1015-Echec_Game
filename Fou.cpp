@@ -1,11 +1,11 @@
+//Corps de la classe Fou
 #include "Fou.h"
 #include <QDebug>
 
+using Modele::Fou;
+using Modele::EmplacementValide;
 
-using model::Fou;
-using model::EmplacementValide;
-
-Fou::Fou(std::string equipe) : ModelPieceEchec(equipe)
+Fou::Fou(std::string equipe) : ModelePieceEchec(equipe)
 {
 	if (equipe_ == "Noir") {
 		cheminImage = "images/FouN.png";
@@ -13,7 +13,6 @@ Fou::Fou(std::string equipe) : ModelPieceEchec(equipe)
 	else {
 		cheminImage = "images/FouB.png";
 	}
-
 }
 
 void Fou::listerDeplacementsSemiValides(ListeCases& listeCase)
@@ -21,69 +20,68 @@ void Fou::listerDeplacementsSemiValides(ListeCases& listeCase)
 	listeEmplacementsValides.clear();
 
     //Haut gauche
-    for (int ligne = lireMatricePos().ligne - 1, colone = lireMatricePos().colone - 1; ligne >= 0 && colone >= 0; ligne--, colone--)
+    for (int ligne = lireMatricePos().ligne - 1, colonne = lireMatricePos().colonne - 1; neDepassePas(ligne, HAUT) && neDepassePas(colonne, GAUCHE); ligne--, colonne--)
     {
-        if (listeCase(ligne, colone)->getPiece() != nullptr) {
-            if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
-                listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
+        if (listeCase(ligne, colonne)->getPiece() != nullptr) {
+            if (listeCase(ligne, colonne)->getPiece()->lireEquipe() != equipe_) {
+                listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkRed });
             }
             break;
         }
         else {
-            listeEmplacementsValides.push_back({ ligne, colone, Qt::darkGreen });
+            listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkGreen });
         }
     }
 
-    //Haut gauche
-    for (int ligne = lireMatricePos().ligne - 1, colone = lireMatricePos().colone + 1; ligne >= 0 && colone <= 7; ligne--, colone++)
+    //Haut droite
+    for (int ligne = lireMatricePos().ligne - 1, colonne = lireMatricePos().colonne + 1; neDepassePas(ligne, HAUT) && depasse(colonne, BAS); ligne--, colonne++)
     {
-        if (listeCase(ligne, colone)->getPiece() != nullptr) {
-            if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
-                listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
+        if (listeCase(ligne, colonne)->getPiece() != nullptr) {
+            if (listeCase(ligne, colonne)->getPiece()->lireEquipe() != equipe_) {
+                listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkRed });
             }
             break;
         }
         else {
-            listeEmplacementsValides.push_back({ ligne, colone, Qt::darkGreen });
+            listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkGreen });
         }
     }
 
     //bas droite
-    for (int ligne = lireMatricePos().ligne + 1, colone = lireMatricePos().colone + 1; ligne <= 7 && colone <= 7; ligne++, colone++)
+    for (int ligne = lireMatricePos().ligne + 1, colonne = lireMatricePos().colonne + 1; depasse(ligne, BAS) && depasse(colonne, BAS); ligne++, colonne++)
     {
-        if (listeCase(ligne, colone)->getPiece() != nullptr) {
-            if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
-                listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
+        if (listeCase(ligne, colonne)->getPiece() != nullptr) {
+            if (listeCase(ligne, colonne)->getPiece()->lireEquipe() != equipe_) {
+                listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkRed });
             }
             break;
         }
         else {
-            listeEmplacementsValides.push_back({ ligne, colone, Qt::darkGreen });
+            listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkGreen });
         }
     }
 
     //bas gauche
-    for (int ligne = lireMatricePos().ligne + 1, colone = lireMatricePos().colone - 1; ligne <= 7 && colone >= 0; ligne++, colone--)
+    for (int ligne = lireMatricePos().ligne + 1, colonne = lireMatricePos().colonne - 1; depasse(ligne, BAS) && neDepassePas(colonne, GAUCHE); ligne++, colonne--)
     {
-        if (listeCase(ligne, colone)->getPiece() != nullptr) {
-            if (listeCase(ligne, colone)->getPiece()->lireEquipe() != equipe_) {
-                listeEmplacementsValides.push_back({ ligne, colone, Qt::darkRed });
+        if (listeCase(ligne, colonne)->getPiece() != nullptr) {
+            if (listeCase(ligne, colonne)->getPiece()->lireEquipe() != equipe_) {
+                listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkRed });
             }
             break;
         }
         else {
-            listeEmplacementsValides.push_back({ ligne, colone, Qt::darkGreen });
+            listeEmplacementsValides.push_back({ ligne, colonne, Qt::darkGreen });
         }
     }
 }
 
-bool model::Fou::deplacementEstValide(const MatricePosition& destination)
+bool Modele::Fou::deplacementEstValide(const MatricePosition& destination)
 {
 	for (auto&& emplacement : listeEmplacementsValides) {
-		if (emplacement.ligne == destination.ligne && emplacement.colone == destination.colone) {
+		if (emplacement.ligne == destination.ligne && emplacement.colonne == destination.colonne) {
 			return true;
 		}
-
 	}
 	return false;
 }

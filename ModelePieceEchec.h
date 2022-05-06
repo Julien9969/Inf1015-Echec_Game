@@ -1,33 +1,46 @@
-#pragma once
-#include <QObject>
-#include <QMediaPlayer>
+/*
+* Classe abstraite implémentant la logique de base d'une piece d'échec.
+*
+* Fichier : ModelePieceEchec.h, ModelePieceEchec.cpp
+* Auteurs : Sebastian Espin, Julien Roux
+* Date : 05/05/2022
+* Crée : 01/04/2022
+*/
 
-#include <list>
-#include <string>
+#pragma once
+#pragma warning(disable:5054)
+#include <QObject>
 #include <QColor>
-#include "modelCase.h"
+#pragma warning(default:5054)
+
+#include <string>
+#include <list>
+#include "ModeleCase.h"
 #include "StructSpecial.h"
 
+#define HAUT 0
+#define BAS 7
+#define GAUCHE 0
+#define DROITE 7
 
 
-namespace model {
+namespace Modele {
 
 	struct ListeCases;
-	class modelCase;
+	class ModeleCase;
 
 	struct EmplacementValide {
 		int ligne;
-		int colone;
+		int colonne;
 		QColor couleur;
 	};
 
-	class ModelPieceEchec : public QObject
+	class ModelePieceEchec : public QObject
 	{
 		Q_OBJECT
 	public:
-		ModelPieceEchec(std::string equipe);
-		//virtual ~ModelPieceEchec() = default;
-		virtual ~ModelPieceEchec();
+		ModelePieceEchec(std::string equipe);
+		virtual ~ModelePieceEchec();
 
 		const MatricePosition& lireMatricePos() const { return mPosition_; }
 
@@ -35,19 +48,21 @@ namespace model {
 
 
 		const QString& lireCheminImage() const { return cheminImage; }
-		void mangeLaPiece(ModelPieceEchec* piece);
+		void mangeLaPiece(ModelePieceEchec* piece);
 
 		const std::string& lireEquipe() const { return equipe_; }
 		std::list<EmplacementValide>& lireEmplacementValide() { return listeEmplacementsValides; }
 		bool listEmplacementEstVide() { return listeEmplacementsValides.empty(); }
 
 		void positionner(const MatricePosition& matricePos, const PixelPosition& scenePos);
-		
+
+		bool neDepassePas(int position, int bord) { return position >= bord; }
+		bool depasse(int position, int bord) { return position <= bord; }
+
 	protected:
 		std::string equipe_;
 		QString cheminImage;
 
-		QMediaPlayer music;
 		MatricePosition mPosition_;
 		PixelPosition pPosition_;
 
@@ -60,6 +75,6 @@ namespace model {
 	signals:   
 		void mettrePositionVue(PixelPosition scenePos);
 		void suppressionPiece();
-		void enleverLaPieceDuPlateau(ModelPieceEchec* piece);
+		void enleverLaPieceDuPlateau(ModelePieceEchec* piece);
 	};
 }

@@ -1,11 +1,11 @@
+//Corps de la classe Tour
 #include "Tour.h"
 #include <QDebug>
 
+using Modele::Tour;
+using Modele::EmplacementValide;
 
-using model::Tour;
-using model::EmplacementValide;
-
-Tour::Tour(std::string equipe) : ModelPieceEchec(equipe)
+Tour::Tour(std::string equipe) : ModelePieceEchec(equipe)
 {
 	if (equipe_ == "Noir") {
 		cheminImage = "images/TourN.png";
@@ -13,7 +13,6 @@ Tour::Tour(std::string equipe) : ModelPieceEchec(equipe)
 	else {
 		cheminImage = "images/TourB.png";
 	}
-
 }
 
 void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
@@ -21,74 +20,72 @@ void Tour::listerDeplacementsSemiValides(ListeCases& listeCase)
 	listeEmplacementsValides.clear();
 
 	//Vers le bas
-	for (int ligne = lireMatricePos().ligne + 1; ligne < 8; ligne++)
+	for (int ligne = lireMatricePos().ligne + 1; depasse(ligne, BAS); ligne++)
 	{
-		if (listeCase(ligne, lireMatricePos().colone)->getPiece() != nullptr) {
-			if (listeCase(ligne, lireMatricePos().colone)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
+		if (listeCase(ligne, lireMatricePos().colonne)->getPiece() != nullptr) {
+			if (listeCase(ligne, lireMatricePos().colonne)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colonne, Qt::darkRed });
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ ligne, lireMatricePos().colonne, Qt::darkGreen });
 		}
 	}
 
 	//vers le haut
-	for (int ligne = lireMatricePos().ligne - 1; ligne >= 0; ligne--)
+	for (int ligne = lireMatricePos().ligne - 1; neDepassePas(ligne, HAUT); ligne--)
 	{
-		if (listeCase(ligne, lireMatricePos().colone)->getPiece() != nullptr) {
-			if (listeCase(ligne, lireMatricePos().colone)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkRed });
+		if (listeCase(ligne, lireMatricePos().colonne)->getPiece() != nullptr) {
+			if (listeCase(ligne, lireMatricePos().colonne)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ ligne, lireMatricePos().colonne, Qt::darkRed });
 
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ ligne, lireMatricePos().colone, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ ligne, lireMatricePos().colonne, Qt::darkGreen });
 		}
 	}
 
 	//vers la droite
-	for (int colone = lireMatricePos().colone + 1; colone < 8; colone++)
+	for (int colonne = lireMatricePos().colonne + 1; depasse(colonne, DROITE); colonne++)
 	{
-		if (listeCase(lireMatricePos().ligne, colone)->getPiece() != nullptr) {
-			if (listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
+		if (listeCase(lireMatricePos().ligne, colonne)->getPiece() != nullptr) {
+			if (listeCase(lireMatricePos().ligne, colonne)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colonne, Qt::darkRed });
 		
 
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ lireMatricePos().ligne, colonne, Qt::darkGreen });
 		}
 	}
 
-
 	//vers la gauche
-	for (int colone = lireMatricePos().colone - 1; colone >= 0; colone--)
+	for (int colonne = lireMatricePos().colonne - 1; neDepassePas(colonne, GAUCHE); colonne--)
 	{
-		if (listeCase(lireMatricePos().ligne, colone)->getPiece() != nullptr) {
-			if (listeCase(lireMatricePos().ligne, colone)->getPiece()->lireEquipe() != equipe_) {
-				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkRed });
+		if (listeCase(lireMatricePos().ligne, colonne)->getPiece() != nullptr) {
+			if (listeCase(lireMatricePos().ligne, colonne)->getPiece()->lireEquipe() != equipe_) {
+				listeEmplacementsValides.push_back({ lireMatricePos().ligne, colonne, Qt::darkRed });
 
 			}
 			break;
 		}
 		else {
-			listeEmplacementsValides.push_back({ lireMatricePos().ligne, colone, Qt::darkGreen });
+			listeEmplacementsValides.push_back({ lireMatricePos().ligne, colonne, Qt::darkGreen });
 		}
 	}
 }
 
-bool model::Tour::deplacementEstValide(const MatricePosition& destination)
+bool Modele::Tour::deplacementEstValide(const MatricePosition& destination)
 {
 	for (auto&& emplacement : listeEmplacementsValides) {
-		if (emplacement.ligne == destination.ligne && emplacement.colone == destination.colone) {
+		if (emplacement.ligne == destination.ligne && emplacement.colonne == destination.colonne) {
 			return true;
 		}
-
 	}
 	return false;
 }

@@ -1,41 +1,47 @@
+/*
+* Classe implémentant la logique d'une Case.
+* Structure pour encapsuler une liste de Cases
+* 
+* Fichier : ModeleCase.h, ModeleCase.cpp
+* Auteurs : Sebastian Espin, Julien Roux
+* Date : 05/05/2022
+* Crée : 28/04/2022
+*/
+
 #pragma once
 #include <QObject>
 #include <vector>
 #include <memory>
 #include "StructSpecial.h"
 
-#include "ModelPieceEchec.h"
+#include "ModelePieceEchec.h"
 
 
 
-namespace model {
+namespace Modele {
 
-	class ModelPieceEchec;
+	class ModelePieceEchec;
 
-	class ModelCase : public QObject
+	class ModeleCase : public QObject
 	{
 		Q_OBJECT
 	public:
-		ModelCase(int ligne, int colone);
-		~ModelCase();
+		ModeleCase(int ligne, int colonne);
+		~ModeleCase();
 
 		const MatricePosition& lirePosition() { return mPosition; }
 		const PixelPosition& lirePixelPos() { return pPosition; }
 		PixelPosition* accedeCasePixelPos() { return &pPosition; }
 
-		void mettrePiece(ModelPieceEchec* piece);
+		void mettrePiece(ModelePieceEchec* piece);
 		void enleverPiece();
 
-		ModelPieceEchec* getPiece() { return piece_; }
-
+		ModelePieceEchec* getPiece() { return piece_; }
 
 	private:
-		ModelPieceEchec* piece_ = nullptr;
+		ModelePieceEchec* piece_ = nullptr;
 		MatricePosition mPosition;
 		PixelPosition pPosition;
-
-	public slots:
-
 
 	signals:
 		void mettreCouleur(QColor couleur);
@@ -45,17 +51,17 @@ namespace model {
 
 
 	struct ListeCases {
-		std::vector<std::unique_ptr<ModelCase>> listeCases;
+		std::vector<std::unique_ptr<ModeleCase>> listeCases;
 
-		ModelCase* operator[](int x) {
+		ModeleCase* operator[](int x) {
 			return listeCases[x].get();
 		}
 
-		ModelCase* operator()(int x, int y) {
+		ModeleCase* operator()(int x, int y) {
 			return listeCases[size_t(x * 8 + y)].get();
 		}
 
-		void push_back(std::unique_ptr<ModelCase> box) {
+		void push_back(std::unique_ptr<ModeleCase> box) {
 			listeCases.push_back(move(box));
 		}
 

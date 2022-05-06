@@ -1,9 +1,21 @@
+/*
+* Classe permettant la création d'un boutton cliquable
+*
+* Fichier : Bouton.h, Bouton.cpp
+* Auteurs : Sebastian Espin, Julien Roux
+* Date : 05/05/2022
+* Crée : 04/05/2022
+*/
+
 #pragma once
+#pragma warning(disable:5054)
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsTextItem>
 #include <QBrush>
 #include <QFont>
+#pragma warning(default:5054)
+
 
 class Bouton :public QObject, public QGraphicsRectItem {
     Q_OBJECT
@@ -14,8 +26,10 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
-signals:
-    void clicked();
+
 private:
     QGraphicsTextItem* text;
+
+signals:
+    void clicked();
 };

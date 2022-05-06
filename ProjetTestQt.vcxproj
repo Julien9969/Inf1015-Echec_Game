@@ -122,16 +122,16 @@
     <ClCompile Include="googletest\src\gtest-all.cc" />
     <ClCompile Include="InterfaceJeu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ModelPieceEchec.cpp" />
+    <ClCompile Include="ModelePieceEchec.cpp" />
     <ClCompile Include="VuePieceEchec.cpp" />
     <ClCompile Include="Plateau.cpp" />
     <ClCompile Include="Roi.cpp" />
-    <ClCompile Include="ModelCase.cpp" />
+    <ClCompile Include="ModeleCase.cpp" />
     <ClCompile Include="Tour.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ModelPieceEchec.h" />
-    <QtMoc Include="ModelCase.h" />
+    <QtMoc Include="ModelePieceEchec.h" />
+    <QtMoc Include="ModeleCase.h" />
     <QtMoc Include="Bouton.h" />
     <ClInclude Include="Fou.h" />
     <ClInclude Include="Roi.h" />

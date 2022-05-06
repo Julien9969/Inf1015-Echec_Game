@@ -1,21 +1,24 @@
+/*
+* Classe implémentant la logique de la pièce Fou.
+*
+* Fichier : Fou.h, Fou.cpp
+* Auteurs : Sebastian Espin, Julien Roux
+* Date : 05/05/2022
+* Crée : 28/04/2022
+*/
+
 #pragma once
-#include "ModelPieceEchec.h"
+#include "ModelePieceEchec.h"
 
-namespace model {
+namespace Modele {
 
-	class Fou : public ModelPieceEchec
+	class Fou : public ModelePieceEchec
 	{
 	public:
 		Fou(std::string equipe);
-		//~Fou() = default;
 
 		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
 		bool deplacementEstValide(const MatricePosition& destination) override;
-
-
-	private:
-
-
 
 	};
 }

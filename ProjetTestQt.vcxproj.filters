@@ -55,7 +55,7 @@
     <ClCompile Include="VueCase.cpp">
       <Filter>Source Files\Vue</Filter>
     </ClCompile>
-    <ClCompile Include="ModelPieceEchec.cpp">
+    <ClCompile Include="ModelePieceEchec.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Plateau.cpp">
@@ -67,7 +67,7 @@
     <ClCompile Include="Tour.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="ModelCase.cpp">
+    <ClCompile Include="ModeleCase.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Fou.cpp">
@@ -90,13 +90,13 @@
     <QtMoc Include="VuePieceEchec.h">
       <Filter>Header Files\Vue</Filter>
     </QtMoc>
-    <QtMoc Include="ModelPieceEchec.h">
+    <QtMoc Include="ModelePieceEchec.h">
       <Filter>Header Files\Model</Filter>
     </QtMoc>
     <QtMoc Include="Plateau.h">
       <Filter>Header Files\Model</Filter>
     </QtMoc>
-    <QtMoc Include="ModelCase.h">
+    <QtMoc Include="ModeleCase.h">
       <Filter>Header Files\Model</Filter>
     </QtMoc>
     <QtMoc Include="Bouton.h">

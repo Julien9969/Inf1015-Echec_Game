@@ -1,16 +1,25 @@
+/*
+* Corps de la classe InterfaceJeu
+*
+* Fichier : InterfaceJeu.h, InterfaceJeu.cpp
+* Auteurs : Sebastian Espin, Julien Roux
+* Date : 05/05/2022
+* Crée : 20/04/2022
+*/
+
 #include "InterfaceJeu.h"
 #include <QDebug>
 
 using iter::range;
-using model::Plateau;
+using Modele::Plateau;
 
 Ui::InterfaceJeu::InterfaceJeu(QWidget* parent) : QMainWindow(parent)
 {
 	window_ = new QGraphicsView(this);
 	scene_ = new QGraphicsScene(window_);
+	music_ = new QMediaPlayer(this);
 
 	initialisationFenetre();
-
 	MenuPrincipal();
 }
 
@@ -24,7 +33,6 @@ void Ui::InterfaceJeu::initialisationFenetre()
 	window_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	scene_->setSceneRect(0, 0, 1080, 778);
-
 	window_->setScene(scene_);
 }
 
@@ -33,7 +41,6 @@ void Ui::InterfaceJeu::creationElementBord()
 	int taillePaneau = (width() - 720) / 2;
 
 	creationDesBord(taillePaneau, 0, 0, QColor(114, 137, 218), 1);
-
 	creationDesBord(taillePaneau, width() - taillePaneau, 0, QColor(255, 78, 80), 1);
 
 	QFont f;
@@ -70,7 +77,7 @@ void Ui::InterfaceJeu::creationVueCases()
 
 		for (int j : range(8)) {
 
-			model::ModelCase* caseAssocie = plateau_->listeCases(i, j);
+			Modele::ModeleCase* caseAssocie = plateau_->listeCases(i, j);
 
 			caseAssocie->accedeCasePixelPos()->x = (width() - 720) / 2 + 90 * j;
 			caseAssocie->accedeCasePixelPos()->y = 60 + 90 * i;
@@ -85,12 +92,11 @@ void Ui::InterfaceJeu::creationVueCases()
 			else {
 				box->mettreCouleurbase(QColor(238, 238, 238));
 			}
-			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleurBase, box, &Ui::VueCase::mettreCouleurBase);
-			QObject::connect(plateau_->listeCases(i, j), &model::ModelCase::mettreCouleur, box, &Ui::VueCase::mettreCouleur);
+			QObject::connect(plateau_->listeCases(i, j), &Modele::ModeleCase::mettreCouleurBase, box, &Ui::VueCase::mettreCouleurBase);
+			QObject::connect(plateau_->listeCases(i, j), &Modele::ModeleCase::mettreCouleur, box, &Ui::VueCase::mettreCouleur);
 			QObject::connect(box, &Ui::VueCase::caseClique, &*plateau_, &Plateau::recevoirCaseClique);
 
 			mettreDansScene(box);
-
 		}
 	}
 }
@@ -99,33 +105,22 @@ void Ui::InterfaceJeu::creationVuePiece()
 {
 	for (auto&& j = plateau_->ListePieceNoir.begin(); j != plateau_->ListePieceNoir.end(); j++) {
 
-		//tempCase = plateau_->listeCases[i++];
-
 		VuePieceEchec* piece = new VuePieceEchec(j->get());
 
-		//j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
-
 		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
-		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
-
+		QObject::connect(j->get(), &Modele::ModelePieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
+		QObject::connect(piece, &Ui::VuePieceEchec::jouerSon, this, &Ui::InterfaceJeu::jouerSon);
 
 		mettreDansScene(piece);
-
 	}
-
-	//i = 0;
 
 	for (auto&& j = plateau_->ListePieceBlanc.begin(); j != plateau_->ListePieceBlanc.end(); j++) {
 
-		//tempCase = plateau_->listeCases[56 + i++];
-
 		VuePieceEchec* piece = new VuePieceEchec(j->get());
 
-		//j->get()->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
-
 		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
-		QObject::connect(j->get(), &model::ModelPieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
-
+		QObject::connect(j->get(), &Modele::ModelePieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
+		QObject::connect(piece, &Ui::VuePieceEchec::jouerSon, this, &Ui::InterfaceJeu::jouerSon);
 
 		mettreDansScene(piece);
 	}
@@ -136,10 +131,11 @@ void Ui::InterfaceJeu::creationVuePiece()
 
 void Ui::InterfaceJeu::creationDesBord(int taille, int x, int y, QColor couleur, double opacite)
 {
-	QGraphicsRectItem* panel = new QGraphicsRectItem(x, y, taille, height());
 	QBrush brush;
 	brush.setStyle(Qt::SolidPattern);
 	brush.setColor(couleur);
+
+	QGraphicsRectItem* panel = new QGraphicsRectItem(x, y, taille, height());
 	panel->setBrush(brush);
 	panel->setOpacity(opacite);
 	scene_->addItem(panel);
@@ -170,13 +166,14 @@ void Ui::InterfaceJeu::MenuPrincipal(std::string textePrincipal)
 	QString ok = QString::fromStdString(textePrincipal);
 
 	auto image = new QGraphicsPixmapItem(QPixmap("images/imageMenu"));
-	image->setPos(width() * 0.5 - image->boundingRect().width() / 2, height() / 4);
+	image->setPos(width() * 0.5 - image->boundingRect().width() / 2, height() * 0.25);
 	mettreDansScene(image);
 
-	auto test = new QGraphicsTextItem(ok);
 	QFont f;
 	f.setPixelSize(100);
 	f.setBold(true);
+
+	auto test = new QGraphicsTextItem(ok);
 	test->setFont(f);
 	test->setDefaultTextColor(Qt::black);
 	test->setPos(width() * 0.5 - test->boundingRect().width() / 2, 40);
@@ -197,3 +194,9 @@ void Ui::InterfaceJeu::mettreDansScene(QGraphicsItem* object)
 	scene_->addItem(object);
 }
 
+void Ui::InterfaceJeu::jouerSon(QString cheminVersSon) 
+{
+	music_->setMedia(QUrl(cheminVersSon));
+	music_->setVolume(20);
+	music_->play();
+}

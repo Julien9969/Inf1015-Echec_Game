@@ -19,7 +19,7 @@ namespace Modele {
 		//~Tour() = default;
 
 		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
-		bool deplacementEstValide(const MatricePosition& destination) override;
+		//bool deplacementEstValide(const MatricePosition& destination) override;
 		
 
 	private:

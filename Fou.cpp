@@ -76,13 +76,13 @@ void Fou::listerDeplacementsSemiValides(ListeCases& listeCase)
     }
 }
 
-bool Modele::Fou::deplacementEstValide(const MatricePosition& destination)
-{
-	for (auto&& emplacement : listeEmplacementsValides) {
-		if (emplacement.ligne == destination.ligne && emplacement.colonne == destination.colonne) {
-			return true;
-		}
-	}
-	return false;
-}
+//bool Modele::Fou::deplacementEstValide(const MatricePosition& destination)
+//{
+//	for (auto&& emplacement : listeEmplacementsValides) {
+//		if (emplacement.ligne == destination.ligne && emplacement.colonne == destination.colonne) {
+//			return true;
+//		}
+//	}
+//	return false;
+//}
 

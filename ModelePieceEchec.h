@@ -54,7 +54,7 @@ namespace Modele {
 		std::list<EmplacementValide>& lireEmplacementValide() { return listeEmplacementsValides; }
 		bool listEmplacementEstVide() { return listeEmplacementsValides.empty(); }
 
-		void positionner(const MatricePosition& matricePos, const PixelPosition& scenePos);
+		virtual void positionner(const MatricePosition& matricePos, const PixelPosition& scenePos);
 
 		bool neDepassePas(int position, int bord) { return position >= bord; }
 		bool depasse(int position, int bord) { return position <= bord; }
@@ -70,7 +70,7 @@ namespace Modele {
 
 	public slots:
 		virtual void listerDeplacementsSemiValides(ListeCases& listeCase) = 0;
-		virtual bool deplacementEstValide(const MatricePosition& destination) = 0;
+		virtual bool deplacementEstValide(const MatricePosition& destination);
 	
 	signals:   
 		void mettrePositionVue(PixelPosition scenePos);

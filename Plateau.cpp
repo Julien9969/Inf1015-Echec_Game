@@ -3,11 +3,14 @@
 #include <QDebug>
 
 using iter::range;
+using Modele::Reine;
 using Modele::Tour;
 using Modele::Roi;
 using Modele::Fou;
+using Modele::Pion;
 using Modele::ModelePieceEchec;
 using Modele::Plateau;
+using Modele::Cavalier;
 
 Plateau::Plateau()
 {
@@ -28,6 +31,7 @@ void Plateau::creeCases()
 		}
 	}
 }
+	
 
 void Plateau::creePiecesNoir()
 {
@@ -45,10 +49,27 @@ void Plateau::creePiecesNoir()
 
 	std::unique_ptr<ModelePieceEchec> fouN1 = std::make_unique<Fou>("Noir");
 	ListePieceNoir.push_back(move(fouN1));
+
+	std::unique_ptr<ModelePieceEchec> reineN = std::make_unique<Reine>("Noir");
+	ListePieceNoir.push_back(move(reineN));
+
+	std::unique_ptr<ModelePieceEchec> cavalierN1 = std::make_unique<Cavalier>("Noir");
+	ListePieceNoir.push_back(move(cavalierN1));
+
+	std::unique_ptr<ModelePieceEchec> cavalierN2 = std::make_unique<Cavalier>("Noir");
+	ListePieceNoir.push_back(move(cavalierN2));
+
+	for (int i = 0; i < 8; i++)
+	{
+		std::unique_ptr<ModelePieceEchec> PionN = std::make_unique<Pion>("Noir");
+		ListePieceNoir.push_back(move(PionN));
+	}
+
 }
 
 void Plateau::creePieceBlanc()
 {
+
 	std::unique_ptr<ModelePieceEchec> tourB = std::make_unique<Tour>("Blanc");
 	ListePieceBlanc.push_back(move(tourB));
 
@@ -64,11 +85,26 @@ void Plateau::creePieceBlanc()
 	std::unique_ptr<ModelePieceEchec> fouB1 = std::make_unique<Fou>("Blanc");
 	ListePieceBlanc.push_back(move(fouB1));
 
+	std::unique_ptr<ModelePieceEchec> reineB = std::make_unique<Reine>("Blanc");
+	ListePieceBlanc.push_back(move(reineB));
+
+	std::unique_ptr<ModelePieceEchec> cavalierB1 = std::make_unique<Cavalier>("Blanc");
+	ListePieceBlanc.push_back(move(cavalierB1));
+
+	std::unique_ptr<ModelePieceEchec> cavalierB2 = std::make_unique<Cavalier>("Blanc");
+	ListePieceBlanc.push_back(move(cavalierB2));
+
 	try {
 		std::unique_ptr<ModelePieceEchec> roiB2 = std::make_unique<Roi>("Blanc");
 	}
 	catch (std::logic_error& e) {
 		qDebug() << "Erreur : " << e.what();
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		std::unique_ptr<ModelePieceEchec> PionB = std::make_unique<Pion>("Blanc");
+		ListePieceBlanc.push_back(move(PionB));
 	}
 }
 
@@ -76,29 +112,31 @@ void Plateau::mettreLesPieces()
 {
 	Modele::ModeleCase* tempCase = nullptr;
 	ModelePieceEchec* tempPiece = nullptr;
-	int positionPiece[5] = {0, 7, 4, 2, 5};
+	int positionPieceN[16] = { 0, 7, 4, 2, 5, 3, 1, 6, 8, 9, 10, 11, 12, 13, 14, 15 };
+	int positionPieceB[16] = { 0, 7, 4, 2, 5, 3, 1, 6, -1, -2, -3, -4, -5, -6, -7, -8 };
+
 	int i = 0;
 
 	for (auto&& j = ListePieceNoir.begin(); j != ListePieceNoir.end(); j++) {
 			
-		tempCase = listeCases[positionPiece[i++]];
+		tempCase = listeCases[positionPieceN[i++]];
 		tempPiece = j->get();
 
 		tempCase->mettrePiece(tempPiece);
 		
-		tempPiece->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
+		tempPiece->ModelePieceEchec::positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
 	}
 
 	i = 0;
 	
 	for (auto&& j = ListePieceBlanc.begin(); j != ListePieceBlanc.end(); j++) {
 
-		tempCase = listeCases[56 + positionPiece[i++]];
+		tempCase = listeCases[56 + positionPieceB[i++]];
 		tempPiece = j->get();
 
 		tempCase->mettrePiece(tempPiece);
 
-		tempPiece->positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
+		tempPiece->ModelePieceEchec::positionner(tempCase->lirePosition(), tempCase->lirePixelPos());
 	}
 }
 

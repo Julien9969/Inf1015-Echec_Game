@@ -1,10 +1,10 @@
 /*
-* Classe implémentant la logique de la pièce Fou.
+* Classe implémentant la logique de la pièce Reine.
 *
-* Fichier : Fou.h, Fou.cpp
+* Fichier : Reine.h, Reine.cpp
 * Auteurs : Sebastian Espin, Julien Roux
 * Date : 05/05/2022
-* Crée : 28/04/2022
+* Crée : 30/04/2022
 */
 
 #pragma once
@@ -12,13 +12,18 @@
 
 namespace Modele {
 
-	class Fou : public ModelePieceEchec
+	class Reine : public ModelePieceEchec
 	{
 	public:
-		Fou(std::string equipe);
+		Reine(std::string equipe);
 
 		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
 		//bool deplacementEstValide(const MatricePosition& destination) override;
+
+
+	private:
+
+
 
 	};
 }

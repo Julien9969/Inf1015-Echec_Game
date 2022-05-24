@@ -11,6 +11,7 @@ using Ui::VueCase;
 TEST(InterfaceJeu, CreationDuJeu) {
 	InterfaceJeu jeu;
 	jeu.MenuPrincipal();
+	jeu.menuInfo();
 	EXPECT_EQ(jeu.plateau(), nullptr);
 	jeu.nouvellePartie();
 	EXPECT_NE(jeu.plateau(), nullptr);
@@ -36,19 +37,24 @@ TEST(InterfaceJeu, Deplacement) {
 	delete event;
 	delete hover;
 
-	jeu.plateau()->recevoirPieceClique(jeu.plateau()->listeCases(7, 0)->getPiece());
-	jeu.plateau()->recevoirCaseClique(jeu.plateau()->listeCases(3, 0));
+	jeu.plateau()->recevoirPieceClique(jeu.plateau()->listeCases(6, 0)->getPiece());
+	jeu.plateau()->recevoirCaseClique(jeu.plateau()->listeCases(4, 0));
 
-	EXPECT_EQ(jeu.plateau()->listeCases(7, 0)->getPiece(), nullptr);
-	EXPECT_NE(jeu.plateau()->listeCases(3, 0)->getPiece(), nullptr);
+	EXPECT_EQ(jeu.plateau()->listeCases(6, 0)->getPiece(), nullptr);
+	EXPECT_NE(jeu.plateau()->listeCases(4, 0)->getPiece(), nullptr);
+
+	jeu.plateau()->listeCases(4, 0)->getPiece()->mangeLaPiece(jeu.plateau()->listeCases(1, 0)->getPiece());
+
+	EXPECT_EQ(jeu.plateau()->ListePieceNoir.size(), 12);
+
 }
 
 TEST(InterfaceJeu, FinDuJeu) {
 	InterfaceJeu jeu;
 	jeu.nouvellePartie();
 	jeu.plateau()->ListePieceNoir.erase(jeu.plateau()->ListePieceNoir.begin(), jeu.plateau()->ListePieceNoir.end());
-	jeu.plateau()->recevoirPieceClique(jeu.plateau()->listeCases(7, 0)->getPiece());
-	jeu.plateau()->recevoirCaseClique(jeu.plateau()->listeCases(3, 0));
+	jeu.plateau()->recevoirPieceClique(jeu.plateau()->listeCases(6, 0)->getPiece());
+	jeu.plateau()->recevoirCaseClique(jeu.plateau()->listeCases(5, 0));
 	EXPECT_EQ(jeu.plateau(), nullptr);
 }
 

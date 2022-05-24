@@ -48,13 +48,13 @@ void Roi::listerDeplacementsSemiValides(ListeCases& listeCase)
 	}
 }
 
-bool Modele::Roi::deplacementEstValide(const MatricePosition& destination)
-{
-	for (auto&& emplacement : listeEmplacementsValides) {
-		if (emplacement.ligne == destination.ligne && emplacement.colonne == destination.colonne) {
-			return true;
-		}
-
-	}
-	return false;
-}
+//bool Modele::Roi::deplacementEstValide(const MatricePosition& destination)
+//{
+//	for (auto&& emplacement : listeEmplacementsValides) {
+//		if (emplacement.ligne == destination.ligne && emplacement.colonne == destination.colonne) {
+//			return true;
+//		}
+//
+//	}
+//	return false;
+//}

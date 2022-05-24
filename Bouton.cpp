@@ -3,9 +3,9 @@
 #include "Bouton.h"
 #include <QDebug>
 
-Bouton::Bouton(QString name, int xPos, int yPos, QGraphicsItem* parent) : QGraphicsRectItem(parent) {
+Bouton::Bouton(QString name, int xPos, int yPos, int xSize, int ySize, QGraphicsItem* parent) : QGraphicsRectItem(parent) {
 
-    setRect(xPos - 250 / 2, yPos + 80, 250, 80);
+    setRect(xPos - xSize / 2, yPos, xSize, ySize);
 
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
@@ -19,7 +19,7 @@ Bouton::Bouton(QString name, int xPos, int yPos, QGraphicsItem* parent) : QGraph
     text->setFont(f);
     text->setDefaultTextColor(Qt::white);
     
-    text->setPos(xPos - text->boundingRect().width() /2 , yPos + 80 + text->boundingRect().height()/4 /*+ 80*/);
+    text->setPos(xPos - text->boundingRect().width() /2 , yPos + (ySize - text->boundingRect().height()) / 2);
 
     setAcceptHoverEvents(true);
 }

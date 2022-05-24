@@ -30,3 +30,13 @@ void Modele::ModelePieceEchec::positionner(const MatricePosition& matricePos, co
 	pPosition_ = scenePos;
 	emit mettrePositionVue(scenePos);
 }
+
+bool Modele::ModelePieceEchec::deplacementEstValide(const MatricePosition& destination)
+{
+	for (auto&& emplacement : listeEmplacementsValides) {
+		if (emplacement.ligne == destination.ligne && emplacement.colonne == destination.colonne) {
+			return true;
+		}
+	}
+	return false;
+}

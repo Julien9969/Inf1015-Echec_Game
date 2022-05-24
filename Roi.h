@@ -19,7 +19,7 @@ namespace Modele {
 		~Roi() { compteurDeRoi--; }
 
 		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
-		bool deplacementEstValide(const MatricePosition& destination) override;		
+		//bool deplacementEstValide(const MatricePosition& destination) override;		
 
 	private:
 		static inline int compteurDeRoi = 0;

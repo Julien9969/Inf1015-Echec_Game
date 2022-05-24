@@ -21,7 +21,7 @@ class Bouton :public QObject, public QGraphicsRectItem {
     Q_OBJECT
 public:
     
-    Bouton(QString name, int xPox, int yPos, QGraphicsItem* parent = NULL);
+    Bouton(QString name, int xPox, int yPos, int xSize = 250, int ySize = 80, QGraphicsItem* parent = NULL);
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent* event);

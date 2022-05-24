@@ -19,6 +19,9 @@
 #include "Tour.h" 
 #include "Roi.h"
 #include "Fou.h"
+#include "Pion.h"
+#include "Reine.h"
+#include "Cavalier.h"
 
 
 namespace Modele {

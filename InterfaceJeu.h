@@ -54,7 +54,11 @@ namespace Ui {
 		Modele::Plateau* plateau() const { return plateau_.get(); }
 		QGraphicsScene* scene() const { return scene_; }
 
+
 	private:
+		void menuInfoText(QString texte, int xPos, int yPos, int taille, bool bold);
+		void menuInfoCase(int xPos, int yPos, int xSize, int ySize, QColor couleur);
+
 
 		QGraphicsScene* scene_;
 		QGraphicsView* window_;
@@ -68,6 +72,8 @@ namespace Ui {
 		void mettreDansScene(QGraphicsItem* object);
 		void mettreTour(std::string equipeQuiJoue);
 		void MenuPrincipal(std::string textePrincipal = "Echec de Fou");
+		void menuInfo();
+		void retour();
 		void jouerSon(QString cheminVersSon);
 
 	};

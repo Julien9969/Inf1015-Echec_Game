@@ -1,10 +1,10 @@
 /*
-* Classe implémentant la logique de la pièce Fou.
+* Classe implémentant la logique de la pièce Cavalier.
 *
-* Fichier : Fou.h, Fou.cpp
+* Fichier : Cavalier.h, Cavalier.cpp
 * Auteurs : Sebastian Espin, Julien Roux
 * Date : 05/05/2022
-* Crée : 28/04/2022
+* Crée : 30/04/2022
 */
 
 #pragma once
@@ -12,13 +12,18 @@
 
 namespace Modele {
 
-	class Fou : public ModelePieceEchec
+	class Cavalier : public ModelePieceEchec
 	{
 	public:
-		Fou(std::string equipe);
+		Cavalier(std::string equipe);
 
 		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
 		//bool deplacementEstValide(const MatricePosition& destination) override;
+
+
+	private:
+
+
 
 	};
 }

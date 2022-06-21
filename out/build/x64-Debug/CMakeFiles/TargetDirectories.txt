@@ -1,4 +1,0 @@
-C:/Users/69juj/OneDrive - polymtl.ca/INF1015/Inf1015-Echec_Game/out/build/x64-Debug/CMakeFiles/ProjetTest.dir
-C:/Users/69juj/OneDrive - polymtl.ca/INF1015/Inf1015-Echec_Game/out/build/x64-Debug/CMakeFiles/ProjetTest_couverture.dir
-C:/Users/69juj/OneDrive - polymtl.ca/INF1015/Inf1015-Echec_Game/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Users/69juj/OneDrive - polymtl.ca/INF1015/Inf1015-Echec_Game/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

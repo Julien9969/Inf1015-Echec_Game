@@ -75,6 +75,7 @@ namespace Ui {
 		void menuInfo();
 		void retour();
 		void jouerSon(QString cheminVersSon);
+		void VuePiece(Modele::ModelePieceEchec* piece);
 
 	};
 }

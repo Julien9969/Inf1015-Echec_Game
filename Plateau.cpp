@@ -61,7 +61,8 @@ void Plateau::creePiecesNoir()
 
 	for (int i = 0; i < 8; i++)
 	{
-		std::unique_ptr<ModelePieceEchec> PionN = std::make_unique<Pion>("Noir");
+		std::unique_ptr<Pion> PionN = std::make_unique<Pion>("Noir");
+		QObject::connect(PionN.get(), &Modele::Pion::promouvoir, this, &Modele::Plateau::promotion);
 		ListePieceNoir.push_back(move(PionN));
 	}
 
@@ -103,7 +104,8 @@ void Plateau::creePieceBlanc()
 
 	for (int i = 0; i < 8; i++)
 	{
-		std::unique_ptr<ModelePieceEchec> PionB = std::make_unique<Pion>("Blanc");
+		std::unique_ptr<Pion> PionB = std::make_unique<Pion>("Blanc");
+		QObject::connect(PionB.get(), &Modele::Pion::promouvoir, this, &Modele::Plateau::promotion);
 		ListePieceBlanc.push_back(move(PionB));
 	}
 }
@@ -332,13 +334,39 @@ void Plateau::couleurPlateauInitial()
 	}
 }
 
+void Modele::Plateau::promotion(Pion* pionPromu)
+{
+	ModelePieceEchec* tempReine;
+	if (pionPromu->lireEquipe() == "Noir") {
+		std::unique_ptr<ModelePieceEchec> reine = std::make_unique<Reine>("Noir");
+		tempReine = reine.get();
+		ListePieceNoir.push_back(move(reine));
+	}
+	else {
+		std::unique_ptr<ModelePieceEchec> reine = std::make_unique<Reine>("Blanc");
+		tempReine = reine.get();
+		ListePieceBlanc.push_back(move(reine));
+	}
+
+	listeCases(pionPromu->lireMatricePos().ligne, pionPromu->lireMatricePos().colonne)->mettrePiece(tempReine);
+
+	emit creationVuePieceUnique(tempReine);
+
+	tempReine->ModelePieceEchec::positionner(pionPromu->lireMatricePos(), pionPromu->lireScenePos());
+
+	pieceActuelle_ = tempReine;
+
+	enleverPiece(pionPromu);
+
+}
+
 void Modele::Plateau::tourDeJeuChangement(std::string quiJoue)
 {
 	tourDeJeu == "Noir" ? tourDeJeu = "Blanc" : tourDeJeu = "Noir";
 	emit changementTour(tourDeJeu.tour);
 }
 
-void Plateau::enleverPieceElimine(Modele::ModelePieceEchec* piece)
+void Plateau::enleverPiece(Modele::ModelePieceEchec* piece)
 {
 	std::vector<std::unique_ptr<ModelePieceEchec>>::iterator pieceAsupprimer;
 

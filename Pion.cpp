@@ -26,6 +26,8 @@ void Modele::Pion::positionner(const MatricePosition& matricePos, const PixelPos
 	deplacement = 1;
 
 	emit mettrePositionVue(scenePos);
+
+	promotion();
 }
 
 
@@ -56,6 +58,13 @@ void Modele::Pion::listerDeplacementsSemiValides(ListeCases& listeCase)
 		if (listeCase(caseHautDroite(sens))->getPiece() != nullptr && listeCase(caseHautDroite(sens))->getPiece()->lireEquipe() != equipe_) {
 			listeEmplacementsValides.push_back({ caseHautDroite(sens), Qt::darkRed });
 		}
+	}
+}
+
+void Modele::Pion::promotion()
+{
+	if (lireMatricePos().ligne == 0 || lireMatricePos().ligne == 7) {
+		emit promouvoir(this);
 	}
 }
 

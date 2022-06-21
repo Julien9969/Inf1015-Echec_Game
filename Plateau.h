@@ -62,11 +62,13 @@ namespace Modele {
 	signals:
 		void changementTour(std::string equipe);
 		void MenuPrincipal(std::string gagnant);
+		void creationVuePieceUnique(ModelePieceEchec* reine);
 
 	public slots:
 		void recevoirPieceClique(ModelePieceEchec* pieceClique);
 		void recevoirCaseClique(ModeleCase* caseClique);
-		void enleverPieceElimine(ModelePieceEchec* piece);
+		void enleverPiece(ModelePieceEchec* piece);
+		void promotion(Pion* pionPromu);
 
 	};
 

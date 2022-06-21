@@ -45,7 +45,7 @@ TEST(InterfaceJeu, Deplacement) {
 
 	jeu.plateau()->listeCases(4, 0)->getPiece()->mangeLaPiece(jeu.plateau()->listeCases(1, 0)->getPiece());
 
-	EXPECT_EQ(jeu.plateau()->ListePieceNoir.size(), 12);
+	EXPECT_EQ(jeu.plateau()->ListePieceNoir.size(), 15);
 
 }
 

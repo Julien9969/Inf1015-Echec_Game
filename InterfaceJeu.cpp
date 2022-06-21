@@ -75,28 +75,25 @@ void Ui::InterfaceJeu::creationVueCases()
 void Ui::InterfaceJeu::creationVuePiece()
 {
 	for (auto&& j = plateau_->ListePieceNoir.begin(); j != plateau_->ListePieceNoir.end(); j++) {
-
-		VuePieceEchec* piece = new VuePieceEchec(j->get());
-
-		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
-		QObject::connect(j->get(), &Modele::ModelePieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
-		QObject::connect(piece, &Ui::VuePieceEchec::jouerSon, this, &Ui::InterfaceJeu::jouerSon);
-
-		mettreDansScene(piece);
+		VuePiece(j->get());
 	}
 
 	for (auto&& j = plateau_->ListePieceBlanc.begin(); j != plateau_->ListePieceBlanc.end(); j++) {
-
-		VuePieceEchec* piece = new VuePieceEchec(j->get());
-
-		QObject::connect(piece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
-		QObject::connect(j->get(), &Modele::ModelePieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPieceElimine);
-		QObject::connect(piece, &Ui::VuePieceEchec::jouerSon, this, &Ui::InterfaceJeu::jouerSon);
-
-		mettreDansScene(piece);
+		VuePiece(j->get());
 	}
 
 	plateau_->mettreLesPieces();
+}
+
+void Ui::InterfaceJeu::VuePiece(Modele::ModelePieceEchec* piece) 
+{
+	VuePieceEchec* vPiece = new VuePieceEchec(piece);
+
+	QObject::connect(vPiece, &Ui::VuePieceEchec::pieceClique, &*plateau_, &Plateau::recevoirPieceClique);
+	QObject::connect(piece, &Modele::ModelePieceEchec::enleverLaPieceDuPlateau, &*plateau_, &Plateau::enleverPiece);
+	QObject::connect(vPiece, &Ui::VuePieceEchec::jouerSon, this, &Ui::InterfaceJeu::jouerSon);
+
+	mettreDansScene(vPiece);
 }
 
 
@@ -122,8 +119,9 @@ void Ui::InterfaceJeu::nouvellePartie()
 
 	plateau_ = std::make_unique<Plateau>();
 
-	QObject::connect(&*plateau_, &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
-	QObject::connect(&*plateau_, &Plateau::MenuPrincipal, this, &InterfaceJeu::MenuPrincipal);
+	QObject::connect(plateau_.get(), &Plateau::changementTour, this, &InterfaceJeu::mettreTour);
+	QObject::connect(plateau_.get(), &Plateau::MenuPrincipal, this, &InterfaceJeu::MenuPrincipal);
+	QObject::connect(plateau_.get(), &Plateau::creationVuePieceUnique, this, &InterfaceJeu::VuePiece);
 
 	creationVueCases();
 	creationVuePiece();

@@ -139,7 +139,7 @@
     <QtMoc Include="Bouton.h" />
     <ClInclude Include="Cavalier.h" />
     <ClInclude Include="Fou.h" />
-    <ClInclude Include="Pion.h" />
+    <QtMoc Include="Pion.h" />
     <ClInclude Include="Reine.h" />
     <ClInclude Include="Roi.h" />
     <ClInclude Include="StructSpecial.h" />

@@ -20,16 +20,21 @@ namespace Modele {
 
 	class Pion : public ModelePieceEchec
 	{
+		Q_OBJECT
 	public:
 		Pion(std::string equipe);
-		//~Pion();
 
 		void listerDeplacementsSemiValides(ListeCases& listeCase) override;
 		void positionner(const MatricePosition& matricePos, const PixelPosition& scenePos) override;
+
+		void promotion();
+
 	private:
 		int deplacement = 2;
 		int sens;
 
+	signals:
+		void promouvoir(Pion* pion);
 	};
 
 }

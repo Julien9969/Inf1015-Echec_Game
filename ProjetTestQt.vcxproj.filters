@@ -111,6 +111,9 @@
     <QtMoc Include="Bouton.h">
       <Filter>Header Files\Vue</Filter>
     </QtMoc>
+    <QtMoc Include="Pion.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Roi.h">
@@ -123,9 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Fou.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Pion.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Reine.h">

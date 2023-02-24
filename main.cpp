@@ -1,5 +1,6 @@
 //#include "Calc.hpp"
 //#include "CalcWindow.hpp"
+#define _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS
 #include "Interfacejeu.h"
 #include <memory>
 #include <QApplication>
@@ -16,6 +17,10 @@ auto& cdbg = clog;
 #include "verification_allocation.hpp"
 #include "debogage_memoire.hpp"  //NOTE: Incompatible avec le "placement new", ne pas utiliser cette entête si vous utilisez ce type de "new" dans les lignes qui suivent cette inclusion.
 #endif
+
+
+
+
 
 void initialiserBibliothequeCours([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {

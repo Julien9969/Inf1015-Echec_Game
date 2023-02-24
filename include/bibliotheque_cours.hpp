@@ -1,10 +1,12 @@
 ﻿#pragma once
+#define _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS
 
 #include <ostream>
 #include <utility>
 #include <ciso646>
 #include <string>
 #include <string_view>
+
 
 namespace bibliotheque_cours {
 

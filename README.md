@@ -1,5 +1,5 @@
-# Inf1015-Echec_Game
+# Inf1015-Chess Game
 
-Echec game made with Qt 5.15.2
+Chess game with autorized position computation and checkmate detection made with Qt 5.15.2
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![image](https://github.com/user-attachments/assets/a1cb86ba-ae4c-4956-951d-f7c67b536c20)
